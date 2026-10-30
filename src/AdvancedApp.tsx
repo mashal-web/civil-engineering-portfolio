@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import './advanced.css'
-import { ArrowDownRight, ArrowRight, BookOpen, Building2, Compass, FileText, Github, GraduationCap, Mail, MapPin, Menu, Moon, Sun, X, Layers3, NotebookPen, Ruler, Search, ExternalLink } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, BookOpen, Building2, Compass, FileText, Github, GraduationCap, MapPin, Menu, Moon, Sun, X, Layers3, NotebookPen, Ruler, Search, ExternalLink } from 'lucide-react'
 
 type Page = 'home' | 'about' | 'academics' | 'courses' | 'projects' | 'journal' | 'contact'
 type Theme = 'dark' | 'light'
