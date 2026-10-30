@@ -18,6 +18,18 @@ arrow:'<path d="M7 17 17 7M7 7h10v10"/>',
 bridge:'<path d="M3 19h18M5 19V8m14 11V8M5 8l7-4 7 4M5 11h14"/><path d="m7 11 2 8m8-8-2 8m-3-8v8"/>',
 compass:'<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.8 6.4-6.4 2.8 2.8-6.4 6.4-2.8Z"/>',
 github:'<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
+
+ruler:'<path d="m21.3 8.7-6-6a2.4 2.4 0 0 0-3.4 0L2.7 12a2.4 2.4 0 0 0 0 3.4l5.9 5.9a2.4 2.4 0 0 0 3.4 0l9.3-9.3a2.4 2.4 0 0 0 0-3.3Z"/><path d="m7.5 10.5 2 2m1-5 2 2m1-5 2 2m-1 8 2 2"/>',
+calculator:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8v4H8zM8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/>',
+file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>',
+download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/>',
+printer:'<path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/>',
+external:'<path d="M14 3h7v7M10 14 21 3"/><path d="M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6"/>',
+check:'<path d="m5 12 4 4L19 6"/>',
+cube:'<path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 7 9 5 9-5M3 7v10l9 5 9-5V7M12 12v10"/>',
+network:'<circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><path d="m10.5 7.5-4 9m7-9 4 9M8 19h8"/>',
+layers3:'<path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/>',
+
 };
 function ico(name,cls='ui-icon'){return '<svg class="'+cls+'" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(iconPaths[name]||iconPaths.compass)+'</svg>';}
 
@@ -79,6 +91,45 @@ const buttons=opts.buttons||[];buttons.forEach(b=>b.addEventListener('click',()=
 createBridge($('#hero-bridge'),{buttons:$$('[data-hero-mode]'),reset:$('#hero-reset'),angle:v=>{if($('#hero-angle'))$('#hero-angle').textContent=v}});
 createBridge($('#lab-canvas'),{buttons:$$('[data-lab-mode]'),reset:$('#lab-reset'),load:$('#lab-load'),span:$('#lab-span'),loadValue:$('#lab-load-value'),spanValue:$('#lab-span-value'),modeLabel:$('#lab-mode-label'),angle:v=>{if($('#lab-angle'))$('#lab-angle').textContent=v},update:s=>{if($('#lab-load-readout'))$('#lab-load-readout').textContent=s.load+'%';if($('#lab-span-readout'))$('#lab-span-readout').textContent=s.span.toFixed(2)+'×';if($('#lab-view-readout'))$('#lab-view-readout').textContent=s.mode==='render'?'3D':s.mode==='blueprint'?'2D':'FORM'}});
 
+
+
+/* 3D portfolio scene and consistent iconography on every page */
+const depthScene=document.createElement('div');
+depthScene.className='depth-scene';
+depthScene.setAttribute('aria-hidden','true');
+depthScene.innerHTML='<div class="depth-grid"></div><div class="depth-object depth-object-a"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="depth-object depth-object-b"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="depth-orbit orbit-a"></div><div class="depth-orbit orbit-b"></div>';
+document.body.prepend(depthScene);
+function iconForText(value){
+ const s=(value||'').toLowerCase();
+ if(/course|subject|lecture|study|notes|journal|read entry/.test(s))return 'book';
+ if(/bridge|structure|load|material|building|project|case study/.test(s))return 'bridge';
+ if(/academic|university|degree|semester|education/.test(s))return 'graduation';
+ if(/drawing|dimension|technical/.test(s))return 'ruler';
+ if(/calculator|math|quantitative|formula|number/.test(s))return 'calculator';
+ if(/github/.test(s))return 'github';
+ if(/linkedin|contact|email|connect|mail/.test(s))return 'mail';
+ if(/download|export/.test(s))return 'download';
+ if(/print|pdf/.test(s))return 'printer';
+ if(/about|person|profile/.test(s))return 'user';
+ if(/roadmap|foundation|layers|digital/.test(s))return 'layers3';
+ if(/progress|checklist|complete/.test(s))return 'check';
+ if(/journal|entry|field notes/.test(s))return 'file';
+ return 'cube';
+}
+function addIcon(el,name,cls='card-icon'){
+ if(!el||el.querySelector(':scope > .'+cls))return;
+ const holder=document.createElement('span');holder.className=cls;holder.innerHTML=ico(name);holder.setAttribute('aria-hidden','true');el.prepend(holder);
+}
+$('.course-card').forEach(card=>addIcon(card,iconForText(card.textContent),'course-icon'));
+$('.card').forEach(card=>addIcon(card,iconForText((card.textContent||'')+' '+(card.getAttribute('href')||'')),'card-icon'));
+$('.journal-open').forEach(card=>addIcon(card,iconForText(card.textContent),'card-icon'));
+$('.project-detail').forEach(btn=>{if(!btn.querySelector('.ui-icon'))btn.insertAdjacentHTML('beforeend',ico('arrow'))});
+$('.text-link,.course-open,.project-arrow,.journal-read').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('beforeend',ico('arrow'))});
+$('a[href^="https://github.com"]').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('afterbegin',ico('github'))});
+$('a[href^="https://linkedin.com"]').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('afterbegin',ico('network'))});
+$('a[href^="mailto:"]').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('afterbegin',ico('mail'))});
+$('#download-cv')?.insertAdjacentHTML('afterbegin',ico('download'));
+$('#print-cv')?.insertAdjacentHTML('afterbegin',ico('printer'));
 
 /* Site-wide engineering command dock: launch the same interactive model from every page. */
 const dock=document.createElement('button');
