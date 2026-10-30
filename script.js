@@ -120,7 +120,7 @@ function addIcon(el,name,cls='card-icon'){
  if(!el||el.querySelector(':scope > .'+cls))return;
  const holder=document.createElement('span');holder.className=cls;holder.innerHTML=ico(name);holder.setAttribute('aria-hidden','true');el.prepend(holder);
 }
-$('.course-card').forEach(card=>addIcon(card,iconForText(card.textContent),'course-icon'));
+$('.course-card').forEach(card=>addIcon(card.querySelector('.course-card-button')||card,iconForText(card.textContent),'course-icon'));
 $('.card').forEach(card=>addIcon(card,iconForText((card.textContent||'')+' '+(card.getAttribute('href')||'')),'card-icon'));
 $('.journal-open').forEach(card=>addIcon(card,iconForText(card.textContent),'card-icon'));
 $('.project-detail').forEach(btn=>{if(!btn.querySelector('.ui-icon'))btn.insertAdjacentHTML('beforeend',ico('arrow'))});
