@@ -62,10 +62,10 @@ function DetailPage({ page }: { page: Exclude<Page, 'home'> }) {
   const [expandedCourse, setExpandedCourse] = useState<string | null>(null)
   const courses = [
     { code: '01', name: 'AP & EM', category: 'SCIENCE / ENGINEERING', icon: <Compass size={22} />, description: 'Course workspace for your AP & EM lectures, worked problems, and revision material.' },
-    { code: '02', name: 'Eng Mat', category: 'ENGINEERING', icon: <Layers3 size={22} />, description: 'Keep lecture summaries, key material properties, class examples, and revision notes together.' },
+    { code: '02', name: 'Engineering Materials', category: 'ENGINEERING', icon: <Layers3 size={22} />, description: 'Keep lecture summaries, key material properties, class examples, and revision notes together.' },
     { code: '03', name: 'IslSt', category: 'GENERAL EDUCATION', icon: <BookOpen size={22} />, description: 'Organize lecture notes, key topics, readings, and exam preparation.' },
     { code: '04', name: 'Func Eng', category: 'LANGUAGE / COMMUNICATION', icon: <NotebookPen size={22} />, description: 'Store grammar notes, writing tasks, vocabulary, presentations, and practice work.' },
-    { code: '05', name: 'Q Res', category: 'QUANTITATIVE SKILLS', icon: <Ruler size={22} />, description: 'Collect reasoning methods, solved questions, practice sets, and revision points.' },
+    { code: '05', name: 'Quantitative Reasoning', category: 'QUANTITATIVE SKILLS', icon: <Ruler size={22} />, description: 'Collect reasoning methods, solved questions, practice sets, and revision points.' },
     { code: '06', name: 'Eng Drawing', category: 'TECHNICAL DRAWING', icon: <FileText size={22} />, description: 'Organize drawing sheets, projection methods, dimensioning rules, and practical exercises.' },
     { code: '07', name: 'Foundation Mathematics', category: 'MATHEMATICS', icon: <Ruler size={22} />, description: 'Keep foundational concepts, worked examples, formulas, and practice problems in one place.' }
   ]
