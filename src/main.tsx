@@ -1,5 +1,1 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './styles.css'
-ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>)
+import React from 'react'\nimport ReactDOM from 'react-dom/client'\nimport AdvancedApp from './AdvancedApp'\nimport './styles.css'\nReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><AdvancedApp /></React.StrictMode>)\n
