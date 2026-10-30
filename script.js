@@ -60,4 +60,24 @@ const buttons=opts.buttons||[];buttons.forEach(b=>b.addEventListener('click',()=
 createBridge($('#hero-bridge'),{buttons:$$('[data-hero-mode]'),reset:$('#hero-reset'),angle:v=>{if($('#hero-angle'))$('#hero-angle').textContent=v}});
 createBridge($('#lab-canvas'),{buttons:$$('[data-lab-mode]'),reset:$('#lab-reset'),load:$('#lab-load'),span:$('#lab-span'),loadValue:$('#lab-load-value'),spanValue:$('#lab-span-value'),modeLabel:$('#lab-mode-label'),angle:v=>{if($('#lab-angle'))$('#lab-angle').textContent=v},update:s=>{if($('#lab-load-readout'))$('#lab-load-readout').textContent=s.load+'%';if($('#lab-span-readout'))$('#lab-span-readout').textContent=s.span.toFixed(2)+'×';if($('#lab-view-readout'))$('#lab-view-readout').textContent=s.mode==='render'?'3D':s.mode==='blueprint'?'2D':'FORM'}});
 
+
+/* Site-wide engineering command dock: launch the same interactive model from every page. */
+const dock=document.createElement('button');
+dock.className='engineering-dock';
+dock.type='button';
+dock.innerHTML='<span class="dock-mark">MK</span><span><b>ENGINEERING LAB</b><small>OPEN INTERACTIVE MODEL</small></span><span class="dock-arrow">↗</span>';
+dock.setAttribute('aria-haspopup','dialog');
+document.body.append(dock);
+const dockModal=document.createElement('div');
+dockModal.className='dock-backdrop';
+dockModal.hidden=true;
+dockModal.innerHTML='<section class="dock-window" role="dialog" aria-modal="true" aria-labelledby="dock-title"><div class="dock-window-head"><div><p class="eyebrow">LIVE MODEL / ANY PAGE</p><h2 id="dock-title">Explore the <em>structure.</em></h2></div><button type="button" class="dock-close" aria-label="Close interactive model">×</button></div><p class="dock-description">Drag to rotate, scroll to zoom, and switch between render, blueprint, and wire views. This is a conceptual geometry model, not a structural solver.</p><div class="dock-viewport"><canvas id="dock-canvas" role="img" aria-label="Interactive cable-stayed bridge model"></canvas></div><div class="dock-toolbar"><button class="dock-mode active" data-dock-mode="render">RENDER</button><button class="dock-mode" data-dock-mode="blueprint">BLUEPRINT</button><button class="dock-mode" data-dock-mode="wire">WIRE / FORM</button><button class="dock-reset" id="dock-reset">RESET VIEW ↺</button></div><p class="small-note">Illustrative only. No verified dimensions, material properties, load calculations, or safety checks.</p></section>';
+document.body.append(dockModal);
+let dockModel=null;
+dock.addEventListener('click',()=>{dockModal.hidden=false;document.body.classList.add('dock-open');if(!dockModel)dockModel=createBridge($('#dock-canvas'),{buttons:$$('[data-dock-mode]'),reset:$('#dock-reset'),angle:v=>{const a=$('.dock-window-head .eyebrow');if(a)a.textContent='LIVE MODEL / '+v}});else dockModel.draw();$('.dock-close',dockModal).focus()});
+function closeDock(){dockModal.hidden=true;document.body.classList.remove('dock-open');dock.focus()}
+$('.dock-close',dockModal).addEventListener('click',closeDock);
+dockModal.addEventListener('click',e=>{if(e.target===dockModal)closeDock()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dockModal.hidden)closeDock()});
+
 })();
