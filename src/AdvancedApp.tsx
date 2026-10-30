@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import './advanced.css'
+import PortfolioExtras from './PortfolioExtras'
 import { ArrowDownRight, ArrowRight, BookOpen, Building2, Compass, FileText, Github, GraduationCap, MapPin, Menu, Moon, Sun, X, Layers3, NotebookPen, Ruler, Search, ExternalLink } from 'lucide-react'
 
 type Page = 'home' | 'about' | 'academics' | 'courses' | 'projects' | 'journal' | 'contact'
@@ -52,6 +53,7 @@ function HomePage() {
       <a className="portal-card" href="#/projects"><span className="portal-icon"><Layers3 size={21} /></span><span className="portal-number">03 / BUILD</span><h3>Projects & practice</h3><p>Document real student work, experiments, and digital tools.</p><span className="portal-link">Browse work <ArrowRight size={15} /></span></a>
       <a className="portal-card" href="#/journal"><span className="portal-icon"><NotebookPen size={21} /></span><span className="portal-number">04 / REFLECT</span><h3>Learning journal</h3><p>Capture concepts, questions, and lessons worth revisiting.</p><span className="portal-link">Read journal <ArrowRight size={15} /></span></a>
     </div></section>
+    <PortfolioExtras />
   </>
 }
 function DetailPage({ page }: { page: Exclude<Page, 'home'> }) {
