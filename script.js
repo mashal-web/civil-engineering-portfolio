@@ -2,10 +2,29 @@
 'use strict';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const page=document.body.dataset.page||'index';
+const iconPaths={
+home:'<path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/>',
+graduation:'<path d="m2 10 10-5 10 5-10 5-10-5Z"/><path d="M6 12v5c4 3 8 3 12 0v-5"/><path d="M22 10v6"/>',
+book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>',
+layers:'<path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/>',
+notebook:'<path d="M4 4h16v16H4z"/><path d="M8 2v4M16 2v4M8 10h8M8 14h5"/>',
+mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>',
+moon:'<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>',
+menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+close:'<path d="m18 6-12 12M6 6l12 12"/>',
+arrow:'<path d="M7 17 17 7M7 7h10v10"/>',
+bridge:'<path d="M3 19h18M5 19V8m14 11V8M5 8l7-4 7 4M5 11h14"/><path d="m7 11 2 8m8-8-2 8m-3-8v8"/>',
+compass:'<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.8 6.4-6.4 2.8 2.8-6.4 6.4-2.8Z"/>',
+github:'<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
+};
+function ico(name,cls='ui-icon'){return '<svg class="'+cls+'" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(iconPaths[name]||iconPaths.compass)+'</svg>';}
+
 const get=k=>{try{return localStorage.getItem(k)}catch(e){return null}},set=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
-const nav=[['index.html','Home','index'],['about.html','About','about'],['academics.html','Academics','academics'],['courses.html','Courses','courses'],['projects.html','Projects','projects'],['journal.html','Journal','journal'],['contact.html','Contact','contact']];
+const nav=[['index.html','Home','index','home'],['about.html','About','about','user'],['academics.html','Academics','academics','graduation'],['courses.html','Courses','courses','book'],['projects.html','Projects','projects','layers'],['journal.html','Journal','journal','notebook'],['contact.html','Contact','contact','mail']];
 const courses=[['01','AP & EM','SCIENCE / ENGINEERING','Lectures, worked problems, and revision material.','ap-em'],['02','Engineering Materials','ENGINEERING','Material properties, lecture summaries, class examples, and revision notes.','engineering-materials'],['03','IslSt','GENERAL EDUCATION','Lecture notes, key topics, readings, and exam preparation.','islst'],['04','Func Eng','LANGUAGE / COMMUNICATION','Grammar notes, writing tasks, vocabulary, and presentations.','func-eng'],['05','Quantitative Reasoning','QUANTITATIVE SKILLS','Reasoning methods, solved questions, practice sets, and revision.','quantitative-reasoning'],['06','Eng Drawing','TECHNICAL DRAWING','Drawing sheets, projections, dimensioning rules, and exercises.','eng-drawing'],['07','Foundation Mathematics','MATHEMATICS','Foundational concepts, worked examples, formulas, and practice.','foundation-mathematics']];
-const head='<header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">MK</span><span class="brand-name">MASHAL KHAN<span>.</span></span></a><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button><nav class="nav-links">'+nav.map(n=>'<a href="'+n[0]+'" '+(page===n[2]?'class="active" aria-current="page"':'')+'>'+n[1]+'</a>').join('')+'</nav><div class="top-actions"><span class="availability">● STUDENT / LEARNING</span><button class="theme-toggle" aria-label="Switch theme">☼</button></div></header>';
+const head='<header class="topbar"><a class="brand" href="index.html"><span class="brand-mark">MK</span><span class="brand-name">MASHAL KHAN<span>.</span></span></a><button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">'+ico('menu')+'</button><nav class="nav-links">'+nav.map(n=>'<a href="'+n[0]+'" '+(page===n[2]?'class="active" aria-current="page"':'')+'>'+ico(n[3],'nav-icon')+'<span>'+n[1]+'</span></a>').join('')+'</nav><div class="top-actions"><span class="availability">● STUDENT / LEARNING</span><button class="theme-toggle" aria-label="Switch theme">'+ico('sun')+'</button></div></header>';
 const foot='<footer class="footer wrap"><a class="brand" href="index.html"><span class="brand-mark">MK</span><span class="brand-name">MASHAL KHAN<span>.</span></span></a><p>Documenting the learning, not pretending to have finished it.</p><span>© <b class="year"></b> MASHAL KHAN</span></footer>';
 const courseCards=courses.map(c=>'<article class="course-card" id="'+c[4]+'" data-search="'+(c[1]+' '+c[2]+' '+c[3]).toLowerCase()+'"><button class="course-card-button" aria-expanded="false"><span class="course-card-top"><i>'+c[0]+'</i><small>COURSE / '+c[0]+'</small></span><span class="course-category">'+c[2]+'</span><strong class="course-name">'+c[1]+'</strong><span class="course-description">'+c[3]+'</span><span class="course-open">Open workspace →</span></button><div class="course-workspace" hidden><p class="panel-kicker">STUDY CHECKLIST</p><label><input type="checkbox" data-course-task="'+c[4]+'-notes"> Organize lecture notes</label><label><input type="checkbox" data-course-task="'+c[4]+'-practice"> Complete practice questions</label><label><input type="checkbox" data-course-task="'+c[4]+'-revision"> Prepare a revision sheet</label><p class="small-note">Add actual course notes and lecturer-provided resources here; no official syllabus has been invented.</p></div></article>').join('');
 const roadmap=[['math','Mathematics & physics','Units, vectors, equations, mechanics, and problem-solving.'],['drawing','Technical drawing','Orthographic views, dimensions, sections, and neat sheets.'],['materials','Materials & structures','Material properties, load paths, supports, and structural forms.'],['digital','Digital tools','Build practical confidence with CAD and simple programming.'],['portfolio','Document real work','Publish examples with process, sources, and honest limitations.']];
@@ -23,8 +42,8 @@ $('#site').innerHTML='<div class="site-shell">'+head+'<main>'+data[page]+'</main
 document.title=({index:'Mashal Khan — Civil Engineering Student',about:'About — Mashal Khan',academics:'Academics — Mashal Khan',courses:'Courses — Mashal Khan',projects:'Projects — Mashal Khan',journal:'Journal — Mashal Khan',contact:'Contact — Mashal Khan'})[page]||'Mashal Khan';
 document.documentElement.dataset.theme=get('mk-theme')==='light'?'light':'dark';
 $$('.year').forEach(x=>x.textContent=new Date().getFullYear());
-$$('.theme-toggle').forEach(b=>{const draw=()=>{b.textContent=document.documentElement.dataset.theme==='dark'?'☼':'☾'};draw();b.addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';set('mk-theme',document.documentElement.dataset.theme);$$('.theme-toggle').forEach(draw)})});
-const menu=$('.menu-toggle'),navEl=$('.nav-links');if(menu)menu.addEventListener('click',()=>{const open=navEl.classList.toggle('is-open');menu.textContent=open?'×':'☰';menu.setAttribute('aria-expanded',String(open))});
+$$('.theme-toggle').forEach(b=>{const draw=()=>{b.innerHTML=ico(document.documentElement.dataset.theme==='dark'?'sun':'moon');b.setAttribute('aria-label',document.documentElement.dataset.theme==='dark'?'Switch to light theme':'Switch to dark theme')};draw();b.addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';set('mk-theme',document.documentElement.dataset.theme);$$('.theme-toggle').forEach(draw)})});
+const menu=$('.menu-toggle'),navEl=$('.nav-links');if(menu)menu.addEventListener('click',()=>{const open=navEl.classList.toggle('is-open');menu.innerHTML=ico(open?'close':'menu');menu.setAttribute('aria-expanded',String(open))});
 function checks(sel,key,callback){const boxes=$$(sel);boxes.forEach(b=>{const id=b.dataset.task||b.dataset.roadmap||b.dataset.courseTask;b.checked=get(key+':'+id)==='1';b.addEventListener('change',()=>{set(key+':'+id,b.checked?'1':'0');if(callback)callback()})});return boxes}
 const tasks=checks('[data-task]','mk-task',updateTasks);function updateTasks(){const n=tasks.filter(b=>b.checked).length,p=Math.round(n/Math.max(1,tasks.length)*100),f=$('#task-progress'),l=$('#task-label');if(f)f.style.width=p+'%';if(l)l.textContent=p+'% complete'}updateTasks();$('#reset-tasks')?.addEventListener('click',()=>{tasks.forEach(b=>{b.checked=false;set('mk-task:'+b.dataset.task,'0')});updateTasks()});
 const road=checks('[data-roadmap]','mk-roadmap',updateRoad);function updateRoad(){const n=road.filter(b=>b.checked).length,f=$('#road-progress'),l=$('#road-label');if(f)f.style.width=(n/Math.max(1,road.length)*100)+'%';if(l)l.textContent=n+' of '+road.length+' milestones checked'}updateRoad();checks('[data-course-task]','mk-course');
@@ -65,7 +84,7 @@ createBridge($('#lab-canvas'),{buttons:$$('[data-lab-mode]'),reset:$('#lab-reset
 const dock=document.createElement('button');
 dock.className='engineering-dock';
 dock.type='button';
-dock.innerHTML='<span class="dock-mark">MK</span><span><b>ENGINEERING LAB</b><small>OPEN INTERACTIVE MODEL</small></span><span class="dock-arrow">↗</span>';
+dock.innerHTML='<span class="dock-mark">'+ico('bridge')+'</span><span><b>ENGINEERING LAB</b><small>OPEN INTERACTIVE MODEL</small></span><span class="dock-arrow">'+ico('arrow')+'</span>';
 dock.setAttribute('aria-haspopup','dialog');
 document.body.append(dock);
 const dockModal=document.createElement('div');
@@ -76,7 +95,7 @@ document.body.append(dockModal);
 let dockModel=null;
 dock.addEventListener('click',()=>{dockModal.hidden=false;document.body.classList.add('dock-open');if(!dockModel)dockModel=createBridge($('#dock-canvas'),{buttons:$$('[data-dock-mode]'),reset:$('#dock-reset'),angle:v=>{const a=$('.dock-window-head .eyebrow');if(a)a.textContent='LIVE MODEL / '+v}});else dockModel.draw();$('.dock-close',dockModal).focus()});
 function closeDock(){dockModal.hidden=true;document.body.classList.remove('dock-open');dock.focus()}
-$('.dock-close',dockModal).addEventListener('click',closeDock);
+$('.dock-close',dockModal).innerHTML=ico('close');$('.dock-close',dockModal).addEventListener('click',closeDock);
 dockModal.addEventListener('click',e=>{if(e.target===dockModal)closeDock()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dockModal.hidden)closeDock()});
 
