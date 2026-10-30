@@ -37,3 +37,7 @@
 @media(max-width:900px){.lab-layout{grid-template-columns:1fr}.hero-art{min-height:0}}
 @media(max-width:700px){#hero-bridge{height:250px}.hero-art{min-height:0}.lab-tools,.model-tools{padding:10px}.lab-controls{padding:20px}#lab-canvas{height:270px}.readouts{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){#hero-bridge,#lab-canvas{touch-action:pan-y}}
+
+/* Keep the interactive model's controls inside its responsive frame */
+.hero-art{height:auto}
+@media(max-width:700px){.hero-art{height:auto}}
