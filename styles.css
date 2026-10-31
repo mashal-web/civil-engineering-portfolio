@@ -55,3 +55,18 @@ input,textarea,select{background:#090909;border-color:#303030;box-shadow:inset 4
 .rule{border-top-color:#292929}
 .site-footer{background:#050505;border-top-color:#202020}
 @media(max-width:700px){.journal-row{grid-template-columns:1fr;gap:14px}.journal-date{width:max-content}.project-row{gap:18px}.project-figure{padding:12px}}
+
+/* Phase 3: technical discipline strip and finishing details. */
+.discipline-strip{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;margin:0 0 30px;padding:17px 12px;border-top:1px solid #222;border-bottom:1px solid #222;color:#929292;font-size:9px;font-weight:700;letter-spacing:.16em}
+.discipline-strip span{padding:5px clamp(12px,3vw,32px);text-align:center}
+.discipline-strip span+span{border-left:1px solid #343434}
+.section h2{max-width:760px}
+.card{position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,#77777755,transparent);pointer-events:none}
+.card .index{letter-spacing:.15em}
+.card h3{font-size:20px}
+.card p{font-size:14px;line-height:1.8}
+.card .link-label{color:#ededed}
+.hero-home{position:relative;isolation:isolate;overflow:hidden}
+.hero-home:after{content:"";position:absolute;z-index:-1;left:10%;right:10%;bottom:0;height:1px;background:linear-gradient(90deg,transparent,#656565,transparent)}
+@media(max-width:600px){.discipline-strip{gap:4px 0;padding:12px 0;font-size:8px;letter-spacing:.12em}.discipline-strip span{padding:6px 10px}.discipline-strip span+span{border-left:0}.discipline-strip span:nth-child(even){border-left:1px solid #343434}}
