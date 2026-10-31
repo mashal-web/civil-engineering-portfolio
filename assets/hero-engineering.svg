@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941" fill="none">
 <defs><linearGradient id="ink" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#aaa"/><stop offset="1" stop-color="#555"/></linearGradient><pattern id="grid" width="96" height="96" patternUnits="userSpaceOnUse"><path d="M96 0H0V96" stroke="#777" stroke-opacity=".13" stroke-width="1"/></pattern></defs>
 <rect width="1672" height="941" fill="#080808"/><rect width="1672" height="941" fill="url(#grid)"/>
+<g fill="#777" fill-opacity=".035" font-family="Georgia,serif" font-size="520" text-anchor="middle"><text x="835" y="570" letter-spacing="-45">MK</text></g>
 <g stroke="#777" stroke-opacity=".24" stroke-width="1"><circle cx="1360" cy="170" r="280"/><circle cx="1360" cy="170" r="220"/><path d="M1080 0v470M1360 0v500M1640 0v500M0 170h1672M0 740h1672"/></g>
 <g stroke="url(#ink)" stroke-width="2" opacity=".78">
 <!-- cable stayed bridge -->
