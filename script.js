@@ -158,7 +158,7 @@ $('#print-cv')?.addEventListener('click',()=>window.print());
 const labMarkup='<section class="section wrap immersive-lab" id="playground"><div class="lab-heading"><p class="eyebrow">INTERACTIVE MODEL / 001</p><h2>Change the variables.<br><em>Study the form.</em></h2><p class="muted">A conceptual bridge visualization for exploration. It is not a validated structural solver and does not calculate real stress, capacity, or safety.</p></div><div class="lab-layout"><div class="lab-viewport"><div class="lab-bar"><span><i class="live-dot"></i>STRUCTURAL MODEL</span><span id="lab-mode-label">RENDER / ACTIVE</span></div><canvas id="lab-canvas" role="img" aria-label="Interactive conceptual bridge model; drag to rotate"></canvas><div class="lab-bar"><span>DRAG TO ROTATE · WHEEL TO ZOOM</span><span id="lab-angle">ROT 000°</span></div><div class="lab-tools"><button class="lab-mode active" data-lab-mode="render">RENDER</button><button class="lab-mode" data-lab-mode="blueprint">BLUEPRINT</button><button class="lab-mode" data-lab-mode="wire">WIRE / FORM</button><button class="lab-mode" id="lab-reset">RESET ↺</button></div></div><aside class="lab-controls"><p class="eyebrow">MODEL CONTROLS</p><label class="range-label" for="lab-load">Illustrative deck load <output id="lab-load-value">50%</output></label><input id="lab-load" type="range" min="0" max="100" value="50"><label class="range-label" for="lab-span">Visual span scale <output id="lab-span-value">100%</output></label><input id="lab-span" type="range" min="65" max="125" value="100"><div class="readouts"><div><small>LOAD INPUT</small><b id="lab-load-readout">50%</b></div><div><small>SPAN SCALE</small><b id="lab-span-readout">1.00×</b></div><div><small>VIEW MODE</small><b id="lab-view-readout">3D</b></div></div><p class="small-note">The sliders exaggerate the drawing to help visual learning. They are not physical calculations. Never use this demo to design or assess a real structure.</p></aside></div></section>';
 if(page==='index'){const art=$('.hero-art');if(art)art.innerHTML='<div class="model-bar"><span><i class="live-dot"></i>FIG. 001 / CABLE-STAYED BRIDGE</span><span>LIVE MODEL</span></div><canvas id="hero-bridge" role="img" aria-label="Interactive cable-stayed bridge model; drag to rotate"></canvas><div class="model-bar"><span>DRAG TO ROTATE · WHEEL TO ZOOM</span><span id="hero-angle">ROT 000°</span></div><div class="model-tools"><button class="model-mode active" data-hero-mode="render">RENDER</button><button class="model-mode" data-hero-mode="blueprint">BLUEPRINT</button><button class="model-mode" data-hero-mode="wire">WIRE / FORM</button><button class="model-mode" id="hero-reset">RESET ↺</button></div>'}
 if(page==='projects'){const main=$('main');if(main&&!$('#playground')){const section=document.createElement('div');section.innerHTML=labMarkup;const existing=main.querySelector('.section.wrap');if(existing)existing.after(section.firstElementChild);else main.append(section.firstElementChild)}}
-function createBridge(canvas,opts){if(!canvas)return null;const ctx=canvas.getContext('2d');if(!ctx)return null;let yaw=-.48,pitch=.18,zoom=1,dragging=false,lastX=0,lastY=0,mode='render',load=50,span=1,raf=0;const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;const accent=()=>getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#8be4ed';const pageBg=()=>getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#090e13';
+function createBridge(canvas,opts){if(!canvas)return null;const ctx=canvas.getContext('2d');if(!ctx)return null;let yaw=-.48,pitch=.18,zoom=1,dragging=false,lastX=0,lastY=0,mode='render',load=50,span=1,raf=0,visible=true,pageVisible=!document.hidden,visibilityObserver=null;const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;const canAnimate=()=>!reduced&&visible&&pageVisible;const accent=()=>getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#8be4ed';const pageBg=()=>getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()||'#090e13';
 function project(p,w,h){const cy=Math.cos(yaw),sy=Math.sin(yaw),cx=Math.cos(pitch),sx=Math.sin(pitch),x=p[0]*span,z=p[2],y=p[1],xx=x*cy-z*sy,zz=x*sy+z*cy,yy=y*cx-zz*sx,depth=y*sx+zz*cx,k=Math.min(w,h)*.46*zoom/(3.6+depth*.17);return [w/2+xx*k,h*.54-yy*k,depth]}
 function line(a,b,wid,alpha,dash){const A=project(a,canvas.width,canvas.height),B=project(b,canvas.width,canvas.height);ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.strokeStyle=accent();ctx.lineWidth=wid||1;ctx.globalAlpha=alpha===undefined ? .8 : alpha;ctx.setLineDash(dash||[]);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1}
 function draw(){const r=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,1.6),w=Math.max(1,Math.round(r.width*dpr)),h=Math.max(1,Math.round(r.height*dpr));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}ctx.clearRect(0,0,w,h);ctx.fillStyle=pageBg();ctx.fillRect(0,0,w,h);const c=accent();ctx.strokeStyle=c;ctx.lineWidth=1;ctx.globalAlpha=.07;for(let x=0;x<w;x+=w/22){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}for(let y=0;y<h;y+=h/15){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}ctx.globalAlpha=1;const half=1.45,dy=-.34,deflection=load/100*.15;
@@ -169,9 +169,11 @@ for(let x=-1.4;x<=1.41;x+=.14)line([x,dy-deflection+Math.abs(x)*.03,-.2],[x,dy-d
 if(mode==='blueprint'){ctx.strokeStyle=c;ctx.lineWidth=1;ctx.globalAlpha=.65;ctx.strokeRect(12,12,w-24,h-24);ctx.globalAlpha=1;ctx.font=Math.max(8,w*.017)+'px monospace';ctx.fillStyle=c;ctx.fillText('FIG 01 / CABLE-STAYED BRIDGE · NOT TO SCALE',20,29);ctx.fillText('DECK / TOWER / STAYS',20,h-15)}else if(mode==='wire'){ctx.font=Math.max(8,w*.017)+'px monospace';ctx.fillStyle=c;ctx.fillText('GEOMETRY VIEW / NO MATERIAL DATA',14,22)}
 if(load>0){const p=project([0,dy-deflection-.15,0],w,h);ctx.beginPath();ctx.arc(p[0],p[1],Math.max(3,w*.008),0,Math.PI*2);ctx.fillStyle='#e4bb82';ctx.fill()}
 if(opts.angle)opts.angle('ROT '+String(Math.round(((yaw*180/Math.PI)%360+360)%360).toString().padStart(3,'0'))+'°');if(opts.update)opts.update({load,span,mode})}
-function frame(){if(!canvas.isConnected){cancelAnimationFrame(raf);return}if(!dragging&&!reduced)yaw+=.0014;draw();if(!reduced)raf=requestAnimationFrame(frame)}
-canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture&&canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!dragging)return;yaw+=(e.clientX-lastX)*.008;pitch=Math.max(-.65,Math.min(.65,pitch+(e.clientY-lastY)*.006));lastX=e.clientX;lastY=e.clientY;draw()});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>canvas.addEventListener(ev,()=>dragging=false));canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.65,Math.min(1.7,zoom-e.deltaY*.001));draw()},{passive:false});window.addEventListener('resize',draw);
-const buttons=opts.buttons||[];buttons.forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.heroMode||b.dataset.labMode||b.dataset.dockMode;buttons.forEach(x=>x.classList.toggle('active',x===b));if(opts.modeLabel)opts.modeLabel.textContent=mode.toUpperCase()+' / ACTIVE';draw()}));if(opts.reset)opts.reset.addEventListener('click',()=>{yaw=-.48;pitch=.18;zoom=1;draw()});if(opts.load)opts.load.addEventListener('input',()=>{load=Number(opts.load.value);if(opts.loadValue)opts.loadValue.textContent=load+'%';draw()});if(opts.span)opts.span.addEventListener('input',()=>{span=Number(opts.span.value)/100;if(opts.spanValue)opts.spanValue.textContent=opts.span.value+'%';draw()});if(!reduced)raf=requestAnimationFrame(frame);else draw();return {draw,stop:()=>cancelAnimationFrame(raf)}}
+function frame(){raf=0;if(!canvas.isConnected){visibilityObserver?.disconnect();document.removeEventListener('visibilitychange',handleVisibility);window.removeEventListener('resize',handleResize);return}if(!dragging&&canAnimate())yaw+=.0014;draw();if(canAnimate())raf=requestAnimationFrame(frame)}
+function handleResize(){draw()}
+function handleVisibility(){pageVisible=!document.hidden;if(pageVisible&&visible){draw();if(canAnimate()&&!raf)raf=requestAnimationFrame(frame)}else if(raf){cancelAnimationFrame(raf);raf=0}}
+canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture&&canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!dragging)return;yaw+=(e.clientX-lastX)*.008;pitch=Math.max(-.65,Math.min(.65,pitch+(e.clientY-lastY)*.006));lastX=e.clientX;lastY=e.clientY;draw()});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>canvas.addEventListener(ev,()=>dragging=false));canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.65,Math.min(1.7,zoom-e.deltaY*.001));draw()},{passive:false});window.addEventListener('resize',handleResize,{passive:true});document.addEventListener('visibilitychange',handleVisibility);if('IntersectionObserver' in window){visibilityObserver=new IntersectionObserver(entries=>{visible=!!entries[0]?.isIntersecting;if(visible&&pageVisible){draw();if(canAnimate()&&!raf)raf=requestAnimationFrame(frame)}else if(raf){cancelAnimationFrame(raf);raf=0}});visibilityObserver.observe(canvas)}
+const buttons=opts.buttons||[];buttons.forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.heroMode||b.dataset.labMode||b.dataset.dockMode;buttons.forEach(x=>x.classList.toggle('active',x===b));if(opts.modeLabel)opts.modeLabel.textContent=mode.toUpperCase()+' / ACTIVE';draw()}));if(opts.reset)opts.reset.addEventListener('click',()=>{yaw=-.48;pitch=.18;zoom=1;draw()});if(opts.load)opts.load.addEventListener('input',()=>{load=Number(opts.load.value);if(opts.loadValue)opts.loadValue.textContent=load+'%';draw()});if(opts.span)opts.span.addEventListener('input',()=>{span=Number(opts.span.value)/100;if(opts.spanValue)opts.spanValue.textContent=opts.span.value+'%';draw()});if(canAnimate()&&!raf)raf=requestAnimationFrame(frame);else draw();return {draw,stop:()=>{cancelAnimationFrame(raf);visibilityObserver?.disconnect();document.removeEventListener('visibilitychange',handleVisibility);window.removeEventListener('resize',handleResize)}}}
 createBridge($('#hero-bridge'),{buttons:$$('[data-hero-mode]'),reset:$('#hero-reset'),angle:v=>{if($('#hero-angle'))$('#hero-angle').textContent=v}});
 createBridge($('#lab-canvas'),{buttons:$$('[data-lab-mode]'),reset:$('#lab-reset'),load:$('#lab-load'),span:$('#lab-span'),loadValue:$('#lab-load-value'),spanValue:$('#lab-span-value'),modeLabel:$('#lab-mode-label'),angle:v=>{if($('#lab-angle'))$('#lab-angle').textContent=v},update:s=>{if($('#lab-load-readout'))$('#lab-load-readout').textContent=s.load+'%';if($('#lab-span-readout'))$('#lab-span-readout').textContent=s.span.toFixed(2)+'×';if($('#lab-view-readout'))$('#lab-view-readout').textContent=s.mode==='render'?'3D':s.mode==='blueprint'?'2D':'FORM'}});
 
@@ -228,7 +230,7 @@ dockModal.hidden=true;
 dockModal.innerHTML='<section class="dock-window" role="dialog" aria-modal="true" aria-labelledby="dock-title"><div class="dock-window-head"><div><p class="eyebrow">LIVE MODEL / ANY PAGE</p><h2 id="dock-title">Explore the <em>structure.</em></h2></div><button type="button" class="dock-close" aria-label="Close interactive model">×</button></div><p class="dock-description">Drag to rotate, scroll to zoom, and switch between render, blueprint, and wire views. This is a conceptual geometry model, not a structural solver.</p><div class="dock-viewport"><canvas id="dock-canvas" role="img" aria-label="Interactive cable-stayed bridge model"></canvas></div><div class="dock-toolbar"><button class="dock-mode active" data-dock-mode="render">RENDER</button><button class="dock-mode" data-dock-mode="blueprint">BLUEPRINT</button><button class="dock-mode" data-dock-mode="wire">WIRE / FORM</button><button class="dock-reset" id="dock-reset">RESET VIEW ↺</button></div><p class="small-note">Illustrative only. No verified dimensions, material properties, load calculations, or safety checks.</p></section>';
 document.body.append(dockModal);
 let dockModel=null;
-dock.addEventListener('click',()=>{dockModal.hidden=false;document.body.classList.add('dock-open');if(!dockModel)dockModel=createBridge($('#dock-canvas'),{buttons:$$('[data-dock-mode]'),reset:$('#dock-reset'),angle:v=>{const a=$('.dock-window-head .eyebrow');if(a)a.textContent='LIVE MODEL / '+v}});else dockModel.draw();$('.dock-close',dockModal).focus()});
+dock.addEventListener('click',()=>{dockModal.hidden=false;document.body.classList.add('dock-open');if(!dockModel)dockModel=createBridge($('#dock-canvas'),{buttons:$$('[data-dock-mode]'),reset:$('#dock-reset'),angle:v=>{const a=$('.dock-window-head .eyebrow');if(a)a.textContent='LIVE MODEL / '+v}});else dockModel.draw();requestThreeEngine();$('.dock-close',dockModal).focus()});
 function closeDock(){dockModal.hidden=true;document.body.classList.remove('dock-open');dock.focus()}
 $('.dock-close',dockModal).innerHTML=ico('close');$('.dock-close',dockModal).addEventListener('click',closeDock);
 dockModal.addEventListener('click',e=>{if(e.target===dockModal)closeDock()});
@@ -360,7 +362,7 @@ function bootThreeWorld(){
   floor.rotation.x=-Math.PI/2;floor.position.y=-.055;scene.add(floor);
   const view={yaw:-.22,pitch:.06,zoom:1,drag:false,x:0,y:0,mode:'render',load:opts.load?Number(opts.load.value):50,span:opts.span?Number(opts.span.value)/100:1};
   const raycaster=new T.Raycaster(),pointer=new T.Vector2();
-  let selected=null,raf=0,disposed=false,resizeObserver=null;
+  let selected=null,raf=0,disposed=false,resizeObserver=null,visibilityObserver=null,visible=true,pageVisible=!document.hidden;
   function setMode(mode){
    view.mode=mode;
    materials.forEach((m,i)=>{
@@ -387,8 +389,9 @@ function bootThreeWorld(){
    if(reduced)render();
   }
   function render(){
-   if(disposed||!canvas.isConnected){disposed=true;cancelAnimationFrame(raf);renderer.dispose();return}
-   if(!view.drag&&!reduced)model.rotation.y+=.001;
+   if(raf){cancelAnimationFrame(raf);raf=0}
+   if(disposed||!canvas.isConnected){disposed=true;resizeObserver?.disconnect();visibilityObserver?.disconnect();document.removeEventListener('visibilitychange',handleVisibility);window.removeEventListener('resize',resize);scene.traverse(o=>{o.geometry?.dispose();if(o.material){const list=Array.isArray(o.material)?o.material:[o.material];list.forEach(m=>m.dispose())}});renderer.dispose();renderer.forceContextLoss?.();return}
+   if(!view.drag&&!reduced&&visible&&pageVisible)model.rotation.y+=.001;
    model.rotation.y+=0;
    model.rotation.x=view.pitch;
    model.rotation.y+=view.yaw*.0;
@@ -399,8 +402,9 @@ function bootThreeWorld(){
    else grid.material.opacity=.3;
    renderer.render(scene,camera);
    if(opts.angle)opts.angle('ROT '+String(Math.round(((view.yaw*180/Math.PI)%360+360)%360)).padStart(3,'0')+'°');
-   if(!reduced)raf=requestAnimationFrame(render);
+   if(!reduced&&visible&&pageVisible)raf=requestAnimationFrame(render);
   }
+  function handleVisibility(){pageVisible=!document.hidden;if(pageVisible&&visible)render();else if(raf){cancelAnimationFrame(raf);raf=0}}
   function pointerDown(e){view.drag=true;view.x=e.clientX;view.y=e.clientY;canvas.setPointerCapture?.(e.pointerId)}
   function pointerMove(e){
    if(view.drag){view.yaw+=(e.clientX-view.x)*.008;view.pitch=Math.max(-.55,Math.min(.55,view.pitch+(e.clientY-view.y)*.006));view.x=e.clientX;view.y=e.clientY;if(reduced)render();return}
@@ -427,9 +431,10 @@ function bootThreeWorld(){
   canvas.parentElement.replaceChild(replacement,canvas);
   canvas=replacement;
   resize();updateInputs();setMode('render');
-  window.addEventListener('resize',resize,{passive:true});
+  window.addEventListener('resize',resize,{passive:true});document.addEventListener('visibilitychange',handleVisibility);
   if('ResizeObserver' in window){resizeObserver=new ResizeObserver(resize);resizeObserver.observe(canvas.parentElement)}
-  if(!reduced)raf=requestAnimationFrame(render);else render();
+  if('IntersectionObserver' in window){visibilityObserver=new IntersectionObserver(entries=>{visible=!!entries[0]?.isIntersecting;if(visible&&pageVisible)render();else if(raf){cancelAnimationFrame(raf);raf=0}});visibilityObserver.observe(canvas)}
+  if(!reduced&&visible&&pageVisible)raf=requestAnimationFrame(render);else render();
   return {render,dispose(){disposed=true;cancelAnimationFrame(raf);resizeObserver?.disconnect();renderer.dispose()}};
  }
  function initWorld(){
@@ -461,10 +466,10 @@ function bootThreeWorld(){
   const grid=new T.GridHelper(36,60,0x1d8ea7,0x17404f);grid.position.y=-2.35;grid.material.transparent=true;grid.material.opacity=.13;group.add(grid);
   let raf=0,last=0,disposed=false;
   function resize(){const w=Math.max(1,host.clientWidth),h=Math.max(1,host.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
-  function draw(t){if(disposed||!canvas.isConnected){disposed=true;cancelAnimationFrame(raf);renderer.dispose();return}const time=t*.00012;if(!reduced){group.rotation.y=Math.sin(time)*.09;group.rotation.x=Math.sin(time*.7)*.025}renderer.render(scene,camera);if(!reduced)raf=requestAnimationFrame(draw)}
+  function draw(t){if(disposed||!canvas.isConnected){disposed=true;cancelAnimationFrame(raf);renderer.dispose();renderer.forceContextLoss?.();return}const time=t*.00012;if(!reduced){group.rotation.y=Math.sin(time)*.09;group.rotation.x=Math.sin(time*.7)*.025}renderer.render(scene,camera);if(!reduced&&!document.hidden&&host.getBoundingClientRect().bottom>0&&host.getBoundingClientRect().top<window.innerHeight)raf=requestAnimationFrame(draw)}
   window.addEventListener('resize',resize,{passive:true});resize();draw(0);
  }
- initWorld();
+ if(page!=='index'&&page!=='projects')return;initWorld();
  const selectLabel=canvas=>{const parent=canvas?.parentElement;if(!parent)return null;let label=parent.querySelector('.three-selection-readout');if(!label){label=document.createElement('div');label.className='three-selection-readout';label.textContent='SELECT A STRUCTURAL ELEMENT';parent.append(label)}return label};
  function upgradeBridgeCanvas(canvas){
   if(!canvas||canvas.classList.contains('three-bridge-canvas'))return;
@@ -490,6 +495,12 @@ dock.addEventListener('click',()=>{
 });
 if(!dockModal.hidden)upgradeBridgeCanvas($('#dock-canvas'));
 }
-loadThreeEngine();
+let threeLoadRequested=false;
+function requestThreeEngine(){if(threeLoadRequested)return;threeLoadRequested=true;loadThreeEngine()}
+const modelTargets=[$('#hero-bridge'),$('#lab-canvas')].filter(Boolean);
+if(modelTargets.length){
+ if('IntersectionObserver' in window){const modelLoader=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting)){modelLoader.disconnect();requestThreeEngine()}},{rootMargin:'140px 0px'});modelTargets.forEach(target=>modelLoader.observe(target))}
+ else requestAnimationFrame(requestThreeEngine);
+}
 
 })();
