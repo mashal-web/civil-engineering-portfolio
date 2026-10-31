@@ -690,3 +690,46 @@ input[aria-invalid="true"]{border-color:#d65b5b!important;box-shadow:0 0 0 2px #
 .skip-link:focus{transform:translateY(0);outline:3px solid var(--accent);outline-offset:3px}
 #main-content:focus{outline:none}
 @media(forced-colors:active){.skip-link{border:2px solid ButtonText}}
+
+
+/* Performance pass: keep the blueprint aesthetic without continuous mobile repaint work. */
+@media (max-width: 680px) {
+  body::before,
+  body::after {
+    animation: none !important;
+  }
+  body::after {
+    inset: 0;
+    transform: none;
+    mask-image: none;
+    opacity: .18;
+    background-size: 64px 64px;
+  }
+  .depth-scene::before {
+    animation: none !important;
+    filter: none;
+    opacity: .48;
+  }
+  .depth-scene::after {
+    animation: none !important;
+    opacity: .16;
+  }
+  .depth-object,
+  .depth-orbit,
+  .depth-grid,
+  .brand-mark::after {
+    animation: none !important;
+  }
+  .hero::before {
+    filter: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  .depth-scene::before,
+  .depth-scene::after,
+  .brand-mark::after {
+    animation: none !important;
+  }
+}
