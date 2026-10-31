@@ -100,7 +100,7 @@ assert.match(css, /\.course-progress-label\[data-status="completed"\]/, 'course 
 assert.match(script, /const modelTargets=\[\$\('#hero-bridge'\),\$\('#lab-canvas'\)\]\.filter\(Boolean\)/, 'Three.js load targets must be limited to pages with interactive models');
 assert.match(script, /new IntersectionObserver\(entries=>\{if\(entries\.some\(entry=>entry\.isIntersecting\)\)/, 'Three.js must wait until an interactive model approaches the viewport');
 assert.match(script, /function requestThreeEngine\(\)\{if\(threeLoadRequested\)return;threeLoadRequested=true;loadThreeEngine\(\)\}/, 'Three.js requests must be deduplicated');
-assert.doesNotMatch(script, /\\nloadThreeEngine\(\);\\s*\\n/, 'Three.js must not load unconditionally at startup');
+assert.doesNotMatch(script, /^\s*loadThreeEngine\(\);\s*$/m, 'Three.js must not load unconditionally at startup');
 assert.doesNotMatch(script, /function initWorld\(/, 'the site must not create a redundant always-on WebGL background context');
 assert.match(script, /visibilityObserver=new IntersectionObserver/, 'canvas renderers must pause when off-screen');
 assert.match(script, /document\.hidden/, 'animation loops must respect background tabs');
