@@ -87,3 +87,11 @@ assert.match(script, /searchReturnFocus&&searchReturnFocus\.isConnected/, 'closi
 assert.match(script, /e\.target\.closest\('\.topbar'\)/, 'mobile menu must close after outside interaction');
 assert.match(script, /e\.key==='Escape'&&navEl\.classList\.contains\('is-open'\)/, 'mobile menu must close with Escape');
 assert.match(css, /\.global-search-result\.is-active/, 'keyboard-selected search result must be visible');
+
+assert.match(script, /data-course-progress=/, 'course cards must show status from saved checklist activity');
+assert.match(script, /done===0\?'Not started':done===boxes\.length\?'Completed':'In progress'/, 'course status must reflect recorded activity');
+assert.match(script, /id="export-study-data"/, 'dashboard must offer study-data export');
+assert.match(script, /id="clear-study-data"/, 'dashboard must offer a control to clear saved study data');
+assert.match(script, /window\.confirm\('Clear saved course checklists/, 'clearing local progress must require confirmation');
+assert.match(script, /Inputs changed\. Calculate again to refresh the result\./, 'calculator must invalidate stale results after edits');
+assert.match(css, /\.course-progress-label\[data-status="completed"\]/, 'course status must be visible without color alone');
