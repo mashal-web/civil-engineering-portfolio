@@ -85,3 +85,12 @@ input,textarea,select{background:#090909;border-color:#303030;box-shadow:inset 4
 @media(max-width:420px){.course-feature{grid-template-columns:1fr}.course-feature-mark{display:none}.grade-row{grid-template-columns:82px minmax(0,1fr) 36px;font-size:12px}.schedule-item{padding:15px 0}.schedule-item .status{font-size:8px;padding:4px 7px}}
 
 .grade-track .grade-10{width:10%}.grade-track .grade-30{width:30%}.grade-track .grade-50{width:50%}
+
+
+/* Phase 4: current-study spotlight and final responsive refinements. */
+.current-study{display:grid;grid-template-columns:minmax(0,1fr) 170px;align-items:center;gap:28px;margin:0 0 26px;padding:clamp(24px,4vw,38px);border:1px solid #2b2b2b;border-radius:12px;background:radial-gradient(ellipse at 100% 0,#202020 0,transparent 48%),linear-gradient(145deg,#151515,#090909);box-shadow:8px 8px 18px #000,-4px -4px 13px #181818}
+.current-study-copy .eyebrow{margin-bottom:12px}.current-study-copy h2{margin-bottom:10px;font-size:clamp(25px,3.4vw,36px)}.current-study-copy>p:not(.eyebrow){max-width:660px;margin-bottom:16px;color:#bdbdbd;font-size:14px;line-height:1.8}.current-study .text-link{padding:9px 0;color:#f1f1f1;text-decoration-thickness:1px;text-underline-offset:5px}
+.current-study-side{display:flex;min-height:150px;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1px solid #303030;border-radius:10px;background:#0a0a0a;box-shadow:inset 5px 5px 10px #000,inset -5px -5px 10px #191919}
+.current-study-code{font-size:58px;font-weight:700;line-height:1;letter-spacing:-.1em}.current-study-label{color:#888;font-size:9px;letter-spacing:.2em}.current-study-line{width:55%;height:1px;margin-top:8px;background:#444}
+@media(max-width:600px){.current-study{grid-template-columns:minmax(0,1fr) 84px;gap:14px;padding:22px 18px}.current-study-side{min-height:105px}.current-study-code{font-size:37px}.current-study-label{font-size:7px;letter-spacing:.12em}.current-study-copy>p:not(.eyebrow){font-size:13px}}
+@media(max-width:390px){.current-study{grid-template-columns:1fr}.current-study-side{display:none}}
