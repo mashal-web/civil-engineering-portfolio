@@ -105,9 +105,9 @@ assert.doesNotMatch(script, /function initWorld\(/, 'the site must not create a 
 assert.match(script, /visibilityObserver=new IntersectionObserver/, 'canvas renderers must pause when off-screen');
 assert.match(script, /document\.hidden/, 'animation loops must respect background tabs');
 assert.match(script, /renderer\.forceContextLoss\?\.\(\)/, 'disposed WebGL renderers must release their context');
-assert.doesNotMatch(css, /^@import\\s/m, 'CSS must not chain an external font import before rendering');
+assert.doesNotMatch(css, /^@import\s/m, 'CSS must not chain an external font import before rendering');
 assert.match(css, /@media \(prefers-reduced-motion: reduce\)/, 'reduced-motion users must receive static visual effects');
-assert.match(css, /@media \(max-width:680px\)[\\s\\S]*?backdrop-filter:none!important/, 'small screens must avoid expensive backdrop blur');
+assert.match(css, /@media \(max-width:680px\)[\s\S]*?backdrop-filter:none!important/, 'small screens must avoid expensive backdrop blur');
 for (const page of pages) {
   const file = page === 'index' ? 'index.html' : page + '.html';
   const html = fs.readFileSync(file, 'utf8');
