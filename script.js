@@ -59,9 +59,9 @@ const searchRoot=$('#global-search'),searchInput=$('#global-search-input'),searc
 const searchCatalog=[
 ...nav.map(n=>({title:n[1],meta:'Website section',url:n[0],terms:n[1]+' '+n[2]})),
 ...courses.map(c=>({title:c[1],meta:c[2]+' · Course workspace',url:'courses.html#'+c[4],terms:c[1]+' '+c[2]+' '+c[3]})),
-{title:'Beam reaction calculator',meta:'Engineering lab · Educational model',url:'projects.html#beam-studio',terms:'beam support reaction load statics equilibrium force calculator'},
-{title:'Concrete volume estimator',meta:'Engineering toolkit · Geometric estimate',url:'projects.html#concrete-estimator',terms:'concrete volume length width depth calculator material'},
-{title:'Learning roadmap',meta:'About · Skills and milestones',url:'about.html#learning-roadmap',terms:'roadmap learning skills milestones progress'},
+{title:'Beam reaction calculator',meta:'Engineering lab · Educational model',url:'projects.html#beam-scene',terms:'beam support reaction load statics equilibrium force calculator'},
+{title:'Concrete volume estimator',meta:'Engineering toolkit · Geometric estimate',url:'projects.html#concrete-form',terms:'concrete volume length width depth calculator material'},
+{title:'Learning roadmap',meta:'About · Skills and milestones',url:'about.html#road-progress',terms:'roadmap learning skills milestones progress'},
 {title:'Contact information',meta:'Contact · Ways to connect',url:'contact.html',terms:'email github contact message'}
 ];
 function closeGlobalSearch(){searchRoot.hidden=true;document.body.classList.remove('search-open');}
