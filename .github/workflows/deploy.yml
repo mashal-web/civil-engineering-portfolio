@@ -21,8 +21,12 @@ jobs:
           for file in index.html about.html academics.html courses.html quantitative-reasoning.html projects.html journal.html contact.html styles.css assets/engineering-mark.svg assets/project-bridge.svg assets/beam-load.svg projects/bridge-study.html journal/learning-notes.html; do
             test -s "$file" || { echo "Missing required file: $file"; exit 1; }
           done
-          if grep -E '<script|<style|@keyframes|transition[[:space:]]*:' index.html about.html academics.html courses.html projects.html journal.html contact.html styles.css; then
+          if find . -path './.git' -prune -o -type f -name '*.html' -print0 | xargs -0 grep -nE '<script|<style|@keyframes|transition[[:space:]]*:'; then
             echo "Unexpected script, embedded style, animation or transition found."
+            exit 1
+          fi
+          if grep -nE 'transition[[:space:]]*:|@keyframes' styles.css; then
+            echo "CSS animation or transition found."
             exit 1
           fi
       - name: Prepare static website
