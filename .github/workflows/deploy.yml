@@ -81,6 +81,17 @@ jobs:
               m = re.search(r'href=["\'](?:\.\./)?styles\.css\?v=([^"\']+)', raw)
               if m:
                   cache_keys.add(m.group(1))
+          css_file = root / "styles.css"
+          if css_file.exists():
+              css = css_file.read_text(encoding="utf-8")
+              for asset_url in re.findall(r"url\(\s*['\"]?([^'\")]+)", css):
+                  asset_url = asset_url.strip()
+                  parts = urlsplit(asset_url)
+                  if parts.scheme or parts.netloc or asset_url.startswith("//") or asset_url.startswith("data:"):
+                      continue
+                  asset_path = (css_file.parent / unquote(parts.path)).resolve()
+                  if not asset_path.exists():
+                      errors.append(f"styles.css: missing CSS asset {asset_url}")
           if len(cache_keys) > 1:
               errors.append("Inconsistent stylesheet cache keys: " + ", ".join(sorted(cache_keys)))
           if errors:
