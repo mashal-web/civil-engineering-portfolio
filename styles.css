@@ -667,3 +667,10 @@ body.search-open{overflow:hidden}
 .global-search-result:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 @media(max-width:950px){.nav-links{gap:clamp(5px,1vw,10px)}.nav-links a{white-space:nowrap}.nav-icon{width:13px;height:13px}}
 @media(max-width:680px){.nav-links a[aria-current="page"]{background:color-mix(in srgb,var(--accent) 8%,transparent);text-decoration:none}}
+
+/* Academic progress and data-management feedback */
+.course-progress-label{display:inline-flex;align-items:center;align-self:flex-start;margin-top:12px;padding:5px 8px;border:1px solid var(--line);border-radius:999px;font:9px 'DM Mono',monospace;color:var(--muted)}
+.course-progress-label[data-status="in-progress"]{color:var(--signal);border-color:color-mix(in srgb,var(--signal) 40%,var(--line))}
+.course-progress-label[data-status="completed"]{color:var(--text);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.study-data-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+input[aria-invalid="true"]{border-color:#d65b5b!important;box-shadow:0 0 0 2px #d65b5b22}
