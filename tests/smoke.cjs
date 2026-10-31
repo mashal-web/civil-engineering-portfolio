@@ -120,3 +120,9 @@ for (const page of pages) {
   assert.ok(html.includes('media="print" onload="this.onload=null;this.media=\'all\'"'), file + ' must load fonts without blocking initial rendering');
   assert.ok(html.includes('<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?'), file + ' must preserve typography when JavaScript is disabled');
 }
+
+
+assert.match(css, /@media \(max-width: 680px\)[\s\S]*?body::before,[\s\S]*?animation: none !important/,
+  'mobile performance mode must disable continuous background animation');
+assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?body::before,[\s\S]*?animation: none !important/,
+  'reduced-motion preference must disable animated backgrounds');
