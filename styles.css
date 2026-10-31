@@ -346,3 +346,37 @@ body::after{opacity:.07}
 @media(prefers-reduced-motion:reduce){
   .hero-art::after{animation:none}
 }
+
+
+/* BRIDGE BACKGROUND IMAGE — adaptive contrast for dark and light themes */
+/* Photo: Brad Switzer, Unsplash — Gordie Howe Bridge at blue hour.
+   The same image is intentionally used in both themes; only the contrast treatment changes. */
+:root{
+  --photo-overlay:linear-gradient(90deg,rgba(7,16,24,.91) 0%,rgba(7,16,24,.76) 42%,rgba(7,16,24,.48) 100%);
+  --photo-bottom:linear-gradient(180deg,rgba(7,16,24,.06) 0%,rgba(7,16,24,.26) 55%,var(--bg) 100%);
+}
+:root[data-theme=light]{
+  --photo-overlay:linear-gradient(90deg,rgba(245,248,246,.94) 0%,rgba(245,248,246,.84) 42%,rgba(245,248,246,.61) 100%);
+  --photo-bottom:linear-gradient(180deg,rgba(245,248,246,.04) 0%,rgba(245,248,246,.28) 55%,var(--bg) 100%);
+}
+body::before{
+  background-image:
+    var(--photo-overlay),
+    var(--photo-bottom),
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+    url("https://images.unsplash.com/photo-1785544265488-4ad80f36e14d?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=72&w=1800");
+  background-size:auto,auto,42px 42px,42px 42px,cover;
+  background-position:center,center,center center,center center,center 38%;
+  background-repeat:no-repeat,no-repeat,repeat,repeat,no-repeat;
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.86) 54%,transparent 100%);
+}
+:root[data-theme=light] body::before{
+  /* Bright treatment keeps body text and pale panels readable in light mode. */
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.78) 48%,transparent 100%);
+}
+@media(max-width:700px){
+  body::before{background-position:center,center,center center,center center,58% 38%}
+  :root{--photo-overlay:linear-gradient(90deg,rgba(7,16,24,.78),rgba(7,16,24,.56))}
+  :root[data-theme=light]{--photo-overlay:linear-gradient(90deg,rgba(245,248,246,.88),rgba(245,248,246,.72))}
+}
