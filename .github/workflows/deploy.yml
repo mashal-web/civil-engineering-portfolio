@@ -18,7 +18,7 @@ jobs:
       - name: Validate required static pages
         run: |
           set -eu
-          for file in index.html about.html academics.html courses.html quantitative-reasoning.html projects.html journal.html contact.html styles.css assets/engineering-mark.svg assets/project-bridge.svg assets/beam-load.svg projects/bridge-study.html journal/learning-notes.html; do
+          for file in index.html about.html academics.html courses.html quantitative-reasoning.html islamic-studies.html projects.html journal.html contact.html styles.css assets/engineering-mark.svg assets/project-bridge.svg assets/beam-load.svg projects/bridge-study.html journal/learning-notes.html; do
             test -s "$file" || { echo "Missing required file: $file"; exit 1; }
           done
           if find . -path './.git' -prune -o -type f -name '*.html' -print0 | xargs -0 grep -nE '<script|<style|@keyframes|transition[[:space:]]*:'; then
@@ -91,7 +91,7 @@ jobs:
       - name: Prepare static website
         run: |
           mkdir -p _site
-          cp index.html about.html academics.html courses.html quantitative-reasoning.html projects.html journal.html contact.html styles.css _site/
+          cp index.html about.html academics.html courses.html quantitative-reasoning.html islamic-studies.html projects.html journal.html contact.html styles.css _site/
           cp -R assets projects journal _site/
           cat > _site/404.html <<'EOF'
           <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page not found — Mashal Khan</title><link rel="stylesheet" href="styles.css"></head><body><main class="container page-intro"><p class="eyebrow">ERROR / 404</p><h1>This page could not be found.</h1><p class="lede">The link may be outdated or the page may have moved.</p><a class="button button-dark" href="index.html">Return home</a></main></body></html>
