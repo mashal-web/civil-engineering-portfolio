@@ -53,19 +53,19 @@ contact:'<section class="page-hero wrap"><p class="eyebrow">06 / CONTACT</p><h1>
 $('#site').innerHTML='<div class="site-shell">'+head+'<main>'+data[page]+'</main>'+foot+'</div>';
 document.title=({index:'Mashal Khan — Civil Engineering Student',about:'About — Mashal Khan',academics:'Academics — Mashal Khan',courses:'Courses — Mashal Khan',projects:'Projects — Mashal Khan',journal:'Journal — Mashal Khan',contact:'Contact — Mashal Khan'})[page]||'Mashal Khan';
 document.documentElement.dataset.theme=get('mk-theme')==='light'?'light':'dark';
-$$('.year').forEach(x=>x.textContent=new Date().getFullYear());
-$$('.theme-toggle').forEach(b=>{const draw=()=>{b.innerHTML=ico(document.documentElement.dataset.theme==='dark'?'sun':'moon');b.setAttribute('aria-label',document.documentElement.dataset.theme==='dark'?'Switch to light theme':'Switch to dark theme')};draw();b.addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';set('mk-theme',document.documentElement.dataset.theme);$$('.theme-toggle').forEach(draw)})});
+$$$('.year').forEach(x=>x.textContent=new Date().getFullYear());
+$$$('.theme-toggle').forEach(b=>{const draw=()=>{b.innerHTML=ico(document.documentElement.dataset.theme==='dark'?'sun':'moon');b.setAttribute('aria-label',document.documentElement.dataset.theme==='dark'?'Switch to light theme':'Switch to dark theme')};draw();b.addEventListener('click',()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark';set('mk-theme',document.documentElement.dataset.theme);$$$('.theme-toggle').forEach(draw)})});
 const menu=$('.menu-toggle'),navEl=$('.nav-links');if(menu)menu.addEventListener('click',()=>{const open=navEl.classList.toggle('is-open');menu.innerHTML=ico(open?'close':'menu');menu.setAttribute('aria-expanded',String(open))});
 function checks(sel,key,callback){const boxes=$$(sel);boxes.forEach(b=>{const id=b.dataset.task||b.dataset.roadmap||b.dataset.courseTask;b.checked=get(key+':'+id)==='1';b.addEventListener('change',()=>{set(key+':'+id,b.checked?'1':'0');if(callback)callback()})});return boxes}
 const tasks=checks('[data-task]','mk-task',updateTasks);function updateTasks(){const n=tasks.filter(b=>b.checked).length,p=Math.round(n/Math.max(1,tasks.length)*100),f=$('#task-progress'),l=$('#task-label');if(f)f.style.width=p+'%';if(l)l.textContent=p+'% complete'}updateTasks();$('#reset-tasks')?.addEventListener('click',()=>{tasks.forEach(b=>{b.checked=false;set('mk-task:'+b.dataset.task,'0')});updateTasks()});
 const road=checks('[data-roadmap]','mk-roadmap',updateRoad);function updateRoad(){const n=road.filter(b=>b.checked).length,f=$('#road-progress'),l=$('#road-label');if(f)f.style.width=(n/Math.max(1,road.length)*100)+'%';if(l)l.textContent=n+' of '+road.length+' milestones checked'}updateRoad();checks('[data-course-task]','mk-course');
-$('#course-search')?.addEventListener('input',e=>{const q=e.target.value.toLowerCase();$$('.course-card').forEach(c=>c.hidden=!(c.dataset.search+' '+c.textContent).toLowerCase().includes(q))});
-$$('.course-card-button').forEach(b=>b.addEventListener('click',()=>{const p=$('.course-workspace',b.closest('.course-card')),open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));p.hidden=!open;$('.course-open',b).textContent=open?'Close workspace ↑':'Open workspace →'}));
+$('#course-search')?.addEventListener('input',e=>{const q=e.target.value.toLowerCase();$$$('.course-card').forEach(c=>c.hidden=!(c.dataset.search+' '+c.textContent).toLowerCase().includes(q))});
+$$$('.course-card-button').forEach(b=>b.addEventListener('click',()=>{const p=$('.course-workspace',b.closest('.course-card')),open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));p.hidden=!open;$('.course-open',b).textContent=open?'Close workspace ↑':'Open workspace →'}));
 const j={bridge:['STRUCTURES / BEGINNER','How a cable-stayed bridge carries loads',['Inclined cables connect the deck directly to towers. They transfer forces from the deck to the towers, which transmit loads toward the foundations.','Actual behaviour also depends on deck stiffness, cable geometry, foundations, wind, temperature, and traffic. This is conceptual, not a design calculation.','Questions: how does tower height matter? How do dead and live loads differ? Why consider wind and vibration?']],drawing:['TECHNICAL DRAWING','Why engineering drawings need clear dimensions',['Drawings use views, symbols, scales, and dimensions to communicate a component consistently.','Dimensions should be readable, unambiguous, and consistent with the required drawing standard. A neat drawing that omits key dimensions is incomplete.','Practice: draw the front, top, and side views of a simple object and check that the necessary dimensions are present.']],study:['STUDY METHODS','A useful way to study technical subjects',['Start with the definition and units, review one worked example, then solve a similar problem independently.','Keep an error log: note whether a mistake came from the concept, setup, arithmetic, units, or reading the question.','A practical cycle is understand, observe an example, attempt a problem, check the reasoning, and explain the method in your own words.']]};
 const pj={structure:['STRUCTURES / FOUNDATION','Structural form studies',['Explore how geometry, support conditions, and qualitative load paths affect a simple structural form.','A practice sketch can mark supports, show likely load directions, and explain how forces travel through a beam or frame.','Status: planned exercise. No verified dimensions, material properties, or engineering design are claimed.']],notes:['DOCUMENTATION / WORKFLOW','Engineering field notes',['Create a consistent record for definitions, diagrams, questions, and references collected during study.','A useful note format includes the concept, explanation, example, source, confidence level, and a question to revisit.','Status: in development; entries should be based on actual course material.']],calculator:['SOFTWARE / INTERFACE','APEX Scientific Calculator',['A student software project exploring calculator-style interactions and a responsive interface.','Important testing areas include keyboard and touch input, order of operations, angle modes, error handling, accessibility, and known test cases.','Status: demo / in progress. Do not treat it as a verified replacement for a scientific calculator until its functions are tested.']],drawing:['TECHNICAL DRAWING / PRACTICE','Orthographic drawing explorer',['Study the front, top, and side views of a simple object and compare the shared edges and dimensions.','Practice with a small block-shaped object first. Keep corresponding dimensions aligned between views and clearly label units.','Status: planned exercise; add real drawing sheets and screenshots as they are completed.']]};
 function modal(id,entry,kicker,title,body){const m=$(id);if(!m||!entry)return;$(kicker).textContent=entry[0];$(title).textContent=entry[1];$(body).replaceChildren(...entry[2].map(t=>{const p=document.createElement('p');p.textContent=t;return p}));m.hidden=false}
-$$('.journal-open').forEach(b=>b.addEventListener('click',()=>modal('#journal-modal',j[b.dataset.entry],'#journal-kicker','#journal-title','#journal-body')));
-$$('.project-detail').forEach(b=>b.addEventListener('click',()=>modal('#project-modal',pj[b.dataset.project],'#project-kicker','#project-title','#project-body')));
+$$$('.journal-open').forEach(b=>b.addEventListener('click',()=>modal('#journal-modal',j[b.dataset.entry],'#journal-kicker','#journal-title','#journal-body')));
+$$$('.project-detail').forEach(b=>b.addEventListener('click',()=>modal('#project-modal',pj[b.dataset.project],'#project-kicker','#project-title','#project-body')));
 function updateBeamStudio(){
  const span=Number($('#studio-span')?.value||6),load=Number($('#studio-load')?.value||12),position=Number($('#studio-position')?.value||50)/100;
  const a=span*position,ra=load*(1-position),rb=load*position;
@@ -90,15 +90,15 @@ function updateBeamStudio(){
 ['studio-span','studio-load','studio-position'].forEach(id=>$('#'+id)?.addEventListener('input',updateBeamStudio));
 $('#studio-reset')?.addEventListener('click',()=>{const defaults={'studio-span':6,'studio-load':12,'studio-position':50};Object.entries(defaults).forEach(([id,v])=>{if($('#'+id))$('#'+id).value=v});updateBeamStudio()});
 updateBeamStudio();
-$$('.project-filter').forEach(button=>button.addEventListener('click',()=>{
+$$$('.project-filter').forEach(button=>button.addEventListener('click',()=>{
  const filter=button.dataset.filter;
- $$('.project-filter').forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
+ $$$('.project-filter').forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
  let visible=0;
- $$('.project-card[data-category]').forEach(card=>{const show=filter==='all'||card.dataset.category===filter;card.hidden=!show;if(show)visible++});
+ $$$('.project-card[data-category]').forEach(card=>{const show=filter==='all'||card.dataset.category===filter;card.hidden=!show;if(show)visible++});
  const count=$('#project-visible-count');if(count)count.textContent=String(visible).padStart(2,'0');
 }));
 $('#concrete-form')?.addEventListener('submit',e=>{e.preventDefault();const l=Number($('#concrete-length').value),w=Number($('#concrete-width').value),d=Number($('#concrete-depth').value),out=$('#concrete-result');if(l<=0||w<=0||d<=0){out.textContent='Enter dimensions greater than zero.';return}const v=l*w*d;out.textContent='Geometric volume: '+v.toFixed(4)+' m³ ('+(v*1000).toFixed(1)+' litres). Excludes waste, reinforcement, and site allowances.'});
-$$('.modal-backdrop').forEach(m=>{$('.modal-close',m).addEventListener('click',()=>m.hidden=true);m.addEventListener('click',e=>{if(e.target===m)m.hidden=true})});document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.modal-backdrop').forEach(m=>m.hidden=true)});
+$$$('.modal-backdrop').forEach(m=>{$('.modal-close',m).addEventListener('click',()=>m.hidden=true);m.addEventListener('click',e=>{if(e.target===m)m.hidden=true})});document.addEventListener('keydown',e=>{if(e.key==='Escape')$$$('.modal-backdrop').forEach(m=>m.hidden=true)});
 $('#download-cv')?.addEventListener('click',()=>{const txt=['MASHAL KHAN','Civil Engineering Student','Sir Syed University of Engineering & Technology','Karachi, Pakistan','Email: imashalweb@gmail.com','GitHub: https://github.com/mashal-web','','Academic stage: First-year / starting','','Current courses',...courses.map((c,i)=>(i+1)+'. '+c[1]),'','Early-stage student building fundamentals in mathematics, materials, technical drawing, and structural concepts.','Add verified grades, projects, and experience before using as a formal CV.'].join('\n');const u=URL.createObjectURL(new Blob([txt],{type:'text/plain'})),a=document.createElement('a');a.href=u;a.download='Mashal-Khan-Student-Profile.txt';document.body.append(a);a.click();a.remove();URL.revokeObjectURL(u)});
 $('#print-cv')?.addEventListener('click',()=>window.print());
 
@@ -152,14 +152,14 @@ function addIcon(el,name,cls='card-icon'){
  if(!el||el.querySelector(':scope > .'+cls))return;
  const holder=document.createElement('span');holder.className=cls;holder.innerHTML=ico(name);holder.setAttribute('aria-hidden','true');el.prepend(holder);
 }
-$$('.course-card').forEach(card=>addIcon(card.querySelector('.course-card-button')||card,iconForText(card.textContent),'course-icon'));
-$('.card').forEach(card=>addIcon(card,iconForText((card.textContent||'')+' '+(card.getAttribute('href')||'')),'card-icon'));
-$('.journal-open').forEach(card=>addIcon(card,iconForText(card.textContent),'card-icon'));
-$('.project-detail').forEach(btn=>{if(!btn.querySelector('.ui-icon'))btn.insertAdjacentHTML('beforeend',ico('arrow'))});
-$('.text-link,.course-open,.project-arrow,.journal-read').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('beforeend',ico('arrow'))});
-$('a[href^="https://github.com"]').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('afterbegin',ico('github'))});
-$('a[href^="https://linkedin.com"]').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('afterbegin',ico('network'))});
-$('a[href^="mailto:"]').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('afterbegin',ico('mail'))});
+$$$('.course-card').forEach(card=>addIcon(card.querySelector('.course-card-button')||card,iconForText(card.textContent),'course-icon'));
+$$('.card').forEach(card=>addIcon(card,iconForText((card.textContent||'')+' '+(card.getAttribute('href')||'')),'card-icon'));
+$$('.journal-open').forEach(card=>addIcon(card,iconForText(card.textContent),'card-icon'));
+$$('.project-detail').forEach(btn=>{if(!btn.querySelector('.ui-icon'))btn.insertAdjacentHTML('beforeend',ico('arrow'))});
+$$('.text-link,.course-open,.project-arrow,.journal-read').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('beforeend',ico('arrow'))});
+$$('a[href^="https://github.com"]').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('afterbegin',ico('github'))});
+$$('a[href^="https://linkedin.com"]').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('afterbegin',ico('network'))});
+$$('a[href^="mailto:"]').forEach(el=>{if(!el.querySelector('.ui-icon'))el.insertAdjacentHTML('afterbegin',ico('mail'))});
 $('#download-cv')?.insertAdjacentHTML('afterbegin',ico('download'));
 $('#print-cv')?.insertAdjacentHTML('afterbegin',ico('printer'));
 
