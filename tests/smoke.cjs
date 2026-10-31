@@ -8,7 +8,7 @@ new Function(script);
 assert.match(script, /const \$=\(s,root=document\)=>root\.querySelector\(s\), \$\$=\(s,root=document\)=>\[\.\.\.root\.querySelectorAll\(s\)\]/,
   'selector helpers must support single and multiple elements, including scoped queries');
 assert.doesNotMatch(script, /\$\$\$/, 'invalid triple-dollar selectors must never ship');
-assert.doesNotMatch(script, /\$\(['"][^'"]+['"]\)\.forEach/, 'single-element queries must not be used as collections');
+assert.doesNotMatch(script, /(?<!\$)\$\(['"][^'"]+['"]\)\.forEach/, 'single-element queries must not be used as collections');
 
 for (const feature of [
   'theme-toggle', 'menu-toggle', 'course-search', 'course-card-button',
