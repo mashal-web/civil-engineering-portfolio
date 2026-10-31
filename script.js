@@ -117,7 +117,7 @@ for(let x=-1.4;x<=1.41;x+=.14)line([x,dy-deflection+Math.abs(x)*.03,-.2],[x,dy-d
 if(mode==='blueprint'){ctx.strokeStyle=c;ctx.lineWidth=1;ctx.globalAlpha=.65;ctx.strokeRect(12,12,w-24,h-24);ctx.globalAlpha=1;ctx.font=Math.max(8,w*.017)+'px monospace';ctx.fillStyle=c;ctx.fillText('FIG 01 / CABLE-STAYED BRIDGE · NOT TO SCALE',20,29);ctx.fillText('DECK / TOWER / STAYS',20,h-15)}else if(mode==='wire'){ctx.font=Math.max(8,w*.017)+'px monospace';ctx.fillStyle=c;ctx.fillText('GEOMETRY VIEW / NO MATERIAL DATA',14,22)}
 if(load>0){const p=project([0,dy-deflection-.15,0],w,h);ctx.beginPath();ctx.arc(p[0],p[1],Math.max(3,w*.008),0,Math.PI*2);ctx.fillStyle='#e4bb82';ctx.fill()}
 if(opts.angle)opts.angle('ROT '+String(Math.round(((yaw*180/Math.PI)%360+360)%360).toString().padStart(3,'0'))+'°');if(opts.update)opts.update({load,span,mode})}
-function frame(){if(!dragging&&!reduced)yaw+=.0014;draw();if(!reduced)raf=requestAnimationFrame(frame)}
+function frame(){if(!canvas.isConnected){cancelAnimationFrame(raf);return}if(!dragging&&!reduced)yaw+=.0014;draw();if(!reduced)raf=requestAnimationFrame(frame)}
 canvas.addEventListener('pointerdown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture&&canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!dragging)return;yaw+=(e.clientX-lastX)*.008;pitch=Math.max(-.65,Math.min(.65,pitch+(e.clientY-lastY)*.006));lastX=e.clientX;lastY=e.clientY;draw()});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>canvas.addEventListener(ev,()=>dragging=false));canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.65,Math.min(1.7,zoom-e.deltaY*.001));draw()},{passive:false});window.addEventListener('resize',draw);
 const buttons=opts.buttons||[];buttons.forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.heroMode||b.dataset.labMode||b.dataset.dockMode;buttons.forEach(x=>x.classList.toggle('active',x===b));if(opts.modeLabel)opts.modeLabel.textContent=mode.toUpperCase()+' / ACTIVE';draw()}));if(opts.reset)opts.reset.addEventListener('click',()=>{yaw=-.48;pitch=.18;zoom=1;draw()});if(opts.load)opts.load.addEventListener('input',()=>{load=Number(opts.load.value);if(opts.loadValue)opts.loadValue.textContent=load+'%';draw()});if(opts.span)opts.span.addEventListener('input',()=>{span=Number(opts.span.value)/100;if(opts.spanValue)opts.spanValue.textContent=opts.span.value+'%';draw()});if(!reduced)raf=requestAnimationFrame(frame);else draw();return {draw,stop:()=>cancelAnimationFrame(raf)}}
 createBridge($('#hero-bridge'),{buttons:$$('[data-hero-mode]'),reset:$('#hero-reset'),angle:v=>{if($('#hero-angle'))$('#hero-angle').textContent=v}});
@@ -181,5 +181,245 @@ function closeDock(){dockModal.hidden=true;document.body.classList.remove('dock-
 $('.dock-close',dockModal).innerHTML=ico('close');$('.dock-close',dockModal).addEventListener('click',closeDock);
 dockModal.addEventListener('click',e=>{if(e.target===dockModal)closeDock()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dockModal.hidden)closeDock()});
+
+
+/* REAL-TIME WEBGL ENGINE: 3D structural models + a site-wide engineering world.
+   If WebGL or the CDN is unavailable, the existing canvas renderer remains usable. */
+function loadThreeEngine(){
+ if(window.THREE){bootThreeWorld();return}
+ const script=document.createElement('script');
+ script.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js';
+ script.async=true;
+ script.onload=()=>{if(window.THREE)bootThreeWorld()};
+ script.onerror=()=>{document.documentElement.classList.add('webgl-fallback')};
+ document.head.append(script);
+}
+function bootThreeWorld(){
+ if(window.__mashalThreeBooted||!window.THREE)return;
+ window.__mashalThreeBooted=true;
+ const T=window.THREE;
+ const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const cssVar=(name,fallback)=>getComputedStyle(document.documentElement).getPropertyValue(name).trim()||fallback;
+ const accent=()=>cssVar('--accent','#72e5f2');
+ const bg=()=>cssVar('--bg','#08121b');
+ function material(color,emissive,intensity,roughness=0.42,metalness=0.45){
+  return new T.MeshStandardMaterial({color,emissive:emissive||color,emissiveIntensity:intensity===undefined?.18:intensity,roughness,metalness});
+ }
+ function box(parent,name,size,pos,mat,part=name){
+  const m=new T.Mesh(new T.BoxGeometry(size[0],size[1],size[2]),mat);
+  m.position.set(pos[0],pos[1],pos[2]);m.name=name;m.userData.part=part;parent.add(m);return m;
+ }
+ function cable(parent,a,b,mat,radius=.012,name='Stay cable'){
+  const A=new T.Vector3(...a),B=new T.Vector3(...b),delta=new T.Vector3().subVectors(B,A);
+  const mesh=new T.Mesh(new T.CylinderGeometry(radius,radius,delta.length(),6),mat);
+  mesh.position.copy(A).add(B).multiplyScalar(.5);
+  mesh.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),delta.normalize());
+  mesh.name=name;mesh.userData.part=name;parent.add(mesh);return mesh;
+ }
+ function makeBridge(canvas,opts){
+  if(!canvas||!canvas.isConnected)return null;
+  const replacement=canvas.cloneNode(false);
+  replacement.classList.add('three-bridge-canvas');
+  let renderer;
+  try{renderer=new T.WebGLRenderer({canvas:replacement,alpha:true,antialias:true,powerPreference:'low-power'});}
+  catch(e){return null}
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
+  renderer.outputColorSpace=T.SRGBColorSpace;
+  renderer.setClearColor(0x000000,0);
+  const scene=new T.Scene();
+  scene.fog=new T.FogExp2(0x07121b,.035);
+  const camera=new T.PerspectiveCamera(38,1,.1,100);
+  camera.position.set(5.5,3.6,7.2);
+  const target=new T.Vector3(0,.65,0);
+  const ambient=new T.HemisphereLight(0xbfefff,0x0b1724,2.05);scene.add(ambient);
+  const key=new T.DirectionalLight(0xd8f8ff,3.1);key.position.set(-4,7,5);scene.add(key);
+  const rim=new T.PointLight(0x27d9ff,22,12);rim.position.set(0,2.8,-2.5);scene.add(rim);
+  const warm=new T.PointLight(0xffb86a,8,8);warm.position.set(2,1.8,3);scene.add(warm);
+  const model=new T.Group();scene.add(model);
+  const steel=material(0x244351,0x0d5668,.42,.28,.82);
+  const edge=material(0x55dff2,0x20b8e6,1.45,.25,.6);
+  const cableMat=material(0x8deeff,0x39c9e8,.72,.32,.52);
+  const deckMat=material(0x344b59,0x123441,.32,.34,.8);
+  const supportMat=material(0x627784,0x142d38,.22,.5,.65);
+  const loadMat=new T.MeshStandardMaterial({color:0xffbd72,emissive:0xff6e34,emissiveIntensity:2.5,metalness:.3,roughness:.25});
+  const materials=[steel,edge,cableMat,deckMat,supportMat,loadMat];
+  const L=6.5, deckY=.34, towerY=2.28;
+  // Main deck, edge girders and cross-members.
+  box(model,'Composite deck',[L,.16,.88],[0,deckY,0],deckMat,'Deck');
+  for(const z of [-.47,.47]){
+   box(model,'Edge girder',[L,.12,.08],[0,deckY-.13,z],steel,'Edge girder');
+   box(model,'Safety rail',[L,.035,.035],[0,deckY+.22,z],edge,'Deck rail');
+   for(let x=-3.05;x<=3.06;x+=.3)box(model,'Cross beam',[.035,.09,.86],[x,deckY-.16,0],supportMat,'Cross beam');
+  }
+  // Two twin-leg pylons and their cross-bracing.
+  const towers=[-1.15,1.15];
+  towers.forEach((x,idx)=>{
+   for(const z of [-.31,.31]){
+    box(model,'Pylon leg',[.13,towerY,.13],[x,deckY+towerY/2,z],steel,'Pylon');
+    box(model,'Pylon crown',[.2,.08,.82],[x,deckY+towerY,z],edge,'Pylon crosshead');
+   }
+   box(model,'Pylon cross brace',[.055,.48,.045],[x,deckY+1.22,0],edge,'Pylon bracing');
+   // Fan stays radiate from each pylon toward its outer and inner deck panels.
+   const direction=idx===0?-1:1;
+   for(let i=1;i<=8;i++){
+    const dx=i*.265;
+    const anchorX=x+direction*dx;
+    const anchorY=deckY+.05;
+    for(const z of [-.31,.31]){
+     cable(model,[x,deckY+towerY-.05,z],[anchorX,anchorY,z],cableMat,.009,'Stay cable');
+    }
+   }
+   for(const z of [-.31,.31])box(model,'Pier cap',[.3,.12,.24],[x,.12,z],supportMat,'Pier cap');
+  });
+  // Under-deck diagonals and bearing blocks.
+  for(let x=-2.9;x<2.9;x+=.42){
+   cable(model,[x,deckY-.22,-.38],[x+.21,deckY-.22,.38],supportMat,.012,'Under-deck cross brace');
+   cable(model,[x,deckY-.22,.38],[x+.21,deckY-.22,-.38],supportMat,.012,'Under-deck cross brace');
+  }
+  for(const x of [-3.05,3.05])for(const z of [-.35,.35]){
+   box(model,'Bearing',[.18,.12,.16],[x,.13,z],edge,'Bearing');
+   box(model,'Foundation block',[.55,.1,.6],[x,.035,z],supportMat,'Foundation');
+  }
+  // Discrete load markers and tiny status beacons.
+  const markers=new T.Group();model.add(markers);
+  for(let i=0;i<11;i++){
+   const m=new T.Mesh(new T.SphereGeometry(.045,10,8),loadMat);
+   m.position.set(-2.8+i*.56,deckY+.17,.02);m.name='Illustrative load marker';m.userData.part='Load marker';markers.add(m);
+  }
+  const nodes=new T.Group();model.add(nodes);
+  for(let i=0;i<22;i++){
+   const angle=i/22*Math.PI*2;
+   const m=new T.Mesh(new T.SphereGeometry(.022,8,6),edge);
+   m.position.set(Math.cos(angle)*3.25,deckY+.06,Math.sin(angle)*.49);
+   nodes.add(m);
+  }
+  // Construction-grid floor.
+  const grid=new T.GridHelper(18,36,0x1e8aa2,0x16404f);
+  grid.position.y=-.045;grid.material.transparent=true;grid.material.opacity=.3;scene.add(grid);
+  const floor=new T.Mesh(new T.PlaneGeometry(30,30),new T.MeshStandardMaterial({color:0x07111a,roughness:1,metalness:0,transparent:true,opacity:.22}));
+  floor.rotation.x=-Math.PI/2;floor.position.y=-.055;scene.add(floor);
+  const view={yaw:-.22,pitch:.06,zoom:1,drag:false,x:0,y:0,mode:'render',load:opts.load?Number(opts.load.value):50,span:opts.span?Number(opts.span.value)/100:1};
+  const raycaster=new T.Raycaster(),pointer=new T.Vector2();
+  let selected=null,raf=0,disposed=false;
+  function setMode(mode){
+   view.mode=mode;
+   materials.forEach((m,i)=>{
+    m.wireframe=mode==='wire';
+    if(mode==='blueprint'){m.color.set(accent());m.emissive.set(accent());m.emissiveIntensity=i===5?2.2:.75;m.transparent=true;m.opacity=.68}
+    else {m.transparent=false;m.opacity=1}
+   });
+   if(opts.modeLabel)opts.modeLabel.textContent=mode.toUpperCase()+' / WEBGL';
+   if(opts.buttons)opts.buttons.forEach(b=>{const val=b.dataset.heroMode||b.dataset.labMode||b.dataset.dockMode;b.classList.toggle('active',val===mode)});
+  }
+  function resize(){
+   if(!canvas.isConnected)return;
+   const w=Math.max(1,canvas.clientWidth),h=Math.max(1,canvas.clientHeight);
+   renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();
+  }
+  function updateInputs(){
+   model.scale.x=view.span;
+   markers.children.forEach((m,i)=>{const active=i<Math.max(1,Math.round(view.load/9));m.visible=active;m.scale.setScalar(.65+view.load/160)});
+   cableMat.emissiveIntensity=.35+view.load/85;
+   if(opts.loadValue)opts.loadValue.textContent=view.load+'%';
+   if(opts.spanValue)opts.spanValue.textContent=Math.round(view.span*100)+'%';
+   if(opts.update)opts.update({load:view.load,span:view.span,mode:view.mode});
+  }
+  function render(){
+   if(disposed||!canvas.isConnected){disposed=true;cancelAnimationFrame(raf);renderer.dispose();return}
+   if(!view.drag&&!reduced)model.rotation.y+=.001;
+   model.rotation.y+=0;
+   model.rotation.x=view.pitch;
+   model.rotation.y+=view.yaw*.0;
+   camera.position.set(Math.sin(view.yaw)*7.2/view.zoom,3.4/view.zoom,Math.cos(view.yaw)*7.2/view.zoom);
+   camera.lookAt(target);
+   if(view.mode==='blueprint'){scene.background=null;grid.material.opacity=.62}
+   else if(view.mode==='wire'){grid.material.opacity=.42}
+   else grid.material.opacity=.3;
+   renderer.render(scene,camera);
+   if(opts.angle)opts.angle('ROT '+String(Math.round(((view.yaw*180/Math.PI)%360+360)%360)).padStart(3,'0')+'°');
+   if(!reduced)raf=requestAnimationFrame(render);
+  }
+  function pointerDown(e){view.drag=true;view.x=e.clientX;view.y=e.clientY;canvas.setPointerCapture?.(e.pointerId)}
+  function pointerMove(e){
+   if(view.drag){view.yaw+=(e.clientX-view.x)*.008;view.pitch=Math.max(-.55,Math.min(.55,view.pitch+(e.clientY-view.y)*.006));view.x=e.clientX;view.y=e.clientY;return}
+   const r=canvas.getBoundingClientRect();pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;
+   raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(model.children,true);
+   canvas.style.cursor=hits.length?'crosshair':'grab';
+  }
+  function pointerUp(e){
+   if(!view.drag)return;view.drag=false;
+   if(e.type==='pointerup'){
+    const r=canvas.getBoundingClientRect();pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;
+    raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(model.children,true);
+    if(hits.length){selected=hits[0].object;if(opts.select)opts.select(selected.userData.part||selected.name||'Structural component')}
+   }
+  }
+  canvas.addEventListener('pointerdown',pointerDown);
+  canvas.addEventListener('pointermove',pointerMove);
+  ['pointerup','pointercancel','lostpointercapture'].forEach(ev=>canvas.addEventListener(ev,pointerUp));
+  canvas.addEventListener('wheel',e=>{e.preventDefault();view.zoom=Math.max(.62,Math.min(1.65,view.zoom-e.deltaY*.001));},{passive:false});
+  if(opts.buttons)opts.buttons.forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.heroMode||b.dataset.labMode||b.dataset.dockMode||'render')));
+  if(opts.reset)opts.reset.addEventListener('click',()=>{view.yaw=-.22;view.pitch=.06;view.zoom=1;model.rotation.set(0,0,0);setMode('render');updateInputs()});
+  if(opts.load)opts.load.addEventListener('input',()=>{view.load=Number(opts.load.value);updateInputs()});
+  if(opts.span)opts.span.addEventListener('input',()=>{view.span=Number(opts.span.value)/100;updateInputs()});
+  canvas.parentElement.replaceChild(replacement,canvas);
+  canvas=replacement;
+  resize();updateInputs();setMode('render');
+  window.addEventListener('resize',resize,{passive:true});
+  if(!reduced)raf=requestAnimationFrame(render);else render();
+  return {render,dispose(){disposed=true;cancelAnimationFrame(raf);renderer.dispose()}};
+ }
+ function initWorld(){
+  const host=$('.depth-scene');if(!host||host.querySelector('.world-webgl-canvas'))return;
+  const canvas=document.createElement('canvas');canvas.className='world-webgl-canvas';canvas.setAttribute('aria-hidden','true');host.prepend(canvas);
+  let renderer;try{renderer=new T.WebGLRenderer({canvas,alpha:true,antialias:false,powerPreference:'low-power'});}catch(e){canvas.remove();return}
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1));renderer.setClearColor(0x000000,0);
+  const scene=new T.Scene(),camera=new T.PerspectiveCamera(46,1,.1,120);camera.position.set(0,2.5,12);
+  scene.add(new T.AmbientLight(0x74e7f6,1.2));
+  const group=new T.Group();scene.add(group);
+  const wireMat=new T.LineBasicMaterial({color:0x39d9f3,transparent:true,opacity:.28});
+  const glowMat=new T.MeshBasicMaterial({color:0x56dff4,transparent:true,opacity:.2,wireframe:true});
+  // Large structural truss floating behind the page content.
+  const pts=[];
+  const left=-5.6,right=5.6,base=-1.2,top=1.45,steps=22;
+  for(let i=0;i<=steps;i++){
+   const x=left+(right-left)*i/steps;pts.push(new T.Vector3(x,base,-1.2),new T.Vector3(x,base,1.2));
+   if(i<steps){const nx=left+(right-left)*(i+1)/steps;pts.push(new T.Vector3(x,base,-1.2),new T.Vector3(nx,base,-1.2),new T.Vector3(x,base,1.2),new T.Vector3(nx,base,1.2));}
+   const peak=top-Math.abs((i/steps)-.5)*1.05;
+   pts.push(new T.Vector3(x,base,-1.2),new T.Vector3(x,peak,-1.2),new T.Vector3(x,base,1.2),new T.Vector3(x,peak,1.2));
+   if(i<steps){const nx=left+(right-left)*(i+1)/steps,npeak=top-Math.abs(((i+1)/steps)-.5)*1.05;pts.push(new T.Vector3(x,peak,-1.2),new T.Vector3(nx,base,-1.2),new T.Vector3(x,base,1.2),new T.Vector3(nx,npeak,1.2));}
+  }
+  const geometry=new T.BufferGeometry().setFromPoints(pts);group.add(new T.LineSegments(geometry,wireMat));
+  for(let i=0;i<46;i++){
+   const angle=i*.37,r=2.6+(i%9)*.43;
+   const node=new T.Mesh(new T.IcosahedronGeometry(.025+(i%3)*.008,0),glowMat);
+   node.position.set(Math.cos(angle)*r,Math.sin(angle*1.6)*1.8,Math.sin(angle)*2.8-1.5);group.add(node);
+  }
+  const grid=new T.GridHelper(36,60,0x1d8ea7,0x17404f);grid.position.y=-2.35;grid.material.transparent=true;grid.material.opacity=.13;group.add(grid);
+  let raf=0,last=0,disposed=false;
+  function resize(){const w=Math.max(1,host.clientWidth),h=Math.max(1,host.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+  function draw(t){if(disposed||!canvas.isConnected){disposed=true;cancelAnimationFrame(raf);renderer.dispose();return}const time=t*.00012;if(!reduced){group.rotation.y=Math.sin(time)*.09;group.rotation.x=Math.sin(time*.7)*.025}renderer.render(scene,camera);if(!reduced)raf=requestAnimationFrame(draw)}
+  window.addEventListener('resize',resize,{passive:true});resize();draw(0);
+ }
+ initWorld();
+ const selectLabel=canvas=>{const parent=canvas?.parentElement;if(!parent)return null;let label=parent.querySelector('.three-selection-readout');if(!label){label=document.createElement('div');label.className='three-selection-readout';label.textContent='SELECT A STRUCTURAL ELEMENT';parent.append(label)}return label};
+ const allCanvas=[$('#hero-bridge'),$('#lab-canvas'),$('#dock-canvas')].filter(Boolean);
+ allCanvas.forEach(canvas=>{
+  const id=canvas.id,lab=id==='lab-canvas',hero=id==='hero-bridge';
+  const angleId=hero?'hero-angle':lab?'lab-angle':null;
+  const buttons=hero?$('[data-hero-mode]'):lab?$('[data-lab-mode]'):$('[data-dock-mode]');
+  const select=selectLabel(canvas);
+  makeBridge(canvas,{
+   buttons,reset:$(hero?'#hero-reset':lab?'#lab-reset':'#dock-reset'),
+   load:lab?$('#lab-load'):null,span:lab?$('#lab-span'):null,
+   loadValue:lab?$('#lab-load-value'):null,spanValue:lab?$('#lab-span-value'):null,
+   modeLabel:lab?$('#lab-mode-label'):null,
+   angle:v=>{const a=angleId?$('#'+angleId):null;if(a)a.textContent=v},
+   update:s=>{if(lab){if($('#lab-load-readout'))$('#lab-load-readout').textContent=s.load+'%';if($('#lab-span-readout'))$('#lab-span-readout').textContent=s.span.toFixed(2)+'×';if($('#lab-view-readout'))$('#lab-view-readout').textContent=s.mode==='render'?'3D':s.mode==='blueprint'?'2D':'FORM'}},
+   select:part=>{if(select)select.textContent='SELECTED COMPONENT / '+part.toUpperCase()}
+  });
+ });
+}
+loadThreeEngine();
 
 })();
