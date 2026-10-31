@@ -139,7 +139,7 @@ jobs:
               if audit.error_duplicate:
                   errors.append(f"{page}: duplicate id {audit.error_duplicate}")
           if errors:
-              print("\\n".join("ERROR: " + e for e in errors))
+              print("\n".join("ERROR: " + e for e in errors))
               sys.exit(1)
           print(f"Accessibility basics and metadata passed for {len(pages)} HTML pages.")
           PY
