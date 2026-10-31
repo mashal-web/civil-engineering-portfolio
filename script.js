@@ -63,10 +63,10 @@ const searchCatalog=[
 {title:'Beam reaction calculator',meta:'Engineering lab · Educational model',url:'projects.html#beam-scene',terms:'beam support reaction load statics equilibrium force calculator'},
 {title:'Concrete volume estimator',meta:'Engineering toolkit · Geometric estimate',url:'projects.html#concrete-form',terms:'concrete volume length width depth calculator material'},
 {title:'Learning roadmap',meta:'Home · Skills and milestones',url:'index.html#road-progress',terms:'roadmap learning skills milestones progress'},
-{title:'Structural Form Studies',meta:'Projects · Study concept',url:'projects.html',terms:'structural form studies bridge load paths project'},
-{title:'Engineering Field Notes',meta:'Projects · Documentation workflow',url:'projects.html',terms:'engineering field notes concepts worked examples sources'},
-{title:'Cable-stayed bridge loads',meta:'Journal · Beginner note',url:'journal.html',terms:'cable stayed bridge loads deck tower cables foundations'},
-{title:'Technical drawing dimensions',meta:'Journal · Beginner note',url:'journal.html',terms:'technical drawing dimensions views scale'},
+{title:'Structural Form Studies',meta:'Projects · Study concept',url:'projects.html#structure',terms:'structural form studies bridge load paths project'},
+{title:'Engineering Field Notes',meta:'Projects · Documentation workflow',url:'projects.html#notes',terms:'engineering field notes concepts worked examples sources'},
+{title:'Cable-stayed bridge loads',meta:'Journal · Beginner note',url:'journal.html#bridge',terms:'cable stayed bridge loads deck tower cables foundations'},
+{title:'Technical drawing dimensions',meta:'Journal · Beginner note',url:'journal.html#drawing',terms:'technical drawing dimensions views scale'},
 {title:'Beam equilibrium formulas',meta:'Engineering tools · Static equilibrium',url:'projects.html#beam-scene',terms:'formula equations R A R B P L a moment equilibrium reaction'},
 {title:'Contact information',meta:'Contact · Ways to connect',url:'contact.html',terms:'email github contact message'}
 ];
