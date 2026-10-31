@@ -438,7 +438,7 @@ function bootThreeWorld(){
  // Keep the ambient background CSS-driven; reserve WebGL for interactive models.
  const selectLabel=canvas=>{const parent=canvas?.parentElement;if(!parent)return null;let label=parent.querySelector('.three-selection-readout');if(!label){label=document.createElement('div');label.className='three-selection-readout';label.textContent='SELECT A STRUCTURAL ELEMENT';parent.append(label)}return label};
  function upgradeBridgeCanvas(canvas){
-  if(!canvas||canvas.classList.contains('three-bridge-canvas'))return;
+  if(!canvas||canvas.classList.contains('three-bridge-canvas')||document.documentElement.classList.contains('webgl-mobile-lite')||!window.THREE)return;
   fallbackBridgeControllers.get(canvas)?.stop();
   const id=canvas.id,lab=id==='lab-canvas',hero=id==='hero-bridge';
   const angleId=hero?'hero-angle':lab?'lab-angle':null;
