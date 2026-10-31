@@ -329,7 +329,7 @@ main.container{padding-bottom:clamp(34px,6vw,72px)}
 .artwork-site ::selection{background:#e7e5df;color:#090909}
 .artwork-site :focus-visible{outline:2px solid #e5e2da;outline-offset:5px}
 .artwork-site .skip-link{z-index:1000}
-.artwork-header{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:linear-gradient(180deg,#070707e8 0%,#070707a8 76%,#07070700 100%)}
+.artwork-header{background:linear-gradient(180deg,#070707e8 0%,#070707a8 76%,#07070700 100%)}
 .artwork-header .header-inner{min-height:86px}
 .artwork-header .brand{white-space:nowrap}
 .artwork-header .primary-nav a{white-space:nowrap;letter-spacing:.015em}
