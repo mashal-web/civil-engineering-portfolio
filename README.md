@@ -1,15 +1,25 @@
-# Mashal Khan — Civil Engineering Student Portfolio
+# Mashal Khan — Minimal Civil Engineering Portfolio
 
-A multi-page static portfolio with a separate full-stack starter for future engineering tools.
+A multi-page, static student portfolio designed around white backgrounds, black typography, grayscale borders, zero animations and minimal dependencies.
 
-## Static portfolio
-Pages: Home, About, Academics, Courses, Projects, Journal, and Contact.
+## Stack
+- Semantic HTML pages
+- External CSS
+- No JavaScript required for content or navigation
+- No framework, package manager, remote font or third-party runtime
+- GitHub Pages deployment through GitHub Actions
 
-Existing features include a persistent theme toggle, mobile navigation, searchable course workspaces, browser-local progress, downloadable profile, print/save as PDF, and clickable project/journal details. GitHub Actions continues publishing these static pages to GitHub Pages.
+## Pages
+Home, About, Academics, Courses & Skills, Projects, Journal and Contact. Individual project and journal articles live in their respective directories.
 
-## Full-stack engineering lab
-The optional starter adds TypeScript, a Node.js API, a Python FastAPI calculation service, a PostgreSQL schema, Docker Compose, and automated checks. It does not replace or interfere with the existing static pages.
+## Local preview
+Open `index.html` in a browser, or serve the folder with any simple static file server. There is no build step.
 
-See FULLSTACK.md for setup, tests, deployment constraints, and engineering-safety notes.
+## Deployment
+Push to `main`. The workflow checks the required files and confirms the static pages do not include script/style blocks, CSS animations or transitions, then publishes the static site to GitHub Pages.
 
-GitHub Pages serves static files only. Node/Python services and PostgreSQL must be deployed separately for live backend functionality.
+## Performance and accessibility
+The site is HTML-first, uses system fonts, has no client-side JavaScript dependency, includes a skip link and visible keyboard focus, and uses responsive CSS. Performance budgets must be verified with actual browser measurements; they are not guaranteed by architecture alone.
+
+## Content integrity
+Projects and technical drawings are student learning examples. They are not construction-ready designs or professional engineering advice. Add grades, credentials and project results only when verified.
