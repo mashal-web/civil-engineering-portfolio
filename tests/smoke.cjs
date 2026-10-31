@@ -78,3 +78,12 @@ assert.match(script, /url:'projects\.html#beam-scene'/, 'beam search result must
 assert.match(script, /url:'projects\.html#concrete-form'/, 'concrete estimator search result must target its form');
 
 console.log('Portfolio audit smoke checks passed.');
+
+assert.match(script, /\['projects\.html#beam-scene','Engineering Tools','projects','calculator'\]/, 'primary navigation must expose engineering tools');
+assert.match(script, /\['courses\.html','Resources','courses','book'\]/, 'primary navigation must expose resources');
+assert.match(script, /setSearchActive\(searchActiveIndex\+1\)/, 'global search must support ArrowDown result navigation');
+assert.match(script, /setSearchActive\(searchActiveIndex-1\)/, 'global search must support ArrowUp result navigation');
+assert.match(script, /searchReturnFocus&&searchReturnFocus\.isConnected/, 'closing search must restore focus');
+assert.match(script, /e\.target\.closest\('\.topbar'\)/, 'mobile menu must close after outside interaction');
+assert.match(script, /e\.key==='Escape'&&navEl\.classList\.contains\('is-open'\)/, 'mobile menu must close with Escape');
+assert.match(css, /\.global-search-result\.is-active/, 'keyboard-selected search result must be visible');
