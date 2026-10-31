@@ -22,3 +22,36 @@
 .hero-metrics span{display:flex;align-items:center;gap:8px}
 .hero-metrics strong{color:#f3f3f3;font-size:12px}
 @media(max-width:520px){.hero-home{min-height:560px;padding:38px 18px 24px}.hero-home .eyebrow{font-size:9px}.hero-home h1{font-size:clamp(36px,10.5vw,48px)}.hero-emblem{margin:26px 0 18px}.hero-metrics{gap:12px 18px}.hero-metrics span{font-size:9px}}
+
+/* Phase 2: consistent cinematic cards and technical content surfaces. */
+:root{--canvas:#050505;--panel:#101011;--panel-raised:#171718;--panel-inset:#080808;--text:#f4f4f4;--muted:#bcbcbc;--subtle:#898989;--line:#292929;--shadow-dark:#000;--shadow-light:#252525}
+.site-header{background:var(--canvas);border-bottom-color:#202020}
+.primary-nav a{border-radius:999px}
+.primary-nav a[aria-current=page]{background:#111;border-color:#303030;box-shadow:inset 3px 3px 6px #000,inset -2px -2px 5px #252525}
+.page-intro{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#1b1b1b 0%,#101010 42%,#080808 100%);border-color:#292929;box-shadow:10px 10px 24px #000,-4px -4px 16px #171717}
+.page-intro:after{content:"";display:block;width:100%;height:1px;margin-top:30px;background:linear-gradient(90deg,transparent,#666,transparent);opacity:.5}
+.content-section{background:linear-gradient(145deg,#121212,#0b0b0b);border-color:#242424;box-shadow:9px 9px 20px #000,-4px -4px 14px #171717}
+.fact,.contact-block,.journal-row,.project-figure{background:linear-gradient(145deg,#171717,#101010);border-color:#292929;box-shadow:6px 6px 12px #000,-4px -4px 12px #1d1d1d}
+.fact{min-height:112px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.fact strong{color:#f4f4f4}
+.stack-list{border-top-color:#292929}
+.stack-list article{padding:25px 18px;border:1px solid #242424;border-radius:8px;margin:12px 0;background:#101010;box-shadow:4px 4px 9px #000,-3px -3px 9px #1a1a1a}
+.stack-list article p{color:#bcbcbc}
+.stack-list .index{color:#858585}
+.project-row{padding:20px 0;gap:30px}
+.project-figure{padding:18px}
+.project-figure svg{color:#d4d4d4}
+.project-copy{padding:8px 0}
+.project-copy h2 a:hover,.journal-row h2 a:hover{color:#c9c9c9}
+.journal-row{grid-template-columns:125px minmax(0,1fr);align-items:start}
+.journal-date{padding:8px 10px;border:1px solid #303030;border-radius:5px;background:#090909;letter-spacing:.1em}
+.note{background:#090909;border-color:#292929;box-shadow:inset 4px 4px 8px #000,inset -3px -3px 8px #191919}
+.status{border-color:#393939;background:#0a0a0a}
+.button{border-color:#333;background:linear-gradient(145deg,#191919,#101010);box-shadow:5px 5px 10px #000,-3px -3px 9px #222}
+.button:hover{background:#181818;box-shadow:inset 3px 3px 6px #000,inset -2px -2px 5px #242424}
+.button-dark{background:linear-gradient(145deg,#f5f5f5,#d4d4d4);color:#080808;border-color:#eee;box-shadow:inset 1px 1px 2px #fff,inset -2px -2px 3px #aaa}
+.button-dark:hover{background:#d8d8d8;color:#080808}
+input,textarea,select{background:#090909;border-color:#303030;box-shadow:inset 4px 4px 8px #000,inset -3px -3px 8px #191919}
+.rule{border-top-color:#292929}
+.site-footer{background:#050505;border-top-color:#202020}
+@media(max-width:700px){.journal-row{grid-template-columns:1fr;gap:14px}.journal-date{width:max-content}.project-row{gap:18px}.project-figure{padding:12px}}
