@@ -188,10 +188,17 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dockModal.hidden)c
 function loadThreeEngine(){
  if(window.THREE){bootThreeWorld();return}
  const script=document.createElement('script');
- script.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js';
+ script.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js';
  script.async=true;
- script.onload=()=>{if(window.THREE)bootThreeWorld()};
- script.onerror=()=>{document.documentElement.classList.add('webgl-fallback')};
+ script.onload=()=>{if(window.THREE)bootThreeWorld();else loadFallbackThree()};
+ script.onerror=loadFallbackThree;
+ function loadFallbackThree(){
+  if(script.dataset.fallbackTried){document.documentElement.classList.add('webgl-fallback');return}
+  script.dataset.fallbackTried='1';
+  script.src='https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+  script.onerror=()=>document.documentElement.classList.add('webgl-fallback');
+  document.head.append(script);
+ }
  document.head.append(script);
 }
 function bootThreeWorld(){
