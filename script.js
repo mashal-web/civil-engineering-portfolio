@@ -99,7 +99,7 @@ $$('.project-filter').forEach(button=>button.addEventListener('click',()=>{
 }));
 $('#concrete-form')?.addEventListener('submit',e=>{e.preventDefault();const l=Number($('#concrete-length').value),w=Number($('#concrete-width').value),d=Number($('#concrete-depth').value),out=$('#concrete-result');if(l<=0||w<=0||d<=0){out.textContent='Enter dimensions greater than zero.';return}const v=l*w*d;out.textContent='Geometric volume: '+v.toFixed(4)+' m³ ('+(v*1000).toFixed(1)+' litres). Excludes waste, reinforcement, and site allowances.'});
 $$('.modal-backdrop').forEach(m=>{$('.modal-close',m).addEventListener('click',()=>m.hidden=true);m.addEventListener('click',e=>{if(e.target===m)m.hidden=true})});document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.modal-backdrop').forEach(m=>m.hidden=true)});
-$('#download-cv')?.addEventListener('click',()=>{const txt=['MASHAL KHAN','Civil Engineering Student','Sir Syed University of Engineering & Technology','Karachi, Pakistan','Email: imashalweb@gmail.com','GitHub: https://github.com/mashal-web','','Academic stage: First-year / starting','','Current courses',...courses.map((c,i)=>(i+1)+'. '+c[1]),'','Early-stage student building fundamentals in mathematics, materials, technical drawing, and structural concepts.','Add verified grades, projects, and experience before using as a formal CV.'].join('\n');const u=URL.createObjectURL(new Blob([txt],{type:'text/plain'})),a=document.createElement('a');a.href=u;a.download='Mashal-Khan-Student-Profile.txt';document.body.append(a);a.click();a.remove();URL.revokeObjectURL(u)});
+$('#download-cv')?.addEventListener('click',()=>{const txt=['MASHAL KHAN','Civil Engineering Student','Sir Syed University of Engineering & Technology','Karachi, Pakistan','Email: imashalweb@gmail.com','GitHub: https://github.com/mashal-web','','Academic stage: First-year / starting','','Current courses',...courses.map((c,i)=>(i+1)+'. '+c[1]),'','Early-stage student building fundamentals in mathematics, materials, technical drawing, and structural concepts.','Add verified grades, projects, and experience before using as a formal CV.'].join('\n');const u=URL.createObjectURL(new Blob([txt],{type:'text/plain'})),a=document.createElement('a');a.href=u;a.download='Mashal-Khan-Student-Profile.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)});
 $('#print-cv')?.addEventListener('click',()=>window.print());
 
 /* Immersive engineering lab enhancement */
@@ -250,6 +250,7 @@ function bootThreeWorld(){
   const supportMat=material(0x627784,0x142d38,.22,.5,.65);
   const loadMat=new T.MeshStandardMaterial({color:0xffbd72,emissive:0xff6e34,emissiveIntensity:2.5,metalness:.3,roughness:.25});
   const materials=[steel,edge,cableMat,deckMat,supportMat,loadMat];
+  const baseMaterials=materials.map(m=>({color:m.color.getHex(),emissive:m.emissive.getHex(),emissiveIntensity:m.emissiveIntensity}));
   const L=6.5, deckY=.34, towerY=2.28;
   // Main deck, edge girders and cross-members.
   box(model,'Composite deck',[L,.16,.88],[0,deckY,0],deckMat,'Deck');
@@ -313,9 +314,10 @@ function bootThreeWorld(){
    materials.forEach((m,i)=>{
     m.wireframe=mode==='wire';
     if(mode==='blueprint'){m.color.set(accent());m.emissive.set(accent());m.emissiveIntensity=i===5?2.2:.75;m.transparent=true;m.opacity=.68}
-    else {m.transparent=false;m.opacity=1}
+    else {const base=baseMaterials[i];m.color.setHex(base.color);m.emissive.setHex(base.emissive);m.emissiveIntensity=base.emissiveIntensity;m.transparent=false;m.opacity=1}
    });
    if(opts.modeLabel)opts.modeLabel.textContent=mode.toUpperCase()+' / WEBGL';
+   if(reduced)render();
    if(opts.buttons)opts.buttons.forEach(b=>{const val=b.dataset.heroMode||b.dataset.labMode||b.dataset.dockMode;b.classList.toggle('active',val===mode)});
   }
   function resize(){
@@ -330,6 +332,7 @@ function bootThreeWorld(){
    if(opts.loadValue)opts.loadValue.textContent=view.load+'%';
    if(opts.spanValue)opts.spanValue.textContent=Math.round(view.span*100)+'%';
    if(opts.update)opts.update({load:view.load,span:view.span,mode:view.mode});
+   if(reduced)render();
   }
   function render(){
    if(disposed||!canvas.isConnected){disposed=true;cancelAnimationFrame(raf);renderer.dispose();return}
@@ -348,7 +351,7 @@ function bootThreeWorld(){
   }
   function pointerDown(e){view.drag=true;view.x=e.clientX;view.y=e.clientY;canvas.setPointerCapture?.(e.pointerId)}
   function pointerMove(e){
-   if(view.drag){view.yaw+=(e.clientX-view.x)*.008;view.pitch=Math.max(-.55,Math.min(.55,view.pitch+(e.clientY-view.y)*.006));view.x=e.clientX;view.y=e.clientY;return}
+   if(view.drag){view.yaw+=(e.clientX-view.x)*.008;view.pitch=Math.max(-.55,Math.min(.55,view.pitch+(e.clientY-view.y)*.006));view.x=e.clientX;view.y=e.clientY;if(reduced)render();return}
    const r=canvas.getBoundingClientRect();pointer.x=((e.clientX-r.left)/r.width)*2-1;pointer.y=-((e.clientY-r.top)/r.height)*2+1;
    raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(model.children,true);
    canvas.style.cursor=hits.length?'crosshair':'grab';
@@ -364,7 +367,7 @@ function bootThreeWorld(){
   canvas.addEventListener('pointerdown',pointerDown);
   canvas.addEventListener('pointermove',pointerMove);
   ['pointerup','pointercancel','lostpointercapture'].forEach(ev=>canvas.addEventListener(ev,pointerUp));
-  canvas.addEventListener('wheel',e=>{e.preventDefault();view.zoom=Math.max(.62,Math.min(1.65,view.zoom-e.deltaY*.001));},{passive:false});
+  canvas.addEventListener('wheel',e=>{e.preventDefault();view.zoom=Math.max(.62,Math.min(1.65,view.zoom-e.deltaY*.001));if(reduced)render();},{passive:false});
   if(opts.buttons)opts.buttons.forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.heroMode||b.dataset.labMode||b.dataset.dockMode||'render')));
   if(opts.reset)opts.reset.addEventListener('click',()=>{view.yaw=-.22;view.pitch=.06;view.zoom=1;model.rotation.set(0,0,0);setMode('render');updateInputs()});
   if(opts.load)opts.load.addEventListener('input',()=>{view.load=Number(opts.load.value);updateInputs()});
