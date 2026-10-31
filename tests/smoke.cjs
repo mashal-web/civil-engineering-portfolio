@@ -10,6 +10,10 @@ assert.doesNotThrow(() => new Function(script), 'script.js must parse as valid J
 assert.match(script, /const \$=\(s,root=document\)=>root\.querySelector\(s\), \$\$=\(s,root=document\)=>\[\.\.\.root\.querySelectorAll\(s\)\]/,
   'selector helpers must support scoped single and multiple queries');
 assert.doesNotMatch(script, /\$\$\$/, 'invalid triple-dollar selectors must never ship');
+assert.match(script, /class="skip-link" href="#main-content"/, 'keyboard users must have a skip-to-content link');
+assert.match(script, /<main id="main-content" tabindex="-1">/, 'main content must be a focus target for skip navigation');
+assert.match(script, /id="primary-navigation" aria-label="Primary navigation"/, 'site navigation must have an accessible name and stable target');
+assert.match(script, /aria-controls="primary-navigation"/, 'mobile menu button must identify the navigation it controls');
 assert.doesNotMatch(script, /(?<!\$)\$\(['"][^'"]+['"]\)\.forEach/, 'single-element queries must not be used as collections');
 
 for (const page of pages) {
