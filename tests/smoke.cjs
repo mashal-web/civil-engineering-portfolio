@@ -8,7 +8,10 @@ const minimalism = fs.readFileSync('minimalism.css', 'utf8');
 const pages = ['index', 'about', 'academics', 'courses', 'projects', 'journal', 'contact'];
 
 assert.doesNotThrow(() => new Function(script), 'script.js must parse as valid JavaScript');
-assert.match(minimalism, /--bg:#f7f7f4/, 'minimalism layer must define the restrained light palette');
+assert.match(minimalism, /--bg:#fff/, 'minimalism layer must use a pure white light background');
+assert.match(minimalism, /--bg:#000/, 'minimalism layer must use a pure black dark background');
+assert.match(minimalism, /animation:none!important/, 'minimalism layer must disable all animations');
+assert.match(minimalism, /transition:none!important/, 'minimalism layer must disable all transitions');
 assert.match(minimalism, /:root\[data-theme="dark"\]/, 'minimalism layer must preserve the dark theme');
 assert.match(minimalism, /prefers-reduced-motion:reduce/, 'minimalism layer must respect reduced-motion preferences');
 assert.match(script, /const \$=\(s,root=document\)=>root\.querySelector\(s\), \$\$=\(s,root=document\)=>\[\.\.\.root\.querySelectorAll\(s\)\]/,
@@ -121,10 +124,7 @@ assert.match(css, /@media \(max-width:680px\)[\s\S]*?backdrop-filter:none!import
 for (const page of pages) {
   const file = page === 'index' ? 'index.html' : page + '.html';
   const html = fs.readFileSync(file, 'utf8');
-  assert.match(html, /rel="preconnect" href="https:\/\/fonts\.googleapis\.com"/, file + ' must preconnect to the font host');
-  assert.match(html, /fonts\.googleapis\.com\/css2\?[^"]*display=swap/, file + ' must load fonts with swap outside the CSS import chain');
-  assert.ok(html.includes('media="print" onload="this.onload=null;this.media=\'all\'"'), file + ' must load fonts without blocking initial rendering');
-  assert.ok(html.includes('<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?'), file + ' must preserve typography when JavaScript is disabled');
+  assert.doesNotMatch(html, /fonts\.googleapis\.com|fonts\.gstatic\.com/, file + ' must avoid external font requests for faster loading');
 }
 
 
