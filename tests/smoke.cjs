@@ -126,3 +126,6 @@ assert.match(css, /@media \(max-width: 680px\)[\s\S]*?body::before,[\s\S]*?anima
   'mobile performance mode must disable continuous background animation');
 assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?body::before,[\s\S]*?animation: none !important/,
   'reduced-motion preference must disable animated backgrounds');
+
+assert.match(script, /setPixelRatio\(Math\.min\(window\.devicePixelRatio\|\|1,window\.matchMedia\('\(max-width: 680px\)'\)\.matches\?1:1\.5\)\)/,
+  '3D rendering resolution must be capped more aggressively on small screens');
