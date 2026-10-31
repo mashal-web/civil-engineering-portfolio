@@ -102,3 +102,38 @@ button:hover,.button:hover,.text-button:hover,.text-link:hover{filter:none}
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
 }
+
+/* Site-wide finishing pass: apply the same quiet visual language to every component. */
+:where(h1,h2,h3,h4){color:var(--text);text-wrap:balance}
+:where(p,li,dd,.muted,.small-note){text-wrap:pretty}
+:where(.page-hero,.hero,.section-heading,.journal-header,.contact-header){max-width:100%}
+:where(.page-hero,.journal-header){padding-top:52px;padding-bottom:28px}
+:where(.tag,.chip,.badge,.pill,.status,.course-progress-label,.project-type,.meta){box-shadow:none!important;text-shadow:none!important}
+:where(.tag,.chip,.badge,.pill){border:1px solid var(--line)!important;border-radius:4px!important;background:transparent!important;color:var(--muted)}
+:where(.divider,.rule,hr){border-color:var(--line)!important;opacity:1}
+:where(.timeline-item,.journal-entry,.journal-entry-card,.academic-row,.course-row,.contact-row,.detail-row){border-color:var(--line)!important}
+:where(.timeline-item::before,.timeline-dot,.step-number){box-shadow:none!important}
+:where(.project-card,.journal-card,.course-card,.academic-card,.card,.panel,.dashboard-card,.stat-card){min-width:0}
+:where(.project-card img,.journal-card img,.card img,.project-art svg,.project-illustration svg){filter:none!important}
+:where(.project-card::before,.project-card::after,.journal-card::before,.journal-card::after,.card::before,.card::after){box-shadow:none}
+:where(.hero-art,.project-art,.project-illustration,.beam-scene,.lab-viewport,.dock-viewport,.depth-scene){filter:none!important}
+:where(.hero-art svg,.project-art svg,.project-illustration svg){max-width:100%}
+:where(.button,.text-button,.text-link,.project-filter,.global-search-trigger,.theme-toggle,.menu-toggle,.modal-close,.dock-close,.model-mode,.lab-mode,.dock-mode,.dock-reset,.dock-open,.studio-reset){min-height:36px}
+:where(.button,.project-filter,.global-search-trigger,.theme-toggle,.menu-toggle,.modal-close,.dock-close,.model-mode,.lab-mode,.dock-mode,.dock-reset,.dock-open,.studio-reset){border-radius:5px!important}
+:where(.button:active,.project-filter:active,.theme-toggle:active,.menu-toggle:active,.model-mode:active,.lab-mode:active,.dock-mode:active){transform:translateY(1px)}
+:where(.button:disabled,button:disabled,input:disabled,select:disabled,textarea:disabled){opacity:.55;cursor:not-allowed}
+:where(.progress,.progress-track,.course-progress,.meter){background:var(--line)!important;box-shadow:none!important;border-radius:2px!important}
+:where(.progress span,.progress-fill,.course-progress-fill,.meter-fill){box-shadow:none!important;border-radius:2px!important}
+:where(pre,code,.code-block,.formula,.equation){box-shadow:none!important}
+:where(blockquote,.note,.callout,.tip,.notice){border-radius:0!important;box-shadow:none!important;background:transparent!important;border-color:var(--line)!important}
+:where(.modal,.global-search-panel,.dock-window){max-height:min(82dvh,760px);overflow:auto}
+:where(.modal-backdrop,.dock-backdrop){background:rgba(12,16,13,.48)!important}
+:where(.footer,.site-footer){padding-top:24px;padding-bottom:24px}
+:where(.footer p,.footer small,.site-footer p){color:var(--muted)}
+:where(.empty-state,.no-results,.search-empty){border:1px dashed var(--line)!important;border-radius:5px!important;background:transparent!important}
+@media(max-width:680px){
+ :where(.page-hero,.journal-header){padding-top:34px;padding-bottom:18px}
+ :where(.card,.panel,.dashboard-card,.stat-card,.contact-panel,.detail-panel,.course-workspace,.lab-layout,.beam-visual-panel,.project-feature,.project-hero,.project-library,.immersive-lab,.engineering-workbench,.dock-window,.modal,.global-search-panel){border-radius:5px!important}
+ :where(.project-grid,.project-grid-advanced,.project-library,.workbench-grid,.cards){grid-template-columns:minmax(0,1fr)}
+ :where(.footer){gap:12px}
+}
