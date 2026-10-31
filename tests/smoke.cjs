@@ -137,3 +137,6 @@ assert.match(script, /const mobileLite=window\.matchMedia\('\(max-width: 680px\)
   'small screens must use the lightweight interactive canvas instead of downloading Three.js');
 assert.doesNotMatch(script.slice(script.indexOf('function makeBridge(canvas,opts)'), script.indexOf('function handleVisibility()', script.indexOf('function makeBridge(canvas,opts)'))), /requestAnimationFrame\(render\)/,
   'the WebGL renderer must not schedule an idle animation loop');
+
+assert.match(script, /function upgradeBridgeCanvas\(canvas\)\{\s*if\(!canvas\|\|canvas\.classList\.contains\('three-bridge-canvas'\)\|\|document\.documentElement\.classList\.contains\('webgl-mobile-lite'\)\|\|!window\.THREE\)return;/,
+  'fallback canvas interactions must remain active when Three.js is deferred');
