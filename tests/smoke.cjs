@@ -129,3 +129,11 @@ assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?body::before
 
 assert.match(script, /setPixelRatio\(Math\.min\(window\.devicePixelRatio\|\|1,window\.matchMedia\('\(max-width: 680px\)'\)\.matches\?1:1\.5\)\)/,
   '3D rendering resolution must be capped more aggressively on small screens');
+
+
+assert.match(script, /Render on demand: no permanent 60 FPS WebGL loop/,
+  'WebGL scenes must not render continuously while idle');
+assert.match(script, /const mobileLite=window\.matchMedia\('\(max-width: 680px\)'\)\.matches;[\s\S]*?if\(mobileLite\)\{document\.documentElement\.classList\.add\('webgl-mobile-lite'\);\}/,
+  'small screens must use the lightweight interactive canvas instead of downloading Three.js');
+assert.doesNotMatch(script.slice(script.indexOf('function makeBridge(canvas,opts)'), script.indexOf('function handleVisibility()', script.indexOf('function makeBridge(canvas,opts)')), /requestAnimationFrame\(render\)/,
+  'the WebGL renderer must not schedule an idle animation loop');
