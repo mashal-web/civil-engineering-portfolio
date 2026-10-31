@@ -570,16 +570,3 @@ main.container{padding-bottom:clamp(34px,6vw,72px)}
  .artwork-header .primary-nav{gap:10px;padding:3px 0 9px}
  .artwork-header .primary-nav a{min-height:44px;padding:8px 10px;font-size:11px}
 }
-
-
-/* RESPONSIVE QA PASS 05 — keep the navigation usable without clipping at tablet widths. */
-@media(max-width:900px){
- .artwork-header .header-inner{width:calc(100% - 40px);min-width:0;align-items:flex-start;flex-direction:column;gap:8px;padding:16px 0}
- .artwork-header .primary-nav{width:100%;min-width:0;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
- .artwork-header .primary-nav a{display:inline-flex;min-height:44px;flex:0 0 auto;align-items:center;justify-content:center}
-}
-@media(max-width:560px){
- .artwork-header .header-inner{width:calc(100% - 28px)}
- .artwork-header .primary-nav{gap:10px;padding:3px 0 9px}
- .artwork-header .primary-nav a{min-height:44px;padding:8px 10px;font-size:11px}
-}
