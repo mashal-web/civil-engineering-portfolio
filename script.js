@@ -285,7 +285,7 @@ function bootThreeWorld(){
   let renderer;
   try{renderer=new T.WebGLRenderer({canvas:replacement,alpha:true,antialias:true,powerPreference:'low-power'});}
   catch(e){return null}
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,window.matchMedia('(max-width: 680px)').matches?1:1.5));
   renderer.outputColorSpace=T.SRGBColorSpace;
   renderer.setClearColor(0x000000,0);
   const scene=new T.Scene();
