@@ -1,0 +1,104 @@
+/* Minimalism system — clear hierarchy, quiet surfaces, restrained motion.
+   This layer intentionally overrides visual styling only; interactions remain in script.js. */
+:root{
+  font-family:"DM Sans",system-ui,sans-serif;
+  --bg:#f7f7f4;--surface:#ffffff;--text:#202725;--muted:#6b746f;
+  --line:#e2e5e0;--accent:#426b5b;--accent2:#345747;--signal:#426b5b;
+  --grid:transparent;--shadow:0 5px 18px rgba(25,35,29,.045);
+  color-scheme:light;scroll-behavior:smooth;
+}
+:root[data-theme="dark"]{
+  --bg:#151816;--surface:#1d211e;--text:#edf0eb;--muted:#a0a8a0;
+  --line:#303731;--accent:#a4c5b2;--accent2:#c0d9ca;--signal:#a4c5b2;
+  --grid:transparent;--shadow:0 6px 22px rgba(0,0,0,.12);color-scheme:dark;
+}
+html{scroll-padding-top:24px}
+body{background:var(--bg);color:var(--text);line-height:1.65;transition:background-color .18s ease,color .18s ease}
+body::before,body::after{content:none!important;display:none!important}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
+button,input,textarea,select{font:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap,.section-wrap{width:min(1080px,calc(100% - 48px))}
+.topbar{width:min(1080px,calc(100% - 48px));height:72px;border-bottom:1px solid var(--line);backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.brand{gap:9px}.brand-mark{width:31px;height:31px;border-radius:5px;border-color:var(--line);background:transparent;color:var(--accent);box-shadow:none}
+.brand-name{font-size:12px;letter-spacing:.015em;font-weight:700}
+.brand-name span,h1 em,h2 em{color:var(--accent)}
+.nav-links{gap:clamp(10px,1.8vw,22px)}
+.nav-links a{font-size:12px;color:var(--muted);transition:color .15s ease}
+.nav-links a.active,.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--text)}
+.nav-links a[aria-current="page"]{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:7px}
+.availability{font-size:10px;letter-spacing:0;color:var(--muted)}
+.theme-toggle,.menu-toggle{width:36px;height:36px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--text);box-shadow:none}
+.hero{min-height:490px;gap:48px;padding-top:64px;padding-bottom:68px}
+.eyebrow,.panel-kicker{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.hero h1,.page-hero h1{font-weight:600;letter-spacing:-.055em;line-height:1.04;margin-bottom:22px}
+.lede,.hero .lede{font-size:15px;line-height:1.8;color:var(--muted);max-width:520px}
+.button,.text-button,.text-link,.course-open,.journal-read,.project-link,.project-arrow,.global-search-trigger,.project-filter,.model-mode,.lab-mode,.dock-mode,.dock-reset,.dock-open,.studio-reset,.export{
+  box-shadow:none!important;text-shadow:none!important;transition:background-color .15s ease,border-color .15s ease,color .15s ease,transform .15s ease;
+}
+.button{border-radius:5px;padding:11px 16px;font-size:12px;font-weight:600}
+.button-primary{background:var(--text);color:var(--bg);border:1px solid var(--text)}
+.button-primary:hover{background:var(--accent2);border-color:var(--accent2);color:#fff}
+.text-button,.text-link{color:var(--text);font-size:12px}
+.hero-art{border:1px solid var(--line);border-radius:8px;background:var(--surface)!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;overflow:hidden}
+.hero-art::before,.hero-art::after{animation:none!important;filter:none!important}
+.depth-scene,.depth-object,.depth-orbit,.depth-grid,.hero-ring,.ring-one,.ring-two,.grid-cube{animation:none!important;filter:none!important;box-shadow:none!important}
+.depth-scene{opacity:.76}
+.depth-grid{opacity:.22}
+.section{padding-top:44px;padding-bottom:44px}
+.section.alt{background:transparent;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.section-heading{margin-bottom:22px}
+.section-heading h2,.section h2{letter-spacing:-.035em}
+.cards{gap:14px}
+.card,.course-card,.project-card,.journal-card,.panel,.stat-card,.academic-card,.dashboard-card,.contact-panel,.detail-panel,.course-workspace,.lab-layout,.beam-visual-panel,.project-feature,.project-hero,.project-library,.immersive-lab,.engineering-workbench,.engineering-dock,.dock-window,.modal,.global-search-panel{
+  background:var(--surface)!important;color:var(--text);border:1px solid var(--line)!important;border-radius:7px!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.card,.course-card,.project-card,.journal-card,.stat-card,.academic-card,.dashboard-card{padding:20px}
+.card:hover,.course-card:hover,.project-card:hover,.journal-card:hover,.academic-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 48%,var(--line))!important;box-shadow:none!important}
+.card-icon,.course-icon{border-radius:5px;background:transparent!important;border:1px solid var(--line);color:var(--accent)}
+.status,.meta,.muted,.small-note,.project-type,.course-category,.journal-read,.project-number,.blueprint-label,.project-count{color:var(--muted)}
+.status,.course-progress-label{border-radius:4px;background:transparent!important}
+.project-art,.project-illustration,.project-hero-mark,.beam-scene,.lab-viewport,.dock-viewport{border-radius:5px;background:var(--bg)!important;box-shadow:none!important}
+.project-grid,.project-grid-advanced,.project-library,.workbench-grid{gap:14px}
+.project-row{border-bottom:1px solid var(--line)}
+.project-number{font-size:11px}
+.project-info h3,.card h3,.course-name,.journal-entry-card h3{letter-spacing:-.02em}
+.project-filters{gap:7px}
+.project-filter{border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--muted);padding:8px 11px;font-size:11px}
+.project-filter.active,.project-filter[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+input,textarea,select,.search,.global-search-field,.range-control{border:1px solid var(--line)!important;border-radius:5px!important;background:var(--bg)!important;color:var(--text)!important;box-shadow:none!important}
+input,textarea,select{padding:11px 12px}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+input:focus,textarea:focus,select:focus{border-color:var(--accent)!important;outline:2px solid color-mix(in srgb,var(--accent) 20%,transparent);outline-offset:1px}
+.footer{border-top:1px solid var(--line);background:transparent!important}
+.global-search-trigger{border:1px solid var(--line);border-radius:5px;background:transparent}
+.global-search-panel{max-width:640px}
+.global-search-result{border-radius:4px}
+.global-search-result:hover,.global-search-result:focus-visible,.global-search-result.is-active{background:color-mix(in srgb,var(--accent) 7%,var(--surface));border-color:var(--line)}
+.modal-backdrop,.dock-backdrop{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(10,14,11,.55)!important}
+.modal-close,.dock-close{border-radius:5px;box-shadow:none!important}
+.engineering-dock{border-radius:7px!important}
+.pulse-dot,.live-dot{animation:none!important;box-shadow:none!important}
+button:hover,.button:hover,.text-button:hover,.text-link:hover{filter:none}
+::selection{background:color-mix(in srgb,var(--accent) 24%,transparent);color:var(--text)}
+@media(max-width:950px){
+ .topbar{height:auto;min-height:68px}
+ .nav-links{gap:10px}
+ .nav-links a{font-size:11px}
+}
+@media(max-width:680px){
+ .wrap,.section-wrap,.topbar{width:calc(100% - 32px)}
+ .topbar{min-height:64px}
+ .hero{min-height:0;grid-template-columns:1fr;gap:28px;padding-top:46px;padding-bottom:46px}
+ .hero h1,.page-hero h1{font-size:clamp(38px,11vw,56px);letter-spacing:-.05em}
+ .lede,.hero .lede{font-size:14px}
+ .section{padding-top:32px;padding-bottom:32px}
+ .cards,.project-grid,.project-grid-advanced,.workbench-grid{gap:10px}
+ .card,.course-card,.project-card,.journal-card,.stat-card,.academic-card,.dashboard-card{padding:16px}
+ .topbar,.hero-art,.card,.course-card,.project-card,.journal-card,.panel,.stat-card,.academic-card,.engineering-dock,.dock-backdrop{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ .hero-art{min-height:210px}
+ .nav-links a[aria-current="page"]{background:transparent;text-decoration:underline}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
