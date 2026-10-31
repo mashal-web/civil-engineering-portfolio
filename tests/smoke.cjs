@@ -3,27 +3,70 @@ const fs = require('node:fs');
 const assert = require('node:assert/strict');
 
 const script = fs.readFileSync('script.js', 'utf8');
-new Function(script);
+const css = fs.readFileSync('styles.css', 'utf8');
+const pages = ['index', 'about', 'academics', 'courses', 'projects', 'journal', 'contact'];
 
+assert.doesNotThrow(() => new Function(script), 'script.js must parse as valid JavaScript');
 assert.match(script, /const \$=\(s,root=document\)=>root\.querySelector\(s\), \$\$=\(s,root=document\)=>\[\.\.\.root\.querySelectorAll\(s\)\]/,
-  'selector helpers must support single and multiple elements, including scoped queries');
+  'selector helpers must support scoped single and multiple queries');
 assert.doesNotMatch(script, /\$\$\$/, 'invalid triple-dollar selectors must never ship');
 assert.doesNotMatch(script, /(?<!\$)\$\(['"][^'"]+['"]\)\.forEach/, 'single-element queries must not be used as collections');
 
+for (const page of pages) {
+  const file = page === 'index' ? 'index.html' : page + '.html';
+  const html = fs.readFileSync(file, 'utf8');
+  assert.match(html, new RegExp('data-page=["\\x27]' + page + '["\\x27]'), file + ' must identify its page');
+  assert.match(html, /id=["']site["']/, file + ' must contain the application mount');
+  assert.match(html, /styles\.css\?v=/, file + ' must load the versioned stylesheet');
+  assert.match(html, /script\.js\?v=/, file + ' must load the versioned script');
+  assert.match(script, new RegExp('(^|\\n)' + page + ':'), 'script.js must define the ' + page + ' page');
+}
+
+const journalBlock = script.match(/const j=\{([\s\S]*?)\};\s*const pj=/);
+const projectBlock = script.match(/const pj=\{([\s\S]*?)\};\s*function modal/);
+assert.ok(journalBlock, 'journal content map must exist');
+assert.ok(projectBlock, 'project detail content map must exist');
+const journalKeys = [...journalBlock[1].matchAll(/(?:^|,)([a-z][\w]*):\[/g)].map(m => m[1]);
+const projectKeys = [...projectBlock[1].matchAll(/(?:^|,)([a-z][\w]*):\[/g)].map(m => m[1]);
+const journalButtons = [...script.matchAll(/data-entry="([^"]+)"/g)].map(m => m[1]);
+const projectButtons = [...script.matchAll(/data-project="([^"]+)"/g)].map(m => m[1]);
+for (const key of journalButtons) assert.ok(journalKeys.includes(key), 'journal button points to missing entry: ' + key);
+for (const key of projectButtons) assert.ok(projectKeys.includes(key), 'project detail button points to missing detail: ' + key);
+
+const categories = [...new Set([...script.matchAll(/data-category="([^"]+)"/g)].map(m => m[1]))];
+const filters = [...new Set([...script.matchAll(/data-filter="([^"]+)"/g)].map(m => m[1]))];
+for (const category of categories) assert.ok(filters.includes(category), 'project category has no filter: ' + category);
+assert.ok(filters.includes('all'), 'project filters must include All');
+
 for (const feature of [
-  'theme-toggle', 'menu-toggle', 'course-search', 'course-card-button',
-  'journal-open', 'project-detail', 'project-filter', 'studio-span',
-  'studio-load', 'studio-position', 'concrete-form', 'download-cv',
-  'print-cv', 'hero-bridge', 'lab-canvas', 'dock-canvas'
-]) {
-  assert.ok(script.includes(feature), `missing expected feature hook: ${feature}`);
-}
+  /theme-toggle[\s\S]*?addEventListener\('click'/,
+  /menu-toggle[\s\S]*?addEventListener\('click'/,
+  /course-search[\s\S]*?addEventListener\('input'/,
+  /course-card-button[\s\S]*?addEventListener\('click'/,
+  /journal-open[\s\S]*?addEventListener\('click'/,
+  /project-detail[\s\S]*?addEventListener\('click'/,
+  /project-filter[\s\S]*?addEventListener\('click'/,
+  /studio-span[\s\S]*?addEventListener\('input'/,
+  /studio-load[\s\S]*?addEventListener\('input'/,
+  /studio-position[\s\S]*?addEventListener\('input'/,
+  /concrete-form[\s\S]*?addEventListener\('submit'/,
+  /download-cv[\s\S]*?addEventListener\('click'/,
+  /print-cv[\s\S]*?addEventListener\('click'/,
+  /loadThreeEngine\(\)/,
+  /cdn\.jsdelivr\.net\/npm\/three@0\.160\.0/
+]) assert.match(script, feature, 'missing or disconnected feature handler: ' + feature);
 
-for (const page of ['index', 'about', 'academics', 'courses', 'projects', 'journal', 'contact']) {
-  const html = fs.readFileSync(page === 'index' ? 'index.html' : `${page}.html`, 'utf8');
-  assert.match(html, new RegExp(`data-page=["']${page}["']`), `wrong data-page for ${page}`);
-  assert.match(html, /styles\.css\?v=/, `${page} must load the versioned stylesheet`);
-  assert.match(html, /script\.js\?v=/, `${page} must load the versioned script`);
-}
+assert.match(script, /ra=load\*\(1-position\),rb=load\*position/, 'beam reactions must use the point-load position');
+assert.match(script, /const v=l\*w\*d/, 'concrete estimator must calculate volume');
+assert.match(script, /if\(reduced\)render\(\)/, 'interactive 3D controls must redraw with reduced motion enabled');
+assert.match(script, /baseMaterials\.map/, '3D materials must preserve their original colors between view modes');
 
-console.log('Portfolio smoke checks passed.');
+for (const selector of [
+  '.course-card[hidden]{display:none}',
+  '.modal-backdrop[hidden]{display:none}',
+  '.dock-backdrop[hidden]{display:none}'
+]) assert.ok(css.includes(selector), 'CSS must respect hidden state: ' + selector);
+assert.match(css, /\.project-grid-advanced \.project-card\[hidden\]\{display:none!important\}/,
+  'filtered project cards must be hidden');
+
+console.log('Portfolio audit smoke checks passed.');
