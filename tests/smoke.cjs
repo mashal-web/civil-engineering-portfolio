@@ -4,16 +4,14 @@ const assert = require('node:assert/strict');
 
 const script = fs.readFileSync('script.js', 'utf8');
 const css = fs.readFileSync('styles.css', 'utf8');
-const minimalism = fs.readFileSync('minimalism.css', 'utf8');
 const pages = ['index', 'about', 'academics', 'courses', 'projects', 'journal', 'contact'];
 
 assert.doesNotThrow(() => new Function(script), 'script.js must parse as valid JavaScript');
-assert.match(minimalism, /--bg:#fff/, 'minimalism layer must use a pure white light background');
-assert.match(minimalism, /--bg:#000/, 'minimalism layer must use a pure black dark background');
-assert.match(minimalism, /animation:none!important/, 'minimalism layer must disable all animations');
-assert.match(minimalism, /transition:none!important/, 'minimalism layer must disable all transitions');
-assert.match(minimalism, /:root\[data-theme="dark"\]/, 'minimalism layer must preserve the dark theme');
-assert.match(minimalism, /prefers-reduced-motion:reduce/, 'minimalism layer must respect reduced-motion preferences');
+assert.match(css, /--bg:#fff/, 'stylesheet must use a pure white light background');
+assert.match(css, /--bg:#000/, 'stylesheet must use a pure black dark background');
+assert.match(css, /:root\[data-theme="dark"\]/, 'stylesheet must preserve the dark theme');
+assert.doesNotMatch(css, /animation\s*:/, 'monochrome stylesheet must not add animations');
+assert.doesNotMatch(css, /transition\s*:/, 'monochrome stylesheet must not add transitions');
 assert.match(script, /const \$=\(s,root=document\)=>root\.querySelector\(s\), \$\$=\(s,root=document\)=>\[\.\.\.root\.querySelectorAll\(s\)\]/,
   'selector helpers must support scoped single and multiple queries');
 assert.doesNotMatch(script, /\$\$\$/, 'invalid triple-dollar selectors must never ship');
@@ -29,7 +27,6 @@ for (const page of pages) {
   assert.match(html, new RegExp('data-page=["\\x27]' + page + '["\\x27]'), file + ' must identify its page');
   assert.match(html, /id=["']site["']/, file + ' must contain the application mount');
   assert.match(html, /styles\.css\?v=/, file + ' must load the versioned stylesheet');
-  assert.match(html, /minimalism\.css\?v=/, file + ' must load the minimalism design layer');
   assert.match(html, /script\.js\?v=/, file + ' must load the versioned script');
   assert.match(script, new RegExp('(^|\\n)' + page + ':'), 'script.js must define the ' + page + ' page');
 }
