@@ -380,3 +380,59 @@ body::before{
   :root{--photo-overlay:linear-gradient(90deg,rgba(7,16,24,.78),rgba(7,16,24,.56))}
   :root[data-theme=light]{--photo-overlay:linear-gradient(90deg,rgba(245,248,246,.88),rgba(245,248,246,.72))}
 }
+
+
+/* CUSTOM ANIMATED ENGINEERING BLUEPRINT — CSS-only, theme-aware, no external image */
+:root{
+  --blueprint-glow:rgba(101,247,255,.10);
+  --blueprint-line:rgba(101,247,255,.075);
+  --blueprint-sweep:rgba(101,247,255,.14);
+}
+:root[data-theme=light]{
+  --blueprint-glow:rgba(8,127,145,.065);
+  --blueprint-line:rgba(8,127,145,.075);
+  --blueprint-sweep:rgba(8,127,145,.12);
+}
+body::before{
+  background-image:
+    radial-gradient(ellipse at 14% 16%,var(--blueprint-glow),transparent 36%),
+    radial-gradient(ellipse at 82% 30%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 34%),
+    linear-gradient(var(--blueprint-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--blueprint-line) 1px,transparent 1px),
+    linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--bg) 95%,var(--accent)));
+  background-size:auto,auto,54px 54px,54px 54px,auto;
+  background-position:center,center,0 0,0 0,center;
+  background-repeat:no-repeat,no-repeat,repeat,repeat,no-repeat;
+  animation:blueprint-grid-drift 48s linear infinite;
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.9) 66%,transparent 100%);
+}
+body::after{
+  opacity:.52;
+  mix-blend-mode:screen;
+  background:
+    linear-gradient(112deg,transparent 0%,transparent 43%,var(--blueprint-sweep) 49.5%,transparent 51%,transparent 100%),
+    linear-gradient(90deg,transparent 0 19%,var(--blueprint-line) 19.1% 19.2%,transparent 19.3% 79%,var(--blueprint-line) 79.1% 79.2%,transparent 79.3%),
+    radial-gradient(circle at 19.2% 34%,var(--accent) 0 1px,transparent 2px),
+    radial-gradient(circle at 79.2% 63%,var(--accent) 0 1px,transparent 2px);
+  background-size:220% 100%,100% 100%,100% 100%,100% 100%;
+  background-position:200% 0,0 0,0 0,0 0;
+  background-repeat:no-repeat;
+  animation:blueprint-scan 17s ease-in-out infinite;
+}
+@keyframes blueprint-grid-drift{
+  from{background-position:center,center,0 0,0 0,center}
+  to{background-position:center,center,54px 54px,54px 54px,center}
+}
+@keyframes blueprint-scan{
+  0%,12%{background-position:200% 0,0 0,0 0,0 0}
+  68%,100%{background-position:-220% 0,0 0,0 0,0 0}
+}
+:root[data-theme=light] body::after{mix-blend-mode:multiply;opacity:.38}
+@media(max-width:680px){
+  body::before{background-size:auto,auto,38px 38px,38px 38px,auto}
+  body::after{opacity:.26;animation-duration:24s}
+}
+@media(prefers-reduced-motion:reduce){
+  body::before,body::after{animation:none!important}
+  body::after{opacity:.18}
+}
