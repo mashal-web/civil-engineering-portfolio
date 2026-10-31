@@ -157,3 +157,25 @@ body{perspective:1400px;transform-style:preserve-3d}
 @keyframes modal-depth-in{from{opacity:0;transform:translateY(18px) rotateX(5deg) scale(.97)}to{opacity:1;transform:translateY(0) rotateX(0) scale(1)}}
 @media(max-width:680px){.depth-object-a{right:-25px;top:22%;scale:.65}.depth-object-b{left:-10px;top:64%;scale:.55}.depth-grid{background-size:42px 42px;opacity:.22}.hero-art{transform:none}.card:hover,.dashboard-card:hover,.academic:hover,.course-callout:hover,.course-card:hover{transform:translateY(-3px) translateZ(2px)}}
 @media(prefers-reduced-motion:reduce){.depth-object,.hero-art::after{animation:none!important}.modal,.dock-window{animation:none!important}.card,.course-card,.dashboard-card,.academic,.course-callout{transition:none!important}}
+
+
+/* Project studio: individual project illustrations and compact learning tools */
+.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}
+.project-card{display:flex;flex-direction:column;min-width:0;padding:20px}
+.project-card h2{font:600 20px/1.2 Manrope;letter-spacing:-.04em;margin:12px 0}
+.project-card>p:not(.eyebrow){font-size:12px;line-height:1.8;color:var(--muted)}
+.project-illustration{height:112px;display:grid;place-items:center;overflow:hidden;margin:-20px -20px 22px;padding:10px 16px;color:var(--accent);border-bottom:1px solid var(--line);background:radial-gradient(ellipse at center,color-mix(in srgb,var(--accent) 10%,transparent),transparent 72%),linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:auto,18px 18px,18px 18px}
+.project-illustration svg{width:100%;height:100%;max-height:100px;overflow:visible}
+.project-card .status{align-self:flex-start;margin-top:auto;margin-bottom:10px}
+.project-card .text-button,.project-card .project-link{align-self:flex-start}
+.project-link{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--accent);text-decoration:none;padding:7px 0}
+.mini-calculator{display:grid;gap:10px;margin:10px 0 18px}
+.mini-calculator label{display:grid;gap:5px;font-size:10px;line-height:1.4;color:var(--muted)}
+.mini-calculator input{width:100%;min-width:0;padding:9px 10px;border:1px solid var(--line);border-radius:3px;background:var(--bg);color:var(--text);font:12px 'DM Mono';}
+.mini-calculator input:focus{outline:1px solid var(--accent);border-color:var(--accent)}
+.mini-calculator .button{justify-self:start;margin:2px 0;padding:10px 12px;cursor:pointer;font-size:10px}
+.calculator-result{display:block;padding:10px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 80%,var(--accent) 5%);color:var(--text);font-size:10px;line-height:1.7;overflow-wrap:anywhere;min-height:40px}
+.dimension-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+@media(max-width:950px){.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.project-grid{grid-template-columns:minmax(0,1fr)}.project-card{padding:18px}.project-illustration{margin:-18px -18px 20px}.dimension-fields{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.project-card{transition:none}}
