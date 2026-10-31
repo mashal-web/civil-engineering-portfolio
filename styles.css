@@ -150,3 +150,47 @@ input,textarea,select{background:#090909;border-color:#303030;box-shadow:inset 4
 .site-footer .copyright{width:min(var(--content),calc(100% - 48px));margin:0 auto;padding:16px 0 20px;border-top:1px solid #202020}
 @media(max-width:700px){.footer-directory{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 22px;padding:32px 0 26px}.footer-identity{grid-column:1/-1}.footer-identity>p{max-width:none}}
 @media(max-width:420px){.footer-directory{width:calc(100% - 32px);grid-template-columns:1fr 1fr;gap:24px 16px}.footer-nav{gap:10px}.footer-nav a{font-size:11px}.site-footer .copyright{width:calc(100% - 32px)}}
+
+
+/* Phase 9: unified page rhythm, stronger content hierarchy, and compact mobile navigation. */
+:root{--page-gap:clamp(18px,2.8vw,30px);--panel-pad:clamp(22px,4vw,46px)}
+main.container{padding-bottom:clamp(34px,6vw,72px)}
+.page-intro{display:flex;min-height:clamp(260px,32vw,390px);flex-direction:column;align-items:flex-start;justify-content:center;margin:var(--page-gap) 0;padding:var(--panel-pad)}
+.page-intro h1{max-width:850px;margin-bottom:16px}
+.page-intro .lede{max-width:660px;margin-bottom:0}
+.content-section{padding:var(--panel-pad);margin:0 0 var(--page-gap)}
+.content-section>h2:first-child{margin-top:0}
+.content-section>h2{max-width:780px}
+.section{margin:var(--page-gap) 0;padding:var(--panel-pad)}
+.section>h2{max-width:780px}
+.section .card-grid{margin-top:26px}
+.card-grid{align-items:stretch;gap:var(--page-gap)}
+.card{min-width:0}
+.fact-grid{gap:var(--page-gap)}
+.stack-list article>div{min-width:0}
+.project-row{gap:clamp(20px,4vw,44px);padding:clamp(22px,3vw,34px) 0}
+.project-figure{min-width:0}
+.journal-row{min-width:0;align-items:start}
+.site-header{z-index:10}
+@media(max-width:800px){
+ .header-inner{width:calc(100% - 32px);gap:12px}
+ .primary-nav{width:100%;max-width:100%;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;padding:2px 1px 9px;scrollbar-width:thin;scrollbar-color:#555 #111;-webkit-overflow-scrolling:touch}
+ .primary-nav a{flex:0 0 auto;white-space:nowrap}
+ .page-intro{min-height:260px}
+}
+@media(max-width:520px){
+ main.container{padding-bottom:28px}
+ .page-intro{min-height:230px;margin:14px 0;padding:25px 21px}
+ .page-intro h1{font-size:clamp(36px,10vw,50px);line-height:1.06}
+ .page-intro .lede{font-size:15px;line-height:1.65}
+ .content-section{padding:23px 19px}
+ .section{padding:23px 19px}
+ .content-section>h2,.section>h2{font-size:27px}
+ .primary-nav{gap:3px}
+ .primary-nav a{padding:7px 9px}
+}
+@media(max-width:360px){
+ .header-inner{width:calc(100% - 24px)}
+ .brand-full{font-size:8px}
+ .page-intro,.content-section,.section{padding-inline:17px}
+}
