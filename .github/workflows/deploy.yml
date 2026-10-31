@@ -18,7 +18,7 @@ jobs:
       - name: Validate required static pages
         run: |
           set -eu
-          for file in index.html about.html academics.html courses.html projects.html journal.html contact.html styles.css assets/engineering-mark.svg projects/bridge-study.html journal/learning-notes.html; do
+          for file in index.html about.html academics.html courses.html quantitative-reasoning.html projects.html journal.html contact.html styles.css assets/engineering-mark.svg projects/bridge-study.html journal/learning-notes.html; do
             test -s "$file" || { echo "Missing required file: $file"; exit 1; }
           done
           if grep -E '<script|<style|@keyframes|transition[[:space:]]*:' index.html about.html academics.html courses.html projects.html journal.html contact.html styles.css; then
