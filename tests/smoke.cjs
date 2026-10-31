@@ -113,6 +113,6 @@ for (const page of pages) {
   const html = fs.readFileSync(file, 'utf8');
   assert.match(html, /rel="preconnect" href="https:\/\/fonts\.googleapis\.com"/, file + ' must preconnect to the font host');
   assert.match(html, /fonts\.googleapis\.com\/css2\?[^"]*display=swap/, file + ' must load fonts with swap outside the CSS import chain');
-  assert.match(html, /media="print" onload="this\\.onload=null;this\\.media='all'"/, file + ' must load fonts without blocking initial rendering');
-  assert.match(html, /<noscript><link rel="stylesheet" href="https:\/\/fonts\\.googleapis\\.com\\/css2\\?/, file + ' must preserve typography when JavaScript is disabled');
+  assert.ok(html.includes('media="print" onload="this.onload=null;this.media=\'all\'"'), file + ' must load fonts without blocking initial rendering');
+  assert.ok(html.includes('<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?'), file + ' must preserve typography when JavaScript is disabled');
 }
