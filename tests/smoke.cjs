@@ -9,7 +9,7 @@ const pages = ['index', 'about', 'academics', 'courses', 'projects', 'journal', 
 
 assert.doesNotThrow(() => new Function(script), 'script.js must parse as valid JavaScript');
 assert.match(minimalism, /--bg:#f7f7f4/, 'minimalism layer must define the restrained light palette');
-assert.match(minimalism, /:root\\[data-theme="dark"\\]/, 'minimalism layer must preserve the dark theme');
+assert.match(minimalism, /:root\[data-theme="dark"\]/, 'minimalism layer must preserve the dark theme');
 assert.match(minimalism, /prefers-reduced-motion:reduce/, 'minimalism layer must respect reduced-motion preferences');
 assert.match(script, /const \$=\(s,root=document\)=>root\.querySelector\(s\), \$\$=\(s,root=document\)=>\[\.\.\.root\.querySelectorAll\(s\)\]/,
   'selector helpers must support scoped single and multiple queries');
