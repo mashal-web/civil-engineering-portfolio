@@ -202,3 +202,371 @@ main.container{padding-bottom:clamp(34px,6vw,72px)}
 .project-figure img{filter:grayscale(1) invert(1);background:#090909}
 .hero-home:before{background:linear-gradient(90deg,#050505bb 0%,#05050530 48%,#050505bb 100%),linear-gradient(180deg,#05050566 0%,#05050522 48%,#050505aa 100%)}
 @media(max-width:520px){.hero-home .hero-artwork{object-fit:cover;object-position:56% center;opacity:.72}}
+
+
+/* ARTWORK REDESIGN — editorial monochrome visual system */
+.artwork-site{--art-white:#f1f0ed;--art-muted:#b8b6b1;--art-dim:#85837e;--art-line:#ffffff32;background:#080808;color:var(--art-white);font-family:Georgia,"Times New Roman",serif}
+.artwork-site a{color:inherit}
+.artwork-header{position:absolute;z-index:20;top:0;left:0;width:100%;background:linear-gradient(180deg,#050505c9,#05050500);border-bottom:1px solid #ffffff20}
+.artwork-header .header-inner{width:min(1540px,calc(100% - 7vw));min-height:78px;gap:34px}
+.artwork-header .brand{font-family:Georgia,"Times New Roman",serif;font-size:28px;font-weight:400;letter-spacing:-.08em}
+.artwork-header .brand-separator{margin:0 16px;color:#777;font-weight:400}
+.artwork-header .brand-full{font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.27em;color:#c8c6c0}
+.artwork-header .primary-nav{gap:clamp(13px,2.2vw,34px)}
+.artwork-header .primary-nav a{padding:9px 0;color:#e1dfdb;font-family:Georgia,"Times New Roman",serif;font-size:13px}
+.artwork-header .primary-nav a[aria-current=page],.artwork-header .primary-nav a:hover{color:#fff;text-decoration:underline;text-underline-offset:9px}
+.artwork-main{width:100%;max-width:none;padding:0 0 70px;overflow:hidden}
+.art-hero{position:relative;isolation:isolate;display:flex;min-height:min(790px,92vh);align-items:center;padding:150px max(7vw,30px) 110px;overflow:hidden;background:#101010}
+.art-hero-image{position:absolute;z-index:-3;inset:0;background-image:linear-gradient(90deg,#050505e8 0%,#0505058c 37%,#05050520 72%,#05050530 100%),linear-gradient(0deg,#050505b0,transparent 44%),url("https://images.unsplash.com/photo-1778445578621-fda018908e35?auto=format&fit=crop&q=82&w=2400");background-size:cover;background-position:center 47%;filter:grayscale(1) contrast(1.08)}
+.art-hero-grid{position:absolute;z-index:-2;inset:0;opacity:.24;background-image:linear-gradient(#ffffff14 1px,transparent 1px),linear-gradient(90deg,#ffffff14 1px,transparent 1px),radial-gradient(circle at 58% 48%,transparent 0 18%,#fff2 18.1% 18.2%,transparent 18.3%);background-size:72px 72px,72px 72px,auto;mask-image:linear-gradient(90deg,#000,transparent 88%)}
+.art-hero-copy{width:min(650px,100%);padding-top:24px}
+.art-kicker{margin:0 0 22px;color:#c7c4bd;font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:600;letter-spacing:.38em;line-height:1.7}
+.art-hero h1{margin:0;color:#f7f6f2;font-family:Georgia,"Times New Roman",serif;font-size:clamp(76px,12vw,178px);font-weight:400;letter-spacing:-.065em;line-height:.76}
+.art-hero h1 span{color:#aaa8a3}
+.art-rule{display:block;width:94px;height:1px;margin-top:38px;background:#e6e3dc}
+.art-hero-index{position:absolute;right:5vw;bottom:44px;margin:0;color:#d0cec8;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.25em}
+.art-shortcuts{position:relative;z-index:2;display:grid;width:min(1540px,calc(100% - 7vw));grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:-54px auto 0}
+.art-tile{position:relative;display:flex;min-height:190px;align-items:flex-end;gap:18px;padding:23px 22px;overflow:hidden;border:1px solid #ffffff36;border-radius:7px;background:#111;text-decoration:none;isolation:isolate}
+.art-tile:before{position:absolute;z-index:-2;inset:0;content:"";background-size:cover;background-position:center;filter:grayscale(1);}
+.art-tile:after{position:absolute;z-index:-1;inset:0;content:"";background:linear-gradient(90deg,#050505d9,#05050565 68%,#05050520),linear-gradient(0deg,#050505a8,transparent 75%)}
+.art-tile-projects:before{background-image:url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=78")}
+.art-tile-courses:before{background-image:url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=78")}
+.art-tile-journal:before{background-image:url("https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=78")}
+.art-tile-academics:before{background-image:url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=78")}
+.art-tile-icon{align-self:flex-start;color:#e8e6e1;font-size:23px}
+.art-tile-copy{display:flex;max-width:190px;flex-direction:column;gap:7px}
+.art-tile-copy strong{font-size:23px;font-weight:400}
+.art-tile-copy small{max-width:190px;color:#d2d0ca;font-size:12px;line-height:1.45}
+.art-arrow{margin-top:8px;color:#eee;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase}
+.art-editorial{position:relative;display:grid;width:min(1540px,calc(100% - 7vw));min-height:400px;grid-template-columns:1.1fr 1fr .52fr;align-items:center;gap:clamp(24px,5vw,80px);margin:45px auto 0;padding:35px 0;border-bottom:1px solid var(--art-line)}
+.art-editorial-image{align-self:stretch;min-height:300px;background:linear-gradient(90deg,#08080808,#08080844),url("https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1400&q=80") center/cover;filter:grayscale(1)}
+.art-editorial-copy{max-width:480px}
+.art-editorial-copy h2{margin:0 0 20px;font-size:clamp(34px,4.2vw,58px);font-weight:400;line-height:1.02;letter-spacing:-.04em}
+.art-editorial-copy h2 em{color:#aaa79f;font-weight:400}
+.art-editorial-copy>p:not(.art-kicker){max-width:460px;color:#c0beb8;font-size:15px;line-height:1.75}
+.art-text-link{display:inline-flex;align-items:center;gap:18px;margin-top:16px;padding-bottom:8px;border-bottom:1px solid #aaa;color:#f2f0eb;text-decoration:none;font-size:13px}
+.art-text-link span{font-family:Arial,Helvetica,sans-serif}
+.art-editorial-note{align-self:center;padding:20px 0 20px 26px;border-left:1px solid #ffffff55}
+.art-editorial-note span,.art-focus .art-kicker{font-size:8px;letter-spacing:.25em}
+.art-editorial-note p{font-size:clamp(20px,2vw,27px);font-style:italic;line-height:1.35}
+.art-editorial-note i{display:block;width:44px;height:1px;background:#ddd}
+.art-focus{display:grid;width:min(1540px,calc(100% - 7vw));grid-template-columns:repeat(4,1fr);gap:22px;margin:0 auto;padding:34px 0;border-bottom:1px solid var(--art-line)}
+.art-focus>div{display:flex;flex-direction:column;gap:8px}
+.art-focus strong{font-size:20px;font-weight:400}
+.art-focus small{color:#a8a69f;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.04em}
+.art-current{position:relative;display:grid;width:min(1540px,calc(100% - 7vw));min-height:320px;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(25px,6vw,90px);margin:48px auto 0;overflow:hidden}
+.art-current-image{position:absolute;z-index:-1;inset:0 45% 0 0;background:linear-gradient(90deg,#08080810,#080808e8),url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1300&q=80") center/cover;filter:grayscale(1);opacity:.72}
+.art-current-copy{grid-column:2;padding:35px 0}
+.art-current-copy h2{margin:0 0 15px;font-size:clamp(38px,5vw,64px);font-weight:400;line-height:.98}
+.art-current-copy>p:not(.art-kicker){max-width:460px;color:#c3c1bb;font-size:14px;line-height:1.7}
+.artwork-footer{border-top:1px solid #ffffff30;background:#080808}
+.artwork-footer .footer-directory{width:min(1540px,calc(100% - 7vw));grid-template-columns:1fr 1fr .8fr;padding:36px 0}
+.artwork-footer .brand{font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:400;letter-spacing:-.06em}
+.artwork-footer .brand-full{font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.25em}
+.artwork-footer .footer-nav a{font-family:Georgia,"Times New Roman",serif;color:#c9c7c1}
+.artwork-footer .footer-signoff{justify-self:end}
+.artwork-footer .footer-signoff span{color:#888;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.22em}
+.artwork-footer .footer-signoff p{font-size:22px;font-style:italic;line-height:1.3}
+.artwork-footer .copyright{width:min(1540px,calc(100% - 7vw));color:#777}
+@media(max-width:900px){.artwork-header .header-inner{width:calc(100% - 36px);flex-wrap:wrap;padding:14px 0}.artwork-header .primary-nav{overflow-x:auto}.art-hero{min-height:690px}.art-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:-35px}.art-editorial{grid-template-columns:1fr 1fr}.art-editorial-image{min-height:340px}.art-editorial-note{grid-column:2}.art-focus{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.artwork-header .header-inner{gap:12px}.artwork-header .brand{font-size:24px}.artwork-header .brand-separator{margin:0 9px}.artwork-header .brand-full{font-size:8px;letter-spacing:.18em}.artwork-header .primary-nav{gap:18px}.artwork-header .primary-nav a{font-size:12px}.art-hero{min-height:640px;align-items:flex-end;padding:160px 24px 125px}.art-hero-image{background-position:58% center}.art-hero h1{font-size:clamp(70px,17vw,108px)}.art-hero-index{right:24px;bottom:32px;font-size:7px}.art-shortcuts{width:calc(100% - 32px);grid-template-columns:1fr 1fr;gap:9px;margin-top:-28px}.art-tile{min-height:175px;gap:10px;padding:16px 13px}.art-tile-copy strong{font-size:19px}.art-tile-copy small{font-size:10px}.art-tile-icon{font-size:18px}.art-editorial{width:calc(100% - 32px);grid-template-columns:1fr;gap:22px;margin-top:28px}.art-editorial-image{min-height:250px}.art-editorial-copy h2{font-size:42px}.art-editorial-note{grid-column:auto}.art-focus{width:calc(100% - 32px);gap:24px 14px}.art-focus strong{font-size:17px}.art-focus small{font-size:9px}.art-current{width:calc(100% - 32px);min-height:420px;grid-template-columns:1fr;margin-top:30px}.art-current-image{inset:0 0 42%}.art-current-copy{grid-column:1;align-self:end;padding:230px 18px 25px;background:linear-gradient(0deg,#080808,#080808e8 78%,transparent)}.artwork-footer .footer-directory{width:calc(100% - 32px);grid-template-columns:1fr 1fr;gap:28px 18px}.artwork-footer .footer-identity{grid-column:1/-1}.artwork-footer .footer-signoff{grid-column:1/-1;justify-self:start}.artwork-footer .copyright{width:calc(100% - 32px)}}
+@media(prefers-reduced-motion:reduce){.artwork-site *{scroll-behavior:auto!important;}}
+
+
+/* ARTWORK REDESIGN — interior-page compositions */
+.artwork-page main.container{width:min(1320px,calc(100% - 7vw));max-width:1320px;padding:94px 0 76px}
+.artwork-page .breadcrumb{margin:0 0 16px;color:#9b9992;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:.08em}
+.artwork-page .breadcrumb a{color:#d5d2ca}
+.artwork-page .page-intro{position:relative;isolation:isolate;min-height:390px;justify-content:flex-end;margin:0 0 28px;padding:clamp(30px,5vw,70px);overflow:hidden;border:1px solid #ffffff28;border-radius:3px;background:#111;box-shadow:none}
+.artwork-page .page-intro:before{position:absolute;z-index:-2;inset:0;content:"";background-size:cover;background-position:center;filter:grayscale(1)}
+.artwork-page .page-intro:after{position:absolute;z-index:-1;inset:0;content:"";background:linear-gradient(90deg,#050505e8 0%,#0505058c 60%,#05050525 100%),linear-gradient(0deg,#050505a8,transparent 80%)}
+.page-about .page-intro:before,.page-academics .page-intro:before{background-image:url("https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1800&q=80")}
+.page-courses .page-intro:before,.page-quantitative-reasoning .page-intro:before,.page-islamic-studies .page-intro:before{background-image:url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1800&q=80")}
+.page-projects .page-intro:before,.page-projects-bridge-study .page-intro:before,.page-projects-beam-study .page-intro:before{background-image:url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80")}
+.page-journal .page-intro:before,.page-journal-learning-notes .page-intro:before{background-image:url("https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1800&q=80")}
+.page-contact .page-intro:before{background-image:url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=80")}
+.artwork-page .page-intro .eyebrow{color:#d0cdc6;font-size:9px;letter-spacing:.32em}
+.artwork-page .page-intro h1{max-width:900px;margin:0 0 16px;color:#f5f3ee;font-family:Georgia,"Times New Roman",serif;font-size:clamp(42px,7vw,86px);font-weight:400;letter-spacing:-.045em;line-height:.98}
+.artwork-page .page-intro .lede{max-width:620px;margin:0;color:#d0cec8;font-size:15px;line-height:1.7}
+.artwork-page .content-section,.artwork-page .section{margin:0 0 28px;padding:clamp(24px,4vw,54px) 0;border:0;border-top:1px solid #ffffff38;border-radius:0;background:transparent;box-shadow:none}
+.artwork-page .content-section h2,.artwork-page .section h2{color:#f0eee8;font-family:Georgia,"Times New Roman",serif;font-size:clamp(27px,3.4vw,43px);font-weight:400;letter-spacing:-.025em}
+.artwork-page .content-section h3,.artwork-page .section h3{font-family:Georgia,"Times New Roman",serif;font-weight:400}
+.artwork-page .prose,.artwork-page .content-section>p{max-width:850px;color:#c4c1ba;font-size:15px;line-height:1.8}
+.artwork-page .rule{height:1px;margin:34px 0;background:#ffffff2c}
+.artwork-page .fact,.artwork-page .course-panel,.artwork-page .course-feature,.artwork-page .detail-nav-link{border:1px solid #ffffff2b;border-radius:3px;background:linear-gradient(135deg,#ffffff0b,#ffffff02);box-shadow:none}
+.artwork-page .fact{padding:24px}
+.artwork-page .fact strong{font-family:Georgia,"Times New Roman",serif;font-size:22px;font-weight:400}
+.artwork-page .stack-list article{padding:22px 0;border-bottom:1px solid #ffffff24}
+.artwork-page .stack-list article h3{font-size:22px}
+.artwork-page .stack-list article p,.artwork-page .note,.artwork-page .plain-list{color:#c2c0b9;line-height:1.8}
+.artwork-page .card-grid{gap:14px}
+.artwork-page .card{border:1px solid #ffffff30;border-radius:3px;background:linear-gradient(145deg,#ffffff12,#ffffff03);box-shadow:none}
+.artwork-page .card:hover{background:#ffffff14;box-shadow:none}
+.artwork-page .project-row{align-items:center;border-bottom:1px solid #ffffff2b}
+.artwork-page .project-figure img{max-height:430px;object-fit:cover;background:#111}
+.artwork-page .project-figure-caption{color:#a7a49c;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.16em}
+.artwork-page .project-copy h2 a,.artwork-page .journal-row h2 a{color:#f4f2ec;text-decoration:none}
+.artwork-page .project-copy h2 a:hover,.artwork-page .journal-row h2 a:hover{text-decoration:underline;text-underline-offset:6px}
+.artwork-page .journal-row{padding:28px 0;border-bottom:1px solid #ffffff2b}
+.artwork-page .journal-date{color:#a5a29a;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.18em}
+.artwork-page .button,.artwork-page .button-dark{border:1px solid #bdbab2;border-radius:0;background:#e7e4dc;color:#111;box-shadow:none}
+.artwork-page .button:hover,.artwork-page .button-dark:hover{background:#fff}
+.artwork-page .text-link{color:#f0eee8}
+.artwork-page .status{color:#bdbab2;border-color:#ffffff45}
+.artwork-page .contact-block{padding:26px 0}
+.artwork-page .detail-navigation{gap:14px}
+.artwork-page .detail-nav-link{padding:24px;color:#eee}
+.artwork-page .course-hero{min-height:330px}
+.artwork-page .course-feature{padding:clamp(22px,4vw,42px);margin-bottom:16px}
+.artwork-page .course-feature-mark{border-color:#ffffff44;background:#ffffff0a}
+.artwork-page .note{border-left:2px solid #aaa;background:#ffffff08;padding:18px 22px}
+@media(max-width:700px){.artwork-page main.container{width:calc(100% - 32px);padding-top:120px}.artwork-page .page-intro{min-height:340px;padding:28px 22px}.artwork-page .page-intro h1{font-size:clamp(38px,10vw,58px)}.artwork-page .project-row{grid-template-columns:1fr}.artwork-page .project-figure img{max-height:300px}}
+
+
+/* ART DIRECTION PASS 02 — silver fluid artwork, editorial rhythm and tactile surfaces */
+:root{color-scheme:dark}
+.artwork-site{background:#080808;color:#eeede9}
+.artwork-site ::selection{background:#e7e5df;color:#090909}
+.artwork-site :focus-visible{outline:2px solid #e5e2da;outline-offset:5px}
+.artwork-site .skip-link{z-index:1000}
+.artwork-header{background:linear-gradient(180deg,#070707e8 0%,#070707a8 76%,#07070700 100%)}
+.artwork-header .header-inner{min-height:86px}
+.artwork-header .brand{white-space:nowrap}
+.artwork-header .primary-nav a{white-space:nowrap;letter-spacing:.015em}
+.artwork-header .primary-nav a[aria-current=page]:after{content:"";display:block;width:100%;height:1px;margin-top:7px;background:#c8c6c0}
+.art-hero{min-height:min(900px,100svh);padding-top:170px;padding-bottom:130px}
+.art-hero:after{position:absolute;z-index:-1;top:13%;right:-4%;width:64%;height:78%;content:"";background:url("https://images.unsplash.com/photo-1778554596781-5d3b1e1c5ad0?auto=format&fit=crop&q=82&w=1800") center/cover no-repeat;opacity:.42;mix-blend-mode:screen;mask-image:linear-gradient(90deg,transparent 0%,#000 28%,#000 84%,transparent 100%);pointer-events:none}
+.art-hero-image{background-image:linear-gradient(90deg,#050505ed 0%,#050505a8 34%,#05050555 72%,#05050570 100%),linear-gradient(0deg,#050505e0 0%,transparent 42%,#05050566 100%),url("https://images.unsplash.com/photo-1778445578621-fda018908e35?auto=format&fit=crop&q=82&w=2400")}
+.art-hero-copy{position:relative}
+.art-hero-copy:before{position:absolute;z-index:-1;top:-30px;left:-32px;width:1px;height:clamp(190px,25vw,330px);content:"";background:linear-gradient(#eee,transparent)}
+.art-hero h1{font-size:clamp(84px,13vw,194px);line-height:.72;letter-spacing:-.075em}
+.art-hero h1 span{display:inline-block;margin-left:clamp(12px,5vw,76px);color:#a9a8a5}
+.art-kicker{letter-spacing:.42em}
+.art-rule{width:clamp(80px,11vw,160px);margin-top:48px}
+.art-hero-index{display:flex;align-items:center;gap:14px}
+.art-hero-index:before{width:36px;height:1px;content:"";background:#d6d3cc}
+.art-shortcuts{gap:12px;margin-top:-66px}
+.art-tile{min-height:205px;border-color:#ffffff25;background:#111;box-shadow:inset 1px 1px 0 #ffffff12,inset -1px -1px 0 #000}
+.art-tile:after{background:linear-gradient(90deg,#050505ed 0%,#05050570 80%,#05050520 100%),linear-gradient(0deg,#050505a8,transparent 82%)}
+.art-tile-copy strong{font-size:clamp(20px,2vw,27px);letter-spacing:-.025em}
+.art-tile-copy small{color:#d1cfc9}
+.art-tile-icon{display:grid;place-items:center;width:34px;height:34px;border:1px solid #ffffff65;border-radius:50%;font-family:Georgia,serif}
+.art-arrow{display:flex;align-items:center;gap:12px}
+.art-arrow:after{width:28px;height:1px;content:"";background:#c9c6bf}
+.art-editorial{min-height:470px;grid-template-columns:1.05fr 1fr .42fr;gap:clamp(28px,4vw,70px);margin-top:58px;padding:52px 0}
+.art-editorial-image{position:relative;min-height:370px;border:1px solid #ffffff20}
+.art-editorial-image:after{position:absolute;inset:14px;content:"";border:1px solid #ffffff32;pointer-events:none}
+.art-editorial-copy h2{font-size:clamp(42px,5vw,70px);line-height:.98}
+.art-editorial-copy>p:not(.art-kicker){font-size:14px;line-height:1.9}
+.art-editorial-note{position:relative}
+.art-editorial-note:after{position:absolute;top:-28px;right:0;width:48px;height:48px;content:"";border-top:1px solid #ffffff55;border-right:1px solid #ffffff55}
+.art-focus{padding:45px 0}
+.art-focus>div{min-height:110px;padding:14px 18px;border-left:1px solid #ffffff35;background:linear-gradient(110deg,#ffffff0b,transparent 80%)}
+.art-focus strong{font-size:clamp(18px,2vw,24px)}
+.art-current{min-height:410px;margin-top:62px;border:1px solid #ffffff24}
+.art-current-image{inset:0 42% 0 0;opacity:.62}
+.art-current-copy{padding:54px clamp(24px,5vw,76px);background:linear-gradient(90deg,#08080800,#080808ed 18%,#080808 100%)}
+.art-current-copy h2{font-size:clamp(46px,6vw,78px);letter-spacing:-.055em}
+.artwork-footer{margin-top:20px}
+.artwork-footer .footer-directory{padding-top:54px;padding-bottom:46px}
+.artwork-footer .footer-signoff p{font-size:clamp(24px,3vw,38px)}
+.artwork-footer .copyright{padding:18px 0 24px;border-top:1px solid #ffffff20;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.12em}
+
+/* Interior page art panels share the reference's liquid-silver image language. */
+.artwork-page main.container{padding-top:118px}
+.artwork-page .page-intro{min-height:440px;margin-bottom:46px;padding:clamp(32px,6vw,84px);border:1px solid #ffffff32;background:#0b0b0b;box-shadow:inset 0 1px 0 #ffffff14,inset 0 -1px 0 #000}
+.artwork-page .page-intro:before{background-image:url("https://images.unsplash.com/photo-1778554596781-5d3b1e1c5ad0?auto=format&fit=crop&q=82&w=2200")!important;background-position:center 48%;background-size:cover;opacity:.66}
+.artwork-page .page-intro:after{background:linear-gradient(90deg,#060606ef 0%,#0606069e 42%,#06060622 100%),linear-gradient(0deg,#060606a8,transparent 70%)}
+.artwork-page .page-intro h1{max-width:980px;font-size:clamp(48px,8vw,104px);line-height:.91;letter-spacing:-.065em}
+.artwork-page .page-intro .eyebrow,.artwork-page .page-intro .art-kicker{margin-bottom:25px;color:#cbc9c3;letter-spacing:.38em}
+.artwork-page .page-intro .lede{max-width:640px;color:#d1cfc9;font-size:15px;line-height:1.8}
+.artwork-page .content-section{position:relative;margin-bottom:44px;padding:38px clamp(0px,2vw,24px) 44px;border-top:1px solid #ffffff32}
+.artwork-page .content-section:before{position:absolute;top:-1px;left:0;width:62px;height:1px;content:"";background:#e2dfd7}
+.artwork-page .content-section h2{margin-bottom:22px;font-size:clamp(32px,4vw,52px);line-height:1.02}
+.artwork-page .content-section h3{font-size:clamp(21px,2.4vw,29px)}
+.artwork-page .prose,.artwork-page .content-section>p{font-size:15px;line-height:1.9}
+.artwork-page .course-facts{gap:12px}
+.artwork-page .course-facts>div,.artwork-page .fact{padding:20px 22px;border:1px solid #ffffff28;background:linear-gradient(145deg,#ffffff0c,#ffffff02);box-shadow:inset 1px 1px 0 #ffffff0c,inset -1px -1px 0 #000}
+.artwork-page .course-facts strong,.artwork-page .fact strong{font-family:Georgia,"Times New Roman",serif;font-size:23px;font-weight:400}
+.artwork-page .course-panel,.artwork-page .course-feature,.artwork-page .topic-card{border:1px solid #ffffff2a;background:linear-gradient(145deg,#ffffff0d,#ffffff02);box-shadow:inset 1px 1px 0 #ffffff0c,inset -1px -1px 0 #000}
+.artwork-page .course-panel,.artwork-page .course-feature{padding:clamp(22px,3vw,38px)}
+.artwork-page .topic-card{padding:22px}
+.artwork-page .topic-card .index{color:#9f9c94;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.18em}
+.artwork-page .grade-track{background:#ffffff16}
+.artwork-page .grade-track span{background:linear-gradient(90deg,#777,#dedbd3)}
+.artwork-page .note{border-left:1px solid #d1cec5;background:linear-gradient(90deg,#ffffff0c,#ffffff02);color:#d2d0ca}
+.artwork-page .project-figure{margin:32px 0 42px;padding:14px;border:1px solid #ffffff2a;background:linear-gradient(145deg,#ffffff0b,#ffffff01);box-shadow:inset 1px 1px 0 #ffffff12,inset -1px -1px 0 #000}
+.artwork-page .project-figure img{display:block;width:100%;max-height:540px;object-fit:contain;background:#101010}
+.artwork-page .project-figure-caption{display:flex;flex-wrap:wrap;gap:9px;margin:12px 4px 2px;font-size:9px;letter-spacing:.12em}
+.artwork-page .detail-navigation{margin-top:46px}
+.artwork-page .detail-nav-link{position:relative;min-height:140px;padding:25px;background:linear-gradient(145deg,#ffffff0d,#ffffff02);box-shadow:inset 1px 1px 0 #ffffff12,inset -1px -1px 0 #000}
+.artwork-page .detail-nav-link:after{position:absolute;right:20px;bottom:18px;width:28px;height:1px;content:"";background:#c8c5bd}
+.artwork-page .button,.artwork-page .button-dark{min-height:44px;padding:12px 22px;letter-spacing:.04em}
+.artwork-page .button:focus-visible,.artwork-page .button-dark:focus-visible{outline-offset:4px}
+.artwork-page input,.artwork-page textarea,.artwork-page select{border:1px solid #ffffff45;border-radius:0;background:#111;color:#f2f0eb;box-shadow:inset 2px 2px 7px #000,inset -1px -1px 2px #ffffff10}
+.artwork-page label{color:#d1cec7}
+.artwork-page .status{padding:5px 9px;border:1px solid #ffffff35;font-family:Arial,Helvetica,sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:900px){.art-hero:after{right:-20%;width:80%;opacity:.32}.art-editorial{grid-template-columns:1fr 1fr}.art-editorial-note{grid-column:2}.artwork-page .page-intro{min-height:390px}}
+@media(max-width:560px){.artwork-header{backdrop-filter:none;-webkit-backdrop-filter:none}.artwork-header .header-inner{min-height:94px}.art-hero{min-height:calc(100svh - 8px);padding:170px 24px 126px}.art-hero:after{top:20%;right:-45%;width:115%;height:65%;opacity:.27}.art-hero-copy:before{left:-12px;top:-16px;height:230px}.art-hero h1{font-size:clamp(76px,18vw,112px)}.art-hero h1 span{margin-left:16px}.art-shortcuts{margin-top:-38px}.art-tile{min-height:184px}.art-editorial{margin-top:34px;padding:34px 0}.art-editorial-image{min-height:265px}.art-focus{gap:12px}.art-focus>div{min-height:112px;padding:12px 10px}.art-current{min-height:390px}.art-current-image{inset:0 0 45%}.art-current-copy{padding:230px 18px 24px;background:linear-gradient(0deg,#080808,#080808f2 70%,transparent)}.artwork-page main.container{padding-top:110px}.artwork-page .page-intro{min-height:360px;margin-bottom:30px;padding:28px 20px}.artwork-page .page-intro h1{font-size:clamp(42px,11vw,62px)}.artwork-page .content-section{padding:28px 0 32px}.artwork-page .project-figure{padding:8px}.artwork-page .project-figure img{max-height:340px}}
+
+
+/* ART DIRECTION PASS 03 — numbered editorial structure and precision details */
+.artwork-page main.container{counter-reset:editorial-section}
+.artwork-page .content-section{counter-increment:editorial-section}
+.artwork-page .content-section:after{position:absolute;top:40px;right:clamp(0px,2vw,24px);content:"SECTION / 0" counter(editorial-section);color:#77756f;font-family:Arial,Helvetica,sans-serif;font-size:8px;letter-spacing:.2em}
+.artwork-page .page-intro{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end}
+.artwork-page .page-intro:before{transform:scale(1.015)}
+.artwork-page .page-intro .eyebrow{position:relative;padding-left:42px}
+.artwork-page .page-intro .eyebrow:before{position:absolute;top:50%;left:0;width:27px;height:1px;content:"";background:#d8d5ce}
+.artwork-page .page-intro h1{max-width:850px;text-wrap:balance}
+.artwork-page .page-intro .lede{max-width:560px}
+.artwork-page .content-section>p:last-child{margin-bottom:0}
+.artwork-page .plain-list{padding-left:20px}
+.artwork-page .plain-list li{padding:5px 0 5px 5px}
+.artwork-page .plain-list li::marker{color:#88857e}
+.artwork-page .topic-grid{gap:12px}
+.artwork-page .topic-card{min-height:140px}
+.artwork-page .topic-card h3{margin:14px 0 8px}
+.artwork-page .card-grid .card{min-height:190px;padding:24px}
+.artwork-page .card-grid .card h3{font-size:24px;font-weight:400;letter-spacing:-.02em}
+.artwork-page .project-row{padding:28px 0}
+.artwork-page .project-copy h2{font-size:clamp(28px,3vw,40px);font-weight:400}
+.artwork-page .project-figure img{border:1px solid #ffffff16}
+.artwork-page .journal-row h2{font-size:clamp(26px,3vw,38px);font-weight:400}
+.artwork-page .journal-row p{max-width:760px;color:#bdbab3;line-height:1.8}
+.artwork-page .actions{display:flex;flex-wrap:wrap;gap:12px}
+.artwork-page .button,.artwork-page .button-dark{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.artwork-page .course-info-grid{gap:14px}
+.artwork-page .schedule-item{padding:16px 0;border-bottom:1px solid #ffffff22}
+.artwork-page .grade-row{gap:14px}
+.artwork-page .grade-row strong{font-family:Georgia,"Times New Roman",serif;font-weight:400}
+.artwork-page .detail-nav-link:hover{background:linear-gradient(145deg,#ffffff16,#ffffff05);border-color:#ffffff66}
+.artwork-site a:hover{color:#fff}
+.artwork-site img{max-width:100%}
+.artwork-site .site-footer a:focus-visible{outline-offset:4px}
+@media(max-width:900px){.artwork-header .primary-nav{flex-wrap:nowrap;justify-content:flex-start;max-width:100%;padding:4px 0 8px;scrollbar-width:thin}.artwork-header .header-inner{align-items:flex-start}.artwork-header .primary-nav a{padding-inline:8px}}
+@media(max-width:560px){.artwork-header .header-inner{width:calc(100% - 28px)}.artwork-header .primary-nav{width:100%;gap:16px;overflow-x:auto;overscroll-behavior-x:contain}.artwork-header .primary-nav a{font-size:11px}.artwork-page .content-section:after{top:31px;right:0;font-size:7px}.artwork-page .content-section{padding-top:34px}.artwork-page .page-intro .eyebrow{padding-left:32px}.artwork-page .page-intro .eyebrow:before{width:20px}}
+@media(prefers-reduced-motion:reduce){.artwork-site *{scroll-behavior:auto!important;transition-duration:0s!important}}
+
+
+/* ART DIRECTION PASS 04 — individual page compositions
+   Each section now has a distinct editorial role while retaining one monochrome system. */
+.page-about .page-intro:before{background-position:50% 38%}
+.page-about .content-section{display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,1.5fr);column-gap:clamp(28px,7vw,112px);align-items:start}
+.page-about .content-section>h2{grid-column:1;max-width:300px;margin:0 0 24px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,3.8vw,46px);font-weight:400;line-height:1.08}
+.page-about .content-section>h2:not(:first-child){grid-column:1;margin-top:18px}
+.page-about .content-section>.prose,.page-about .content-section>.plain-list,.page-about .content-section>.text-link{grid-column:2}
+.page-about .content-section>.rule{grid-column:1/-1;width:100%;margin:28px 0}
+.page-about .content-section>.text-link{margin-top:14px}
+.page-about .content-section:after{content:"PROFILE / NOTES"}
+
+.page-projects .page-intro:before{background-position:50% 58%}
+.page-projects .content-section{padding-top:14px}
+.page-projects .project-row{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(260px,.88fr);gap:clamp(24px,5vw,72px);align-items:center;padding:42px 0}
+.page-projects .project-row:nth-of-type(even){grid-template-columns:minmax(260px,.88fr) minmax(0,1.12fr)}
+.page-projects .project-row:nth-of-type(even) .project-figure{order:2}
+.page-projects .project-figure{margin:0;padding:16px;background:#101010}
+.page-projects .project-figure img{min-height:220px;max-height:360px}
+.page-projects .project-copy{max-width:490px}
+.page-projects .project-copy h2 a{text-decoration:none}
+.page-projects .project-copy .eyebrow{color:#a6a39b}
+.page-projects .content-section>.rule{margin:8px 0}
+.page-projects .content-section:after{content:"DRAWING INDEX"}
+
+.page-academics .page-intro:before{background-position:50% 30%}
+.page-academics .fact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.page-academics .fact{min-height:142px;display:flex;flex-direction:column;justify-content:space-between}
+.page-academics .fact strong{max-width:190px;font-size:clamp(19px,2vw,25px)}
+.page-academics .stack-list article{display:grid;grid-template-columns:74px 1fr;gap:20px;align-items:start;padding:24px 0;border-bottom:1px solid #ffffff22}
+.page-academics .stack-list .index{font-family:Georgia,"Times New Roman",serif;font-size:30px;color:#88857e}
+.page-academics .stack-list h3{margin:0 0 6px;font-weight:400}
+.page-academics .stack-list p{margin:0;color:#bdbab3}
+.page-academics .content-section:after{content:"STUDY FRAMEWORK"}
+
+.page-courses .page-intro:before{background-position:50% 64%}
+.page-courses .course-feature{display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:24px;align-items:center;margin:0 0 16px;min-height:210px}
+.page-courses .course-feature>div:first-child{max-width:680px}
+.page-courses .course-feature h2{margin:8px 0 12px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,4vw,46px);font-weight:400}
+.page-courses .course-feature-mark{width:130px;height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #ffffff32;border-radius:50%;box-shadow:inset 5px 5px 14px #000,inset -3px -3px 10px #ffffff0c}
+.page-courses .course-feature-mark span{font-family:Georgia,"Times New Roman",serif;font-size:48px;line-height:1}
+.page-courses .course-feature-mark small{margin-top:10px;color:#aaa79f;font-size:9px;letter-spacing:.18em}
+.page-courses .stack-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(20px,4vw,54px)}
+.page-courses .stack-list article{display:grid;grid-template-columns:42px 1fr;gap:12px;padding:22px 0;border-bottom:1px solid #ffffff22}
+.page-courses .stack-list h3{margin:0 0 7px;font-weight:400}
+.page-courses .stack-list p{margin:0 0 12px;color:#bdbab3}
+.page-courses .content-section:after{content:"CURRICULUM MAP"}
+
+.page-journal .page-intro:before{background-position:50% 44%}
+.page-journal .content-section{max-width:960px;margin-inline:auto}
+.page-journal .journal-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:clamp(22px,5vw,70px);padding:42px 0;border-bottom:1px solid #ffffff30}
+.page-journal .journal-date{padding-top:8px;color:#aaa79f;font-size:9px;letter-spacing:.2em;line-height:2}
+.page-journal .journal-row h2{max-width:680px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,4.2vw,52px);line-height:1.06}
+.page-journal .journal-row p{max-width:620px;font-size:15px}
+.page-journal .journal-row .text-link{display:inline-block;margin-top:12px}
+.page-journal .content-section>.note{margin-top:34px}
+.page-journal .content-section:after{content:"INDEX / 001"}
+
+.page-contact .page-intro:before{background-position:50% 52%}
+.page-contact .content-section{max-width:900px;margin-inline:auto}
+.page-contact .contact-block{min-height:290px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(28px,6vw,70px);border:1px solid #ffffff32;background:linear-gradient(130deg,#ffffff0b,transparent 65%)}
+.page-contact .contact-block h2{max-width:600px;margin:18px 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,6vw,70px);font-weight:400}
+.page-contact .contact-block .button{margin-top:18px;overflow-wrap:anywhere}
+.page-contact .content-section:after{content:"DIRECT CHANNEL"}
+
+.page-projects-bridge-study .page-intro:before{background-position:50% 58%}
+.page-projects-bridge-study .project-figure img{min-height:260px;max-height:500px;padding:22px}
+.page-projects-bridge-study .content-section h2{margin-top:42px}
+.page-projects-bridge-study .content-section:after{content:"STRUCTURAL STUDY / 001"}
+.page-projects-beam-study .page-intro:before{background-position:50% 70%}
+.page-projects-beam-study .course-panel{max-width:680px;margin:22px 0 32px;padding:28px 32px}
+.page-projects-beam-study .course-panel h3{font-family:Georgia,"Times New Roman",serif;font-size:clamp(28px,4vw,42px);font-weight:400}
+.page-projects-beam-study .content-section:after{content:"MECHANICS / 002"}
+.page-journal-learning-notes .page-intro:before{background-position:50% 38%}
+.page-journal-learning-notes .content-section{max-width:850px;margin-inline:auto}
+.page-journal-learning-notes .content-section h2{margin-top:38px;padding-top:18px;border-top:1px solid #ffffff20;font-family:Georgia,"Times New Roman",serif;font-size:clamp(26px,3vw,36px);font-weight:400}
+.page-journal-learning-notes .content-section:after{content:"FIELD NOTES / 001"}
+
+@media(max-width:760px){
+ .page-about .content-section{display:block}
+ .page-about .content-section>h2{max-width:none;margin-top:28px}
+ .page-about .content-section>.rule{margin:24px 0}
+ .page-projects .project-row,.page-projects .project-row:nth-of-type(even){grid-template-columns:1fr;gap:22px}
+ .page-projects .project-row:nth-of-type(even) .project-figure{order:0}
+ .page-projects .project-figure img{min-height:180px}
+ .page-academics .fact-grid{grid-template-columns:1fr}
+ .page-academics .fact{min-height:105px}
+ .page-courses .course-feature{grid-template-columns:1fr 90px}
+ .page-courses .course-feature-mark{width:82px;height:82px}
+ .page-courses .course-feature-mark span{font-size:32px}
+ .page-courses .stack-list{grid-template-columns:1fr}
+ .page-journal .journal-row{grid-template-columns:1fr;gap:10px}
+}
+@media(max-width:520px){
+ .page-courses .course-feature{grid-template-columns:1fr}
+ .page-courses .course-feature-mark{width:72px;height:72px;grid-row:1}
+ .page-contact .contact-block{padding:25px 18px}
+ .page-contact .contact-block .button{max-width:100%;font-size:12px}
+ .page-projects-bridge-study .project-figure img{min-height:0;padding:10px}
+}
+
+
+/* PERFORMANCE PASS — let the image CDN negotiate modern formats and defer off-screen rendering. */
+.artwork-header{backdrop-filter:none;-webkit-backdrop-filter:none}
+.art-shortcuts,.art-editorial,.art-focus,.art-current,.artwork-page .content-section{
+ content-visibility:auto;
+ contain-intrinsic-size:auto 520px;
+}
+.artwork-page .content-section{contain-intrinsic-size:auto 360px}
+
+
+/* RESPONSIVE QA PASS 05 — keep the navigation usable without clipping at tablet widths. */
+@media(max-width:900px){
+ .artwork-header .header-inner{width:calc(100% - 40px);min-width:0;align-items:flex-start;flex-direction:column;gap:8px;padding:16px 0}
+ .artwork-header .primary-nav{width:100%;min-width:0;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+ .artwork-header .primary-nav a{display:inline-flex;min-height:44px;flex:0 0 auto;align-items:center;justify-content:center}
+}
+@media(max-width:560px){
+ .artwork-header .header-inner{width:calc(100% - 28px)}
+ .artwork-header .primary-nav{gap:10px;padding:3px 0 9px}
+ .artwork-header .primary-nav a{min-height:44px;padding:8px 10px;font-size:11px}
+}
