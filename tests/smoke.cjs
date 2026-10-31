@@ -67,7 +67,8 @@ for (const feature of [
 
 assert.match(script, /ra=load\*\(1-position\),rb=load\*position/, 'beam reactions must use the point-load position');
 assert.match(script, /v=l\*w\*d/, 'concrete estimator must calculate volume');
-assert.match(script, /if\(reduced\)render\(\)/, 'interactive 3D controls must redraw with reduced motion enabled');
+assert.match(script, /const canAnimate=\(\)=>!reduced&&visible&&pageVisible/, 'continuous animation must be disabled for reduced-motion users and off-screen canvases');
+assert.match(script, /else render\(\)/, 'interactive canvas must still render when continuous animation is disabled');
 assert.match(script, /const baseMaterials=materials\.map/, '3D materials must preserve their original colors between view modes');
 
 for (const selector of [
