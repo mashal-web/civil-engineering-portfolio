@@ -26,6 +26,7 @@ for (const page of pages) {
   assert.match(html, new RegExp('data-page=["\\x27]' + page + '["\\x27]'), file + ' must identify its page');
   assert.match(html, /id=["']site["']/, file + ' must contain the application mount');
   assert.match(html, /styles\.css\?v=/, file + ' must load the versioned stylesheet');
+  assert.match(html, /minimalism\.css\?v=/, file + ' must load the minimalism design layer');
   assert.match(html, /script\.js\?v=/, file + ' must load the versioned script');
   assert.match(script, new RegExp('(^|\\n)' + page + ':'), 'script.js must define the ' + page + ' page');
 }
