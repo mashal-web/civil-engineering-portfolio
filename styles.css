@@ -284,3 +284,65 @@ body{perspective:1400px;transform-style:preserve-3d}
  .world-webgl-canvas{opacity:.16}
  .depth-object,.hero-ring{animation:none!important}
 }
+
+
+/* STEP 1 VISUAL REFINEMENT — architectural depth with restrained lighting */
+:root{
+  --grid:rgba(101,247,255,.065);
+  --line:rgba(164,207,219,.16);
+  --shadow:0 22px 58px rgba(0,0,0,.24);
+}
+:root[data-theme=light]{
+  --grid:rgba(8,127,145,.055);
+  --line:rgba(20,75,88,.16);
+  --shadow:0 20px 48px rgba(18,55,70,.075);
+}
+body::before{
+  background:
+    radial-gradient(ellipse at 14% 8%,rgba(34,211,238,.105),transparent 36%),
+    radial-gradient(ellipse at 88% 28%,rgba(56,112,150,.075),transparent 34%),
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+    linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--bg) 92%,#163442));
+  background-size:auto,auto,42px 42px,42px 42px,auto;
+  background-position:center,center,center center,center center,center;
+  mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.82) 76%,transparent 100%);
+}
+:root[data-theme=light] body::before{
+  background:
+    radial-gradient(ellipse at 14% 8%,rgba(34,211,238,.09),transparent 36%),
+    radial-gradient(ellipse at 88% 28%,rgba(56,112,150,.045),transparent 34%),
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+    linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--bg) 96%,#d9e9ec));
+}
+body::after{opacity:.07}
+.hero::before{
+  inset:4% -2% 0 2%;
+  border-color:color-mix(in srgb,var(--accent) 13%,transparent);
+  background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 3.5%,transparent),transparent 48%,rgba(56,112,150,.025));
+}
+.hero-art{
+  border-color:color-mix(in srgb,var(--accent) 30%,var(--line));
+  box-shadow:inset 0 0 32px color-mix(in srgb,var(--accent) 3%,transparent),var(--shadow);
+}
+.hero-art::after{opacity:.55;animation-duration:12s}
+.card,.course-card,.project-card,.journal-card,.panel,.stat-card,.academic-card{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 12px 34px rgba(0,0,0,.10);
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+}
+.card:hover,.course-card:hover,.project-card:hover,.journal-card:hover{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 16px 38px color-mix(in srgb,var(--accent) 7%,transparent);
+}
+:root[data-theme=light] .card,
+:root[data-theme=light] .course-card,
+:root[data-theme=light] .project-card,
+:root[data-theme=light] .journal-card,
+:root[data-theme=light] .panel,
+:root[data-theme=light] .stat-card,
+:root[data-theme=light] .academic-card{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 12px 32px rgba(20,55,70,.055);
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-art::after{animation:none}
+}
