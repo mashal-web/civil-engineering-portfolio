@@ -300,7 +300,7 @@ function bootThreeWorld(){
   floor.rotation.x=-Math.PI/2;floor.position.y=-.055;scene.add(floor);
   const view={yaw:-.22,pitch:.06,zoom:1,drag:false,x:0,y:0,mode:'render',load:opts.load?Number(opts.load.value):50,span:opts.span?Number(opts.span.value)/100:1};
   const raycaster=new T.Raycaster(),pointer=new T.Vector2();
-  let selected=null,raf=0,disposed=false;
+  let selected=null,raf=0,disposed=false,resizeObserver=null;
   function setMode(mode){
    view.mode=mode;
    materials.forEach((m,i)=>{
@@ -366,8 +366,9 @@ function bootThreeWorld(){
   canvas=replacement;
   resize();updateInputs();setMode('render');
   window.addEventListener('resize',resize,{passive:true});
+  if('ResizeObserver' in window){resizeObserver=new ResizeObserver(resize);resizeObserver.observe(canvas.parentElement)}
   if(!reduced)raf=requestAnimationFrame(render);else render();
-  return {render,dispose(){disposed=true;cancelAnimationFrame(raf);renderer.dispose()}};
+  return {render,dispose(){disposed=true;cancelAnimationFrame(raf);resizeObserver?.disconnect();renderer.dispose()}};
  }
  function initWorld(){
   const host=$('.depth-scene');if(!host||host.querySelector('.world-webgl-canvas'))return;
@@ -403,11 +404,11 @@ function bootThreeWorld(){
  }
  initWorld();
  const selectLabel=canvas=>{const parent=canvas?.parentElement;if(!parent)return null;let label=parent.querySelector('.three-selection-readout');if(!label){label=document.createElement('div');label.className='three-selection-readout';label.textContent='SELECT A STRUCTURAL ELEMENT';parent.append(label)}return label};
- const allCanvas=[$('#hero-bridge'),$('#lab-canvas'),$('#dock-canvas')].filter(Boolean);
- allCanvas.forEach(canvas=>{
+ function upgradeBridgeCanvas(canvas){
+  if(!canvas||canvas.classList.contains('three-bridge-canvas'))return;
   const id=canvas.id,lab=id==='lab-canvas',hero=id==='hero-bridge';
   const angleId=hero?'hero-angle':lab?'lab-angle':null;
-  const buttons=hero?$('[data-hero-mode]'):lab?$('[data-lab-mode]'):$('[data-dock-mode]');
+  const buttons=hero?$$('[data-hero-mode]'):lab?$$('[data-lab-mode]'):$$('[data-dock-mode]');
   const select=selectLabel(canvas);
   makeBridge(canvas,{
    buttons,reset:$(hero?'#hero-reset':lab?'#lab-reset':'#dock-reset'),
@@ -418,7 +419,14 @@ function bootThreeWorld(){
    update:s=>{if(lab){if($('#lab-load-readout'))$('#lab-load-readout').textContent=s.load+'%';if($('#lab-span-readout'))$('#lab-span-readout').textContent=s.span.toFixed(2)+'×';if($('#lab-view-readout'))$('#lab-view-readout').textContent=s.mode==='render'?'3D':s.mode==='blueprint'?'2D':'FORM'}},
    select:part=>{if(select)select.textContent='SELECTED COMPONENT / '+part.toUpperCase()}
   });
- });
+}
+[$('#hero-bridge'),$('#lab-canvas')].filter(Boolean).forEach(upgradeBridgeCanvas);
+let dockThreeBuilt=false;
+dock.addEventListener('click',()=>{
+ const c=$('#dock-canvas');
+ if(!dockThreeBuilt&&c){upgradeBridgeCanvas(c);dockThreeBuilt=!!c.classList.contains('three-bridge-canvas')}
+});
+if(!dockModal.hidden)upgradeBridgeCanvas($('#dock-canvas'));
 }
 loadThreeEngine();
 
