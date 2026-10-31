@@ -437,39 +437,7 @@ function bootThreeWorld(){
   if(!reduced&&visible&&pageVisible)raf=requestAnimationFrame(render);else render();
   return {render,dispose(){disposed=true;cancelAnimationFrame(raf);resizeObserver?.disconnect();renderer.dispose()}};
  }
- function initWorld(){
-  const host=$('.depth-scene');if(!host||host.querySelector('.world-webgl-canvas'))return;
-  const canvas=document.createElement('canvas');canvas.className='world-webgl-canvas';canvas.setAttribute('aria-hidden','true');host.prepend(canvas);
-  let renderer;try{renderer=new T.WebGLRenderer({canvas,alpha:true,antialias:false,powerPreference:'low-power'});}catch(e){canvas.remove();return}
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1));renderer.setClearColor(0x000000,0);
-  const scene=new T.Scene(),camera=new T.PerspectiveCamera(46,1,.1,120);camera.position.set(0,2.5,12);
-  scene.add(new T.AmbientLight(0x74e7f6,1.2));
-  const group=new T.Group();scene.add(group);
-  const wireMat=new T.LineBasicMaterial({color:0x39d9f3,transparent:true,opacity:.28});
-  const glowMat=new T.MeshBasicMaterial({color:0x56dff4,transparent:true,opacity:.2,wireframe:true});
-  // Large structural truss floating behind the page content.
-  const pts=[];
-  const left=-5.6,right=5.6,base=-1.2,top=1.45,steps=22;
-  for(let i=0;i<=steps;i++){
-   const x=left+(right-left)*i/steps;pts.push(new T.Vector3(x,base,-1.2),new T.Vector3(x,base,1.2));
-   if(i<steps){const nx=left+(right-left)*(i+1)/steps;pts.push(new T.Vector3(x,base,-1.2),new T.Vector3(nx,base,-1.2),new T.Vector3(x,base,1.2),new T.Vector3(nx,base,1.2));}
-   const peak=top-Math.abs((i/steps)-.5)*1.05;
-   pts.push(new T.Vector3(x,base,-1.2),new T.Vector3(x,peak,-1.2),new T.Vector3(x,base,1.2),new T.Vector3(x,peak,1.2));
-   if(i<steps){const nx=left+(right-left)*(i+1)/steps,npeak=top-Math.abs(((i+1)/steps)-.5)*1.05;pts.push(new T.Vector3(x,peak,-1.2),new T.Vector3(nx,base,-1.2),new T.Vector3(x,base,1.2),new T.Vector3(nx,npeak,1.2));}
-  }
-  const geometry=new T.BufferGeometry().setFromPoints(pts);group.add(new T.LineSegments(geometry,wireMat));
-  for(let i=0;i<46;i++){
-   const angle=i*.37,r=2.6+(i%9)*.43;
-   const node=new T.Mesh(new T.IcosahedronGeometry(.025+(i%3)*.008,0),glowMat);
-   node.position.set(Math.cos(angle)*r,Math.sin(angle*1.6)*1.8,Math.sin(angle)*2.8-1.5);group.add(node);
-  }
-  const grid=new T.GridHelper(36,60,0x1d8ea7,0x17404f);grid.position.y=-2.35;grid.material.transparent=true;grid.material.opacity=.13;group.add(grid);
-  let raf=0,last=0,disposed=false;
-  function resize(){const w=Math.max(1,host.clientWidth),h=Math.max(1,host.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
-  function draw(t){if(disposed||!canvas.isConnected){disposed=true;cancelAnimationFrame(raf);renderer.dispose();renderer.forceContextLoss?.();return}const time=t*.00012;if(!reduced){group.rotation.y=Math.sin(time)*.09;group.rotation.x=Math.sin(time*.7)*.025}renderer.render(scene,camera);if(!reduced&&!document.hidden&&host.getBoundingClientRect().bottom>0&&host.getBoundingClientRect().top<window.innerHeight)raf=requestAnimationFrame(draw)}
-  window.addEventListener('resize',resize,{passive:true});resize();draw(0);
- }
- if(page!=='index'&&page!=='projects')return;initWorld();
+ // Keep the ambient background CSS-driven; reserve WebGL for interactive models.
  const selectLabel=canvas=>{const parent=canvas?.parentElement;if(!parent)return null;let label=parent.querySelector('.three-selection-readout');if(!label){label=document.createElement('div');label.className='three-selection-readout';label.textContent='SELECT A STRUCTURAL ELEMENT';parent.append(label)}return label};
  function upgradeBridgeCanvas(canvas){
   if(!canvas||canvas.classList.contains('three-bridge-canvas'))return;
