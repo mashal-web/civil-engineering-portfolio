@@ -14,3 +14,7 @@ This portfolio uses externally hosted photographs as monochrome editorial artwor
 The bridge and beam engineering diagrams used on project pages remain separately credited on their relevant pages and are governed by their original licences. See the project-page captions and the Wikimedia Commons source pages.
 
 External image delivery is a deliberate current trade-off: it avoids adding large binary files to this static repository, but depends on the image CDN being available. For long-term reliability and tighter performance control, locally optimized WebP copies can replace these URLs in a later pass.
+
+
+## Additional artwork image
+- **Silver-wave editorial artwork:** [Abstract metallic waves against a black background](https://unsplash.com/photos/abstract-metallic-waves-against-a-black-background-WA3ONNC9mp0) by Veli Batuhan Aytaç, sourced from [Unsplash](https://unsplash.com/photos/abstract-metallic-waves-against-a-black-background-WA3ONNC9mp0), used under the [Unsplash License](https://unsplash.com/license). Used as a decorative background in the homepage hero and interior page introductions.
