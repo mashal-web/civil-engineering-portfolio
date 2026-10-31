@@ -659,3 +659,11 @@ body.search-open{overflow:hidden}
  .global-search-result-meta{text-align:left}
 }
 @media(prefers-reduced-motion:reduce){.global-search-panel{animation:none}}
+
+/* Usability: visible keyboard-selected search result and clearer nav focus */
+.global-search-result.is-active{border-color:color-mix(in srgb,var(--accent) 52%,var(--line));background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.global-search-result[aria-selected="true"] .global-search-result-title{color:var(--accent)}
+.nav-links a[aria-current="page"]{color:var(--accent);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--accent) 55%,transparent);text-underline-offset:6px}
+.global-search-result:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+@media(max-width:950px){.nav-links{gap:clamp(5px,1vw,10px)}.nav-links a{white-space:nowrap}.nav-icon{width:13px;height:13px}}
+@media(max-width:680px){.nav-links a[aria-current="page"]{background:color-mix(in srgb,var(--accent) 8%,transparent);text-decoration:none}}
