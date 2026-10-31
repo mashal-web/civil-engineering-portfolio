@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs><linearGradient id="steel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#42e5f1"/><stop offset="1" stop-color="#9887ff"/></linearGradient></defs>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="#101820" stroke="url(#steel)" stroke-width="2"/>
+  <path d="M9 48H55M14 48V25M50 48V25M14 25L32 14 50 25M14 29H50M18 29L23 48M46 29L41 48M32 29V48" fill="none" stroke="url(#steel)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M7 53H57" stroke="#ffffff" stroke-opacity=".35"/>
+  <circle cx="32" cy="14" r="2.2" fill="#42e5f1"/>
+</svg>
