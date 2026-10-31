@@ -15,13 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate required pages and assets
+      - name: Validate required static pages
         run: |
           set -eu
           for file in index.html about.html academics.html courses.html projects.html journal.html contact.html styles.css assets/engineering-mark.svg projects/bridge-study.html journal/learning-notes.html; do
             test -s "$file" || { echo "Missing required file: $file"; exit 1; }
           done
-          ! grep -R -E '<script|<style|@keyframes|transition[[:space:]]*:' --include='*.html' --include='*.css' index.html about.html academics.html courses.html projects.html journal.html contact.html styles.css projects journal
+          if grep -E '<script|<style|@keyframes|transition[[:space:]]*:' index.html about.html academics.html courses.html projects.html journal.html contact.html styles.css; then
+            echo "Unexpected script, embedded style, animation or transition found."
+            exit 1
+          fi
       - name: Prepare static website
         run: |
           mkdir -p _site
