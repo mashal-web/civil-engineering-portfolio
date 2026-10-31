@@ -95,3 +95,22 @@ assert.match(script, /id="clear-study-data"/, 'dashboard must offer a control to
 assert.match(script, /window\.confirm\('Clear saved course checklists/, 'clearing local progress must require confirmation');
 assert.match(script, /Inputs changed\. Calculate again to refresh the result\./, 'calculator must invalidate stale results after edits');
 assert.match(css, /\.course-progress-label\[data-status="completed"\]/, 'course status must be visible without color alone');
+
+// Performance and reliability regression checks.
+assert.match(script, /const modelTargets=\[\$\('#hero-bridge'\),\$\('#lab-canvas'\)\]\.filter\(Boolean\)/, 'Three.js load targets must be limited to pages with interactive models');
+assert.match(script, /new IntersectionObserver\(entries=>\{if\(entries\.some\(entry=>entry\.isIntersecting\)\)/, 'Three.js must wait until an interactive model approaches the viewport');
+assert.match(script, /function requestThreeEngine\(\)\{if\(threeLoadRequested\)return;threeLoadRequested=true;loadThreeEngine\(\)\}/, 'Three.js requests must be deduplicated');
+assert.doesNotMatch(script, /\\nloadThreeEngine\(\);\\s*\\n/, 'Three.js must not load unconditionally at startup');
+assert.doesNotMatch(script, /function initWorld\(/, 'the site must not create a redundant always-on WebGL background context');
+assert.match(script, /visibilityObserver=new IntersectionObserver/, 'canvas renderers must pause when off-screen');
+assert.match(script, /document\.hidden/, 'animation loops must respect background tabs');
+assert.match(script, /renderer\.forceContextLoss\?\.\(\)/, 'disposed WebGL renderers must release their context');
+assert.doesNotMatch(css, /^@import\\s/m, 'CSS must not chain an external font import before rendering');
+assert.match(css, /@media \(prefers-reduced-motion: reduce\)/, 'reduced-motion users must receive static visual effects');
+assert.match(css, /@media \(max-width:680px\)[\\s\\S]*?backdrop-filter:none!important/, 'small screens must avoid expensive backdrop blur');
+for (const page of pages) {
+  const file = page === 'index' ? 'index.html' : page + '.html';
+  const html = fs.readFileSync(file, 'utf8');
+  assert.match(html, /rel="preconnect" href="https:\/\/fonts\.googleapis\.com"/, file + ' must preconnect to the font host');
+  assert.match(html, /fonts\.googleapis\.com\/css2\?[^"]*display=swap/, file + ' must load fonts with swap outside the CSS import chain');
+}
