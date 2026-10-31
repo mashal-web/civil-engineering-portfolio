@@ -29,6 +29,65 @@ jobs:
             echo "CSS animation or transition found."
             exit 1
           fi
+      - name: Check local links and stylesheet versions
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlsplit, unquote
+          import re, sys
+
+          root = Path(".").resolve()
+          pages = sorted(root.rglob("*.html"))
+          pages = [p for p in pages if ".git" not in p.parts and "_site" not in p.parts]
+          errors = []
+
+          class PageParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.targets = set()
+                  self.links = []
+              def handle_starttag(self, tag, attrs):
+                  a = dict(attrs)
+                  if a.get("id"):
+                      self.targets.add(a["id"])
+                  if tag == "a" and a.get("name"):
+                      self.targets.add(a["name"])
+                  for key in ("href", "src"):
+                      if a.get(key):
+                          self.links.append((key, a[key]))
+          
+          parsed = {}
+          for page in pages:
+              parser = PageParser()
+              parser.feed(page.read_text(encoding="utf-8"))
+              parsed[page.resolve()] = parser
+          
+          cache_keys = set()
+          for page, parser in parsed.items():
+              raw = page.read_text(encoding="utf-8")
+              for key, url in parser.links:
+                  parts = urlsplit(url)
+                  if parts.scheme or parts.netloc or url.startswith("//") or parts.path.startswith("/"):
+                      continue
+                  target_path = (page.parent / unquote(parts.path)).resolve() if parts.path else page
+                  if not target_path.exists():
+                      errors.append(f"{page.relative_to(root)}: missing {key} target {url}")
+                      continue
+                  if parts.fragment and target_path.suffix.lower() in (".html", ".htm"):
+                      target_parser = parsed.get(target_path)
+                      if target_parser and unquote(parts.fragment) not in target_parser.targets:
+                          errors.append(f"{page.relative_to(root)}: missing fragment #{parts.fragment} in {target_path.relative_to(root)}")
+              m = re.search(r'href=["\'](?:\.\./)?styles\.css\?v=([^"\']+)', raw)
+              if m:
+                  cache_keys.add(m.group(1))
+          if len(cache_keys) > 1:
+              errors.append("Inconsistent stylesheet cache keys: " + ", ".join(sorted(cache_keys)))
+          if errors:
+              print("\n".join("ERROR: " + e for e in errors))
+              sys.exit(1)
+          print(f"Checked {len(pages)} HTML pages: local links, fragments and stylesheet cache keys passed.")
+          PY
       - name: Prepare static website
         run: |
           mkdir -p _site
