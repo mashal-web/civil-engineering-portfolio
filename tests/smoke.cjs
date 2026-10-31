@@ -69,4 +69,12 @@ for (const selector of [
 assert.match(css, /\.project-grid-advanced \.project-card\[hidden\]\{display:none!important\}/,
   'filtered project cards must be hidden');
 
+assert.match(script, /global-search-trigger/, 'global search must be reachable from the shared header');
+assert.match(script, /id=\\'global-search\\'/, 'global search dialog must exist');
+assert.match(script, /e\.key\.toLowerCase\(\)==='k'/, 'global search must support Ctrl/Command+K');
+assert.match(script, /global-search-input/, 'global search input must be wired');
+assert.match(script, /search:'<circle/, 'global search must have a dedicated icon');
+assert.match(script, /url:'projects\.html#beam-scene'/, 'beam search result must target an existing project diagram');
+assert.match(script, /url:'projects\.html#concrete-form'/, 'concrete estimator search result must target its form');
+
 console.log('Portfolio audit smoke checks passed.');
