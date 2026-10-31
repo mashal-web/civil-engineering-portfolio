@@ -447,3 +447,104 @@ main.container{padding-bottom:clamp(34px,6vw,72px)}
 @media(max-width:900px){.artwork-header .primary-nav{flex-wrap:nowrap;justify-content:flex-start;max-width:100%;padding:4px 0 8px;scrollbar-width:thin}.artwork-header .header-inner{align-items:flex-start}.artwork-header .primary-nav a{padding-inline:8px}}
 @media(max-width:560px){.artwork-header .header-inner{width:calc(100% - 28px)}.artwork-header .primary-nav{width:100%;gap:16px;overflow-x:auto;overscroll-behavior-x:contain}.artwork-header .primary-nav a{font-size:11px}.artwork-page .content-section:after{top:31px;right:0;font-size:7px}.artwork-page .content-section{padding-top:34px}.artwork-page .page-intro .eyebrow{padding-left:32px}.artwork-page .page-intro .eyebrow:before{width:20px}}
 @media(prefers-reduced-motion:reduce){.artwork-site *{scroll-behavior:auto!important;transition-duration:0s!important}}
+
+
+/* ART DIRECTION PASS 04 — individual page compositions
+   Each section now has a distinct editorial role while retaining one monochrome system. */
+.page-about .page-intro:before{background-position:50% 38%}
+.page-about .content-section{display:grid;grid-template-columns:minmax(220px,.72fr) minmax(0,1.5fr);column-gap:clamp(28px,7vw,112px);align-items:start}
+.page-about .content-section>h2{grid-column:1;max-width:300px;margin:0 0 24px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,3.8vw,46px);font-weight:400;line-height:1.08}
+.page-about .content-section>h2:not(:first-child){grid-column:1;margin-top:18px}
+.page-about .content-section>.prose,.page-about .content-section>.plain-list,.page-about .content-section>.text-link{grid-column:2}
+.page-about .content-section>.rule{grid-column:1/-1;width:100%;margin:28px 0}
+.page-about .content-section>.text-link{margin-top:14px}
+.page-about .content-section:after{content:"PROFILE / NOTES"}
+
+.page-projects .page-intro:before{background-position:50% 58%}
+.page-projects .content-section{padding-top:14px}
+.page-projects .project-row{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(260px,.88fr);gap:clamp(24px,5vw,72px);align-items:center;padding:42px 0}
+.page-projects .project-row:nth-of-type(even){grid-template-columns:minmax(260px,.88fr) minmax(0,1.12fr)}
+.page-projects .project-row:nth-of-type(even) .project-figure{order:2}
+.page-projects .project-figure{margin:0;padding:16px;background:#101010}
+.page-projects .project-figure img{min-height:220px;max-height:360px}
+.page-projects .project-copy{max-width:490px}
+.page-projects .project-copy h2 a{text-decoration:none}
+.page-projects .project-copy .eyebrow{color:#a6a39b}
+.page-projects .content-section>.rule{margin:8px 0}
+.page-projects .content-section:after{content:"DRAWING INDEX"}
+
+.page-academics .page-intro:before{background-position:50% 30%}
+.page-academics .fact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.page-academics .fact{min-height:142px;display:flex;flex-direction:column;justify-content:space-between}
+.page-academics .fact strong{max-width:190px;font-size:clamp(19px,2vw,25px)}
+.page-academics .stack-list article{display:grid;grid-template-columns:74px 1fr;gap:20px;align-items:start;padding:24px 0;border-bottom:1px solid #ffffff22}
+.page-academics .stack-list .index{font-family:Georgia,"Times New Roman",serif;font-size:30px;color:#88857e}
+.page-academics .stack-list h3{margin:0 0 6px;font-weight:400}
+.page-academics .stack-list p{margin:0;color:#bdbab3}
+.page-academics .content-section:after{content:"STUDY FRAMEWORK"}
+
+.page-courses .page-intro:before{background-position:50% 64%}
+.page-courses .course-feature{display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:24px;align-items:center;margin:0 0 16px;min-height:210px}
+.page-courses .course-feature>div:first-child{max-width:680px}
+.page-courses .course-feature h2{margin:8px 0 12px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,4vw,46px);font-weight:400}
+.page-courses .course-feature-mark{width:130px;height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #ffffff32;border-radius:50%;box-shadow:inset 5px 5px 14px #000,inset -3px -3px 10px #ffffff0c}
+.page-courses .course-feature-mark span{font-family:Georgia,"Times New Roman",serif;font-size:48px;line-height:1}
+.page-courses .course-feature-mark small{margin-top:10px;color:#aaa79f;font-size:9px;letter-spacing:.18em}
+.page-courses .stack-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(20px,4vw,54px)}
+.page-courses .stack-list article{display:grid;grid-template-columns:42px 1fr;gap:12px;padding:22px 0;border-bottom:1px solid #ffffff22}
+.page-courses .stack-list h3{margin:0 0 7px;font-weight:400}
+.page-courses .stack-list p{margin:0 0 12px;color:#bdbab3}
+.page-courses .content-section:after{content:"CURRICULUM MAP"}
+
+.page-journal .page-intro:before{background-position:50% 44%}
+.page-journal .content-section{max-width:960px;margin-inline:auto}
+.page-journal .journal-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:clamp(22px,5vw,70px);padding:42px 0;border-bottom:1px solid #ffffff30}
+.page-journal .journal-date{padding-top:8px;color:#aaa79f;font-size:9px;letter-spacing:.2em;line-height:2}
+.page-journal .journal-row h2{max-width:680px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,4.2vw,52px);line-height:1.06}
+.page-journal .journal-row p{max-width:620px;font-size:15px}
+.page-journal .journal-row .text-link{display:inline-block;margin-top:12px}
+.page-journal .content-section>.note{margin-top:34px}
+.page-journal .content-section:after{content:"INDEX / 001"}
+
+.page-contact .page-intro:before{background-position:50% 52%}
+.page-contact .content-section{max-width:900px;margin-inline:auto}
+.page-contact .contact-block{min-height:290px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:clamp(28px,6vw,70px);border:1px solid #ffffff32;background:linear-gradient(130deg,#ffffff0b,transparent 65%)}
+.page-contact .contact-block h2{max-width:600px;margin:18px 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,6vw,70px);font-weight:400}
+.page-contact .contact-block .button{margin-top:18px;overflow-wrap:anywhere}
+.page-contact .content-section:after{content:"DIRECT CHANNEL"}
+
+.page-projects-bridge-study .page-intro:before{background-position:50% 58%}
+.page-projects-bridge-study .project-figure img{min-height:260px;max-height:500px;padding:22px}
+.page-projects-bridge-study .content-section h2{margin-top:42px}
+.page-projects-bridge-study .content-section:after{content:"STRUCTURAL STUDY / 001"}
+.page-projects-beam-study .page-intro:before{background-position:50% 70%}
+.page-projects-beam-study .course-panel{max-width:680px;margin:22px 0 32px;padding:28px 32px}
+.page-projects-beam-study .course-panel h3{font-family:Georgia,"Times New Roman",serif;font-size:clamp(28px,4vw,42px);font-weight:400}
+.page-projects-beam-study .content-section:after{content:"MECHANICS / 002"}
+.page-journal-learning-notes .page-intro:before{background-position:50% 38%}
+.page-journal-learning-notes .content-section{max-width:850px;margin-inline:auto}
+.page-journal-learning-notes .content-section h2{margin-top:38px;padding-top:18px;border-top:1px solid #ffffff20;font-family:Georgia,"Times New Roman",serif;font-size:clamp(26px,3vw,36px);font-weight:400}
+.page-journal-learning-notes .content-section:after{content:"FIELD NOTES / 001"}
+
+@media(max-width:760px){
+ .page-about .content-section{display:block}
+ .page-about .content-section>h2{max-width:none;margin-top:28px}
+ .page-about .content-section>.rule{margin:24px 0}
+ .page-projects .project-row,.page-projects .project-row:nth-of-type(even){grid-template-columns:1fr;gap:22px}
+ .page-projects .project-row:nth-of-type(even) .project-figure{order:0}
+ .page-projects .project-figure img{min-height:180px}
+ .page-academics .fact-grid{grid-template-columns:1fr}
+ .page-academics .fact{min-height:105px}
+ .page-courses .course-feature{grid-template-columns:1fr 90px}
+ .page-courses .course-feature-mark{width:82px;height:82px}
+ .page-courses .course-feature-mark span{font-size:32px}
+ .page-courses .stack-list{grid-template-columns:1fr}
+ .page-journal .journal-row{grid-template-columns:1fr;gap:10px}
+}
+@media(max-width:520px){
+ .page-courses .course-feature{grid-template-columns:1fr}
+ .page-courses .course-feature-mark{width:72px;height:72px;grid-row:1}
+ .page-contact .contact-block{padding:25px 18px}
+ .page-contact .contact-block .button{max-width:100%;font-size:12px}
+ .page-projects-bridge-study .project-figure img{min-height:0;padding:10px}
+}
