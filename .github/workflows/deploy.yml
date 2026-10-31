@@ -88,13 +88,68 @@ jobs:
               sys.exit(1)
           print(f"Checked {len(pages)} HTML pages: local links, fragments and stylesheet cache keys passed.")
           PY
+      - name: Check accessibility basics and page metadata
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import sys
+
+          pages = [p for p in Path(".").rglob("*.html") if ".git" not in p.parts and "_site" not in p.parts]
+          errors = []
+
+          class Audit(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.lang = False
+                  self.title = False
+                  self.description = False
+                  self.viewport = False
+                  self.ids = set()
+                  self.images = 0
+              def handle_starttag(self, tag, attrs):
+                  a = dict(attrs)
+                  if tag == "html" and a.get("lang"):
+                      self.lang = True
+                  if tag == "title":
+                      self.title = True
+                  if tag == "meta" and a.get("name", "").lower() == "description" and a.get("content", "").strip():
+                      self.description = True
+                  if tag == "meta" and a.get("name", "").lower() == "viewport" and a.get("content", "").strip():
+                      self.viewport = True
+                  if a.get("id"):
+                      if a["id"] in self.ids:
+                          self.error_duplicate = a["id"]
+                      self.ids.add(a["id"])
+                  if tag == "img":
+                      self.images += 1
+                      if "alt" not in a:
+                          self.missing_alt = True
+
+          for page in pages:
+              audit = Audit()
+              audit.missing_alt = False
+              audit.error_duplicate = ""
+              audit.feed(page.read_text(encoding="utf-8"))
+              for ok, label in ((audit.lang, "html lang"), (audit.title, "title"), (audit.description, "meta description"), (audit.viewport, "viewport meta")):
+                  if not ok:
+                      errors.append(f"{page}: missing {label}")
+              if audit.missing_alt:
+                  errors.append(f"{page}: img missing alt attribute")
+              if audit.error_duplicate:
+                  errors.append(f"{page}: duplicate id {audit.error_duplicate}")
+          if errors:
+              print("\\n".join("ERROR: " + e for e in errors))
+              sys.exit(1)
+          print(f"Accessibility basics and metadata passed for {len(pages)} HTML pages.")
+          PY
       - name: Prepare static website
         run: |
           mkdir -p _site
           cp index.html about.html academics.html courses.html quantitative-reasoning.html islamic-studies.html projects.html journal.html contact.html styles.css _site/
           cp -R assets projects journal _site/
           cat > _site/404.html <<'EOF'
-          <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page not found — Mashal Khan</title><link rel="stylesheet" href="styles.css"></head><body><main class="container page-intro"><p class="eyebrow">ERROR / 404</p><h1>This page could not be found.</h1><p class="lede">The link may be outdated or the page may have moved.</p><a class="button button-dark" href="index.html">Return home</a></main></body></html>
+          <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page not found — Mashal Khan</title><meta name="description" content="The requested page could not be found in Mashal Khan’s civil engineering portfolio."><link rel="stylesheet" href="styles.css"></head><body><main class="container page-intro"><p class="eyebrow">ERROR / 404</p><h1>This page could not be found.</h1><p class="lede">The link may be outdated or the page may have moved.</p><a class="button button-dark" href="index.html">Return home</a></main></body></html>
           EOF
       - uses: actions/upload-pages-artifact@v3
         with:
