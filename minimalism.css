@@ -137,3 +137,59 @@ button:hover,.button:hover,.text-button:hover,.text-link:hover{filter:none}
  :where(.project-grid,.project-grid-advanced,.project-library,.workbench-grid,.cards){grid-template-columns:minmax(0,1fr)}
  :where(.footer){gap:12px}
 }
+
+
+/* Monochrome palette: approximately 90% black, white and neutral greys. */
+:root{
+  --bg:#ffffff;
+  --surface:#ffffff;
+  --text:#111111;
+  --muted:#666666;
+  --line:#dedede;
+  --accent:#333333;
+  --accent2:#111111;
+  --signal:#333333;
+  --grid:transparent;
+  --shadow:none;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --bg:#090909;
+  --surface:#111111;
+  --text:#f5f5f5;
+  --muted:#a0a0a0;
+  --line:#303030;
+  --accent:#d0d0d0;
+  --accent2:#f0f0f0;
+  --signal:#d0d0d0;
+  --grid:transparent;
+  --shadow:none;
+  color-scheme:dark;
+}
+:where(.hero-art,.project-art,.project-illustration,.project-hero-mark,.beam-scene,.lab-viewport,.dock-viewport,.depth-scene){
+  background-color:var(--surface)!important;
+  background-image:none!important;
+}
+:where(.hero-art svg,.project-art svg,.project-illustration svg,.project-hero-mark svg,#hero-bridge,#lab-canvas){
+  filter:grayscale(1) contrast(1.04);
+}
+:where(.model-mode.active,.lab-mode.active,.dock-mode.active,.project-filter.active,.project-filter[aria-pressed="true"]){
+  background:var(--text)!important;
+  color:var(--bg)!important;
+  border-color:var(--text)!important;
+}
+:where(.button-primary,.primary){
+  background:var(--text)!important;
+  color:var(--bg)!important;
+  border-color:var(--text)!important;
+}
+:where(.button-primary:hover,.primary:hover){
+  background:var(--accent)!important;
+  color:var(--bg)!important;
+  border-color:var(--accent)!important;
+}
+:where(.brand-name span,h1 em,h2 em,.eyebrow,.panel-kicker,.card>b,.card>span,.course-card-top,.course-open,.project-type,.text-link,.text-button,.model-mode.active,.lab-mode.active){
+  color:var(--accent)!important;
+}
+:where(.live-dot,.pulse-dot){background:var(--muted)!important}
+::selection{background:var(--text);color:var(--bg)}
