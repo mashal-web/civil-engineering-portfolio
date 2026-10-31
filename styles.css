@@ -198,7 +198,7 @@ main.container{padding-bottom:clamp(34px,6vw,72px)}
 
 /* Phase 10: use sourced engineering artwork instead of bespoke decorative drawings. */
 .hero-home{background:#080808}
-.hero-home .hero-artwork{position:absolute;inset:0;z-index:-1;display:block;width:100%;height:100%;object-fit:contain;object-position:center;opacity:.62;filter:grayscale(1) invert(1);mix-blend-mode:screen;pointer-events:none}
+.hero-home .hero-artwork{position:absolute;inset:0;z-index:-1;display:block;width:100%;height:100%;object-fit:cover;object-position:center 48%;opacity:.78;filter:grayscale(1) brightness(.43) contrast(1.12);pointer-events:none}
 .project-figure img{filter:grayscale(1) invert(1);background:#090909}
 .hero-home:before{background:linear-gradient(90deg,#050505bb 0%,#05050530 48%,#050505bb 100%),linear-gradient(180deg,#05050566 0%,#05050522 48%,#050505aa 100%)}
-@media(max-width:520px){.hero-home .hero-artwork{object-fit:contain;opacity:.55}}
+@media(max-width:520px){.hero-home .hero-artwork{object-fit:cover;object-position:56% center;opacity:.72}}
