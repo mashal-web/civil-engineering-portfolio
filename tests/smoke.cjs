@@ -4,9 +4,13 @@ const assert = require('node:assert/strict');
 
 const script = fs.readFileSync('script.js', 'utf8');
 const css = fs.readFileSync('styles.css', 'utf8');
+const minimalism = fs.readFileSync('minimalism.css', 'utf8');
 const pages = ['index', 'about', 'academics', 'courses', 'projects', 'journal', 'contact'];
 
 assert.doesNotThrow(() => new Function(script), 'script.js must parse as valid JavaScript');
+assert.match(minimalism, /--bg:#f7f7f4/, 'minimalism layer must define the restrained light palette');
+assert.match(minimalism, /:root\\[data-theme="dark"\\]/, 'minimalism layer must preserve the dark theme');
+assert.match(minimalism, /prefers-reduced-motion:reduce/, 'minimalism layer must respect reduced-motion preferences');
 assert.match(script, /const \$=\(s,root=document\)=>root\.querySelector\(s\), \$\$=\(s,root=document\)=>\[\.\.\.root\.querySelectorAll\(s\)\]/,
   'selector helpers must support scoped single and multiple queries');
 assert.doesNotMatch(script, /\$\$\$/, 'invalid triple-dollar selectors must never ship');
