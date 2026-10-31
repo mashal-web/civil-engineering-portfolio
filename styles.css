@@ -138,3 +138,15 @@ input,textarea,select{background:#090909;border-color:#303030;box-shadow:inset 4
 .hero-home h1{width:100%;max-width:100%;margin:0;font-size:clamp(27px,8.2vw,108px);letter-spacing:.12em;text-indent:.12em;white-space:nowrap;overflow-wrap:normal}
 @media(max-width:520px){.hero-home{min-height:340px;padding:24px 12px;background-position:52% center}.hero-home h1{font-size:clamp(25px,8.1vw,42px);letter-spacing:.075em;text-indent:.075em}}
 @media(max-width:360px){.hero-home h1{font-size:clamp(23px,7.5vw,27px);letter-spacing:.055em;text-indent:.055em}}
+
+
+/* Connected site architecture: a shared, responsive directory across every page. */
+.footer-directory{display:grid;grid-template-columns:minmax(220px,1.2fr) repeat(2,minmax(170px,1fr));gap:clamp(24px,5vw,64px);width:min(var(--content),calc(100% - 48px));margin:0 auto;padding:42px 0 34px}
+.footer-identity .brand{font-size:16px}.footer-identity>p{max-width:230px;margin:14px 0 0;color:#929292;font-size:12px;line-height:1.7}
+.footer-nav{display:grid;grid-template-columns:1fr;align-content:start;justify-items:start;gap:11px}
+.footer-heading{margin-bottom:5px;color:#777;font-size:9px;font-weight:700;letter-spacing:.17em}
+.footer-nav a{color:#bcbcbc;font-size:12px;line-height:1.5;text-decoration:none}
+.footer-nav a:hover,.footer-nav a:focus-visible{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.site-footer .copyright{width:min(var(--content),calc(100% - 48px));margin:0 auto;padding:16px 0 20px;border-top:1px solid #202020}
+@media(max-width:700px){.footer-directory{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 22px;padding:32px 0 26px}.footer-identity{grid-column:1/-1}.footer-identity>p{max-width:none}}
+@media(max-width:420px){.footer-directory{width:calc(100% - 32px);grid-template-columns:1fr 1fr;gap:24px 16px}.footer-nav{gap:10px}.footer-nav a{font-size:11px}.site-footer .copyright{width:calc(100% - 32px)}}
