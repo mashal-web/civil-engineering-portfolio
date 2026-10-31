@@ -130,3 +130,11 @@ input,textarea,select{background:#090909;border-color:#303030;box-shadow:inset 4
 
 
 
+
+
+/* Hero final polish: keep the name dominant and prevent narrow-screen overflow. */
+.hero-home{min-height:clamp(360px,58vw,620px);padding:clamp(28px,5vw,64px) 20px;background-position:center 52%;background-size:cover}
+.hero-home:before{background:linear-gradient(90deg,#05050588 0%,#05050530 48%,#05050588 100%),linear-gradient(180deg,#05050555 0%,#05050522 48%,#05050588 100%)}
+.hero-home h1{width:100%;max-width:100%;margin:0;font-size:clamp(27px,8.2vw,108px);letter-spacing:.12em;text-indent:.12em;white-space:nowrap;overflow-wrap:normal}
+@media(max-width:520px){.hero-home{min-height:340px;padding:24px 12px;background-position:52% center}.hero-home h1{font-size:clamp(25px,8.1vw,42px);letter-spacing:.075em;text-indent:.075em}}
+@media(max-width:360px){.hero-home h1{font-size:clamp(23px,7.5vw,27px);letter-spacing:.055em;text-indent:.055em}}
