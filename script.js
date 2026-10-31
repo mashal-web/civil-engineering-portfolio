@@ -80,7 +80,7 @@ $('.global-search-scrim')?.addEventListener('click',closeGlobalSearch);
 searchInput?.addEventListener('input',()=>drawGlobalSearch(searchInput.value));
 document.addEventListener('keydown',e=>{
  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();if(searchRoot.hidden)openGlobalSearch();else closeGlobalSearch();}
- if(e.key==='Escape'&&!searchRoot.hidden)closeGlobalSearch();
+ if(e.key==='Escape'&&!searchRoot.hidden)closeGlobalSearch();\n if(e.key==='Enter'&&!searchRoot.hidden){const first=searchResults.querySelector('a');if(first){e.preventDefault();first.click();window.location.href=first.href;}}
 });
 
 document.documentElement.dataset.theme=get('mk-theme')==='light'?'light':'dark';
