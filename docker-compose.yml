@@ -1,0 +1,31 @@
+services:
+  api:
+    build: { context: ., dockerfile: backend/node/Dockerfile }
+    environment:
+      PORT: "3000"
+      PYTHON_SERVICE_URL: http://python:8000
+    ports: ["3000:3000"]
+    depends_on: [python]
+    restart: unless-stopped
+  python:
+    build: { context: ., dockerfile: backend/python/Dockerfile }
+    expose: ["8000"]
+    restart: unless-stopped
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: civil_portfolio
+      POSTGRES_USER: portfolio
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in your environment}
+    ports: ["5432:5432"]
+    volumes:
+      - portfolio_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U portfolio -d civil_portfolio"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  portfolio_data:

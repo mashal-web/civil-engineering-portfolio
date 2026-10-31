@@ -1,0 +1,20 @@
+{
+  "name": "mashal-civil-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack engineering tools for the existing static civil engineering portfolio",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test test/*.test.cjs",
+    "start": "node dist/backend/node/src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.4",
+    "typescript": "^5.7.3"
+  }
+}
