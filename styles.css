@@ -1082,3 +1082,76 @@ a{transition:color .16s ease,border-color .16s ease,background-color .16s ease}
 }
 @media(hover:none){.art-tile:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* MINIMAL RESET — text-first, monochrome, no imagery or decorative surfaces */
+:root{
+  color-scheme:dark;
+  --canvas:#000;
+  --panel:transparent;
+  --panel-raised:transparent;
+  --panel-inset:transparent;
+  --text:#f5f5f5;
+  --muted:#b8b8b8;
+  --subtle:#888;
+  --line:#292929;
+  --shadow-dark:transparent;
+  --shadow-light:transparent;
+}
+html,body,.artwork-site{background:#000!important;color:#f5f5f5!important}
+*,*::before,*::after{
+  background-image:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  filter:none!important;
+  backdrop-filter:none!important;
+}
+img,picture,video,canvas,svg, .project-figure, .course-feature-mark,
+.artwork-site img,.artwork-site picture,.artwork-site video,.artwork-site svg{
+  display:none!important;
+}
+.site-header,.artwork-header,.site-footer,.page-intro,.content-section,
+.fact,.contact-block,.journal-row,.project-figure,.course-panel,.topic-card,
+.course-feature,.course-facts>div,.detail-nav-link,.stack-list article,
+.note,.button,.button-dark,.primary-nav a,.course-feature-mark,
+input,textarea,select,.grade-track,.status,.journal-date{
+  background:#000!important;
+  background-color:#000!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.site-header,.artwork-header,.site-footer,.page-intro,.content-section,
+.fact,.contact-block,.journal-row,.course-panel,.topic-card,
+.course-feature,.course-facts>div,.detail-nav-link,.stack-list article,
+.note,.button,.button-dark,.primary-nav a,input,textarea,select,.status,.journal-date{
+  border-color:#292929!important;
+}
+.page-intro,.content-section,.fact,.contact-block,.journal-row,
+.course-panel,.topic-card,.course-feature,.course-facts>div,
+.detail-nav-link,.stack-list article,.note{
+  padding:clamp(18px,3vw,32px)!important;
+}
+.page-intro{min-height:0!important;margin:28px 0!important}
+.page-intro:before,.page-intro:after,.artwork-site *:before,.artwork-site *:after{
+  background-image:none!important;box-shadow:none!important;
+}
+.button,.button-dark,.primary-nav a,.detail-nav-link{
+  color:#f5f5f5!important;
+}
+.button-dark{background:#000!important;color:#fff!important}
+a:hover{color:#fff!important}
+.primary-nav a[aria-current=page]{background:#111!important;border-color:#555!important}
+.eyebrow,.index,.status,.journal-date,.footer-heading{color:#999!important}
+.lede,.prose,.content-section p,.stack-list article p,.project-copy p,
+.journal-row p,.course-panel p,.topic-card p,.detail-nav-description{
+  color:#b8b8b8!important;
+}
+input,textarea,select{border:1px solid #444!important}
+::selection{background:#fff!important;color:#000!important}
+@media(max-width:800px){
+  .page-intro{margin:16px 0!important}
+  .primary-nav{background:#000!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
