@@ -643,3 +643,15 @@ main.container{padding-bottom:clamp(34px,6vw,72px)}
  .artwork-header .primary-nav{gap:5px 6px;padding:3px 0 8px}
  .artwork-header .primary-nav a{min-height:44px;padding:8px 9px;font-size:11px}
 }
+
+
+/* Mobile navigation repair: keep every destination visible without horizontal swiping. */
+@media(max-width:900px){
+  .artwork-header .header-inner{align-items:flex-start;}
+  .artwork-header .primary-nav{width:100%;max-width:100%;flex-wrap:wrap;justify-content:flex-start;gap:6px 18px;overflow:visible;padding:2px 0 8px;}
+  .artwork-header .primary-nav a{flex:0 0 auto;white-space:nowrap;}
+}
+@media(max-width:560px){
+  .artwork-header .primary-nav{gap:5px 12px;}
+  .artwork-header .primary-nav a{padding:7px 0;font-size:12px;}
+}
