@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" role="img" aria-labelledby="title desc">
+<title id="title">Conceptual cable-stayed bridge elevation</title>
+<desc id="desc">A schematic bridge deck supported by two pylons and fan-shaped diagonal cables, with piers and water lines beneath.</desc>
+<rect width="900" height="340" fill="#0b0b0b"/>
+<g fill="none" stroke="#343434" stroke-width="1">
+<path d="M30 285H870M30 301H870M30 317H870"/>
+<path d="M80 65V280M820 65V280" stroke-dasharray="4 8"/>
+<path d="M35 42H865M35 42v10M865 42v10" stroke="#555"/>
+</g>
+<g fill="none" stroke="#e6e4de" stroke-linecap="round" stroke-linejoin="round">
+<path d="M65 190H835" stroke-width="7"/>
+<path d="M65 199H835" stroke="#8f8e88" stroke-width="2"/>
+<path d="M260 190V78M246 190L260 78L274 190M640 190V78M626 190L640 78L654 190" stroke-width="5"/>
+<path d="M260 88L105 185M260 104L150 185M260 122L195 185M260 142L230 185M260 88L410 185M260 104L365 185M260 122L325 185M260 142L292 185M640 88L490 185M640 104L535 185M640 122L575 185M640 142L608 185M640 88L795 185M640 104L750 185M640 122L705 185M640 142L670 185" stroke-width="1.8" opacity=".9"/>
+<path d="M244 190V260M276 190V260M624 190V260M656 190V260" stroke-width="4"/>
+<path d="M225 260H295M605 260H675" stroke-width="4"/>
+</g>
+<g fill="#c9c7c0" font-family="Arial, Helvetica, sans-serif" font-size="13" letter-spacing="2">
+<text x="260" y="62" text-anchor="middle">Pylon A</text>
+<text x="640" y="62" text-anchor="middle">Pylon B</text>
+<text x="450" y="222" text-anchor="middle">DECK / CONCEPTUAL SPAN</text>
+<text x="450" y="326" text-anchor="middle" fill="#777">SCHEMATIC ONLY · NOT TO SCALE</text>
+</g>
+<g stroke="#777" stroke-width="1" fill="none"><path d="M260 46V30H640V46"/><path d="M450 30V16"/></g>
+</svg>
