@@ -230,7 +230,7 @@ jobs:
                   (audit.h1 == 1, "must contain exactly one h1"),
                   (audit.main == 1, "must contain exactly one main landmark"),
                   (audit.primary_nav == 1, "must contain exactly one primary navigation"),
-                  (audit.current_page_links == 1, "primary navigation must identify exactly one current page"),
+                  (audit.current_page_links == (0 if page.name == "404.html" else 1), "primary navigation current-page marker is incorrect"),
                   (audit.skip_link == 1, "must contain exactly one skip link"),
               ):
                   if not condition:
