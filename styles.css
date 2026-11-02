@@ -1,52 +1,226 @@
-/* Mobile navigation polish: visible links, no horizontal scrolling. */
-@media (max-width: 900px) {
-  .artwork-header .header-inner {
-    align-items: flex-start;
-  }
-
-  .artwork-header .primary-nav {
-    display: flex;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 6px 18px;
-    overflow: visible;
-    padding: 2px 0 8px;
-    scrollbar-width: none;
-  }
-
-  .artwork-header .primary-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .artwork-header .primary-nav a {
-    display: inline-flex;
-    min-height: 44px;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 10px;
-    white-space: nowrap;
-  }
+/* Dark neumorphic system — softer shadows, deeper contrast, tactile panels */
+:root {
+  --neu-bg: #0a0d10;
+  --neu-bg-2: #11161b;
+  --neu-panel: #14191d;
+  --neu-panel-2: #1a2127;
+  --neu-panel-3: #0d1114;
+  --neu-text: #edf3f8;
+  --neu-muted: #aeb9c2;
+  --neu-subtle: #7f8d99;
+  --neu-line: rgba(255,255,255,0.08);
+  --neu-shadow-dark: rgba(0,0,0,0.76);
+  --neu-shadow-mid: rgba(9,12,15,0.9);
+  --neu-shadow-light: rgba(214,224,233,0.04);
 }
 
-@media (max-width: 560px) {
-  .artwork-header .header-inner {
-    width: calc(100% - 28px);
-    gap: 10px;
-    padding: 14px 0;
-  }
+body,
+.artwork-site,
+.artwork-page,
+.artwork-main {
+  background: radial-gradient(circle at top, rgba(28, 35, 41, 0.9), rgba(10, 13, 16, 1) 42%) !important;
+  color: var(--neu-text);
+}
 
+.artwork-site {
+  background-color: var(--neu-bg);
+}
+
+.artwork-header,
+.art-tile,
+.art-current,
+.art-editorial-note,
+.art-focus > div,
+.artwork-page .content-section,
+.artwork-page .page-intro,
+.artwork-page .detail-nav-link,
+.artwork-page .topic-card,
+.artwork-page .course-panel,
+.artwork-page .course-feature,
+.artwork-page .fact,
+.project-figure,
+.project-row,
+.journal-row,
+.contact-block,
+.note,
+.status,
+.button,
+.button-dark,
+.detail-nav-link,
+.course-feature,
+.course-panel,
+.fact,
+.topic-card,
+.site-footer,
+.site-header {
+  background: linear-gradient(145deg, rgba(18, 22, 26, 0.98), rgba(10, 13, 15, 0.98));
+  border: 1px solid var(--neu-line);
+  box-shadow: 12px 12px 24px var(--neu-shadow-dark), -8px -8px 20px rgba(255,255,255,0.02), inset 1px 1px 0 rgba(255,255,255,0.03), inset -1px -1px 0 rgba(0,0,0,0.45);
+}
+
+.artwork-header {
+  background: rgba(10, 13, 16, 0.88);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.artwork-header .brand,
+.artwork-header .primary-nav a,
+.artwork-site a,
+.art-tile-copy strong,
+.art-tile-copy small,
+.art-current-copy h2,
+.art-editorial-copy h2,
+.art-focus strong,
+.artwork-page h2,
+.artwork-page h3,
+.artwork-page .project-copy h2 a,
+.artwork-page .journal-row h2 a,
+.footer-nav a,
+.footer-signoff p,
+.site-footer .brand,
+.site-footer a {
+  color: var(--neu-text);
+}
+
+.artwork-header .primary-nav a {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.artwork-header .primary-nav a[aria-current="page"],
+.artwork-header .primary-nav a:hover,
+.artwork-header .primary-nav a:focus-visible,
+.button:hover,
+.button-dark:hover,
+.art-tile:hover,
+.detail-nav-link:hover {
+  background: linear-gradient(145deg, rgba(26, 31, 35, 0.98), rgba(11, 14, 16, 0.98));
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: inset 3px 3px 8px rgba(0,0,0,0.7), inset -2px -2px 8px rgba(255,255,255,0.02), 0 0 0 1px rgba(255,255,255,0.02);
+}
+
+.art-hero,
+.art-editorial,
+.art-focus,
+.art-current,
+.page-intro,
+.content-section,
+.page-about .content-section,
+.page-projects .project-row,
+.page-courses .course-feature {
+  background: linear-gradient(145deg, rgba(18, 22, 26, 0.98), rgba(10, 13, 15, 0.98));
+  box-shadow: 14px 14px 28px var(--neu-shadow-dark), -10px -10px 22px rgba(255,255,255,0.02), inset 1px 1px 0 rgba(255,255,255,0.02);
+}
+
+.art-tile {
+  border-radius: 16px;
+  box-shadow: 10px 10px 22px rgba(0,0,0,0.7), -6px -6px 16px rgba(255,255,255,0.02), inset 1px 1px 0 rgba(255,255,255,0.03);
+}
+
+.art-tile-copy small,
+.art-editorial-copy>p:not(.art-kicker),
+.art-current-copy>p:not(.art-kicker),
+.artwork-site p,
+.artwork-page .prose,
+.artwork-page .content-section>p,
+.footer-identity>p,
+.footer-nav a,
+.detail-nav-description,
+.note,
+.artwork-page .stack-list article p,
+.artwork-page .journal-row p,
+.plain-list,
+.course-panel,
+.topic-card,
+.fact,
+.project-copy,
+.journal-row,
+.contact-block {
+  color: var(--neu-muted);
+}
+
+.art-kicker,
+.eyebrow,
+.footer-heading,
+.footer-signoff span,
+.journal-date,
+.art-tile-copy small,
+.art-focus .art-kicker,
+.artwork-page .page-intro .eyebrow,
+.index,
+.status {
+  color: #c4ced6;
+  letter-spacing: 0.18em;
+}
+
+.button,
+.button-dark {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 8px 8px 16px rgba(0,0,0,0.6), -6px -6px 12px rgba(255,255,255,0.02), inset 1px 1px 0 rgba(255,255,255,0.03);
+  color: var(--neu-text);
+}
+
+.button-dark {
+  background: linear-gradient(145deg, #edf3f8, #bfc9d2);
+  color: #0b1014;
+}
+
+.project-figure,
+.contact-block,
+.note,
+.fact,
+.course-panel,
+.topic-card,
+.detail-nav-link,
+.page-intro,
+.content-section {
+  border-radius: 18px;
+}
+
+.artwork-page .content-section,
+.artwork-page .page-intro,
+.artwork-page .detail-nav-link,
+.artwork-page .topic-card,
+.artwork-page .course-panel,
+.artwork-page .fact,
+.project-figure,
+.note,
+.contact-block {
+  box-shadow: 12px 12px 24px rgba(0,0,0,0.7), -8px -8px 18px rgba(255,255,255,0.02), inset 1px 1px 0 rgba(255,255,255,0.02);
+}
+
+.artwork-site .skip-link {
+  background: linear-gradient(145deg, rgba(22, 27, 31, 0.98), rgba(10, 13, 15, 0.98));
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--neu-text);
+  box-shadow: 8px 8px 16px rgba(0,0,0,0.7);
+}
+
+.artwork-site a:hover,
+.artwork-site a:focus-visible,
+.footer-nav a:hover,
+.footer-nav a:focus-visible,
+.artwork-page .project-copy h2 a:hover,
+.artwork-page .journal-row h2 a:hover {
+  color: #ffffff;
+  text-decoration-color: rgba(255,255,255,0.6);
+}
+
+.artwork-site ::selection {
+  background: rgba(206, 216, 225, 0.32);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
   .artwork-header .primary-nav {
-    gap: 3px 12px;
-    padding: 3px 0 8px;
-  }
-
-  .artwork-header .primary-nav a {
-    min-height: 44px;
-    padding: 7px 0;
-    font-size: 11px;
+    background: rgba(12, 15, 18, 0.84);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 14px;
+    padding: 8px 10px;
+    box-shadow: inset 2px 2px 6px rgba(0,0,0,0.58), inset -2px -2px 6px rgba(255,255,255,0.02);
   }
 }
